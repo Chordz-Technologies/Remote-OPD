@@ -1,0 +1,210 @@
+// Variables
+$primary-color: #392E73;
+$background-color: #fff;
+$text-color: #333;
+$light-gray: #f0f0f0;
+$accent-color: #ff4081;
+
+// Mixins
+@mixin card-shadow($level: 1) {
+    box-shadow: 0 #{$level * 2}px #{$level * 4}px rgba(0, 0, 0, 0.1);
+}
+
+@mixin transition($property: all, $duration: 0.3s, $timing: cubic-bezier(0.25, 0.8, 0.25, 1)) {
+    transition: $property $duration $timing;
+}
+
+// Styles
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: $background-color;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    button {
+        margin: 0 10px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        @include transition(background-color);
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+}
+
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.users-card {
+    @include transition(all, 0.4s);
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    mat-card {
+        @include transition(all, 0.4s);
+        @include card-shadow(1);
+        border-radius: 8px;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        background-color: $background-color;
+        flex-direction: column;
+
+        &:hover {
+            @include card-shadow(2);
+        }
+
+        mat-card-header {
+            background-color: $primary-color;
+            color: $background-color;
+            padding: 20px;
+
+            mat-card-title {
+                font-size: 1.4rem;
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            mat-card-subtitle {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 1rem;
+            }
+        }
+
+        mat-card-content {
+            padding: 20px;
+            flex-grow: 1;
+
+            p {
+                font-size: 1.1rem;
+                color: $text-color;
+
+                strong {
+                    color: $primary-color;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        mat-card-actions {
+            padding: 0 20px 20px;
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+                font-weight: 500;
+                @include transition(background-color);
+
+                &:hover {
+                    background-color: rgba($primary-color, 0.1);
+                }
+            }
+        }
+    }
+}
+
+// Dialog styles
+.mat-dialog-container {
+    padding: 0 !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+mat-card {
+    // box-shadow: none !important;
+
+    mat-card-header {
+        background-color: $primary-color;
+        padding: 15px;
+        color: $background-color;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(45deg);
+            @include transition(transform, 0.6s);
+        }
+
+        &:hover::after {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        mat-card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+    }
+
+    mat-card-content {
+        padding: 20px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            mat-form-field {
+                width: 100%;
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+
+            button {
+                padding: 8px 20px;
+                font-weight: 500;
+                @include transition(background-color);
+
+                &:hover {
+                    background-color: darken($primary-color, 10%);
+                }
+
+                &[color="warn"]:hover {
+                    background-color: darken($accent-color, 10%);
+                }
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+
+        button {
+            margin: 5px 0;
+        }
+    }
+
+    .users-grid {
+        grid-template-columns: 1fr;
+    }
+}

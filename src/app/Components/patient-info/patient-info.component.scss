@@ -1,0 +1,291 @@
+/* patient-form.component.css */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+// .form-sidebar {
+//     background-color: #392e73;
+//     color: #ffffff;
+//     padding: 40px;
+//     width: 30%;
+// }
+
+// .form-sidebar h3 {
+//     font-size: 24px;
+//     margin-bottom: 20px;
+// }
+
+// .form-sidebar p {
+//     font-size: 16px;
+// }
+
+// /* Button Styles */
+// .form-sidebar button {
+//     width: 100%;
+//     /* Make buttons block-level */
+//     padding: 15px;
+//     margin-top: 15px;
+//     font-size: 18px;
+//     font-weight: bold;
+//     color: #ffffff;
+//     background-color: #4CAF50;
+//     /* Green background */
+//     border: none;
+//     border-radius: 5px;
+//     transition: background-color 0.3s ease, transform 0.3s ease;
+//     /* Smooth transitions */
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//     /* Add subtle shadow */
+// }
+
+// .form-sidebar button.btn-danger {
+//     background-color: #f44336;
+//     /* Red background for logout */
+// }
+
+// .form-sidebar button:hover {
+//     background-color: #45a049;
+//     /* Darker green on hover */
+//     transform: translateY(-2px);
+//     /* Slight lift on hover */
+// }
+
+// .form-sidebar button.btn-danger:hover {
+//     background-color: #d32f2f;
+//     /* Darker red on hover */
+// }
+
+// .form-sidebar button:focus {
+//     outline: none;
+//     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+//     /* Glowing effect on focus */
+// }
+
+:root {
+    --primary-color: #D72B27;
+    --secondary-color: #3A3078;
+    --white: #FFFFFF;
+    --light-gray: #F5F5F5;
+}
+
+.form-sidebar {
+    // background: linear-gradient(135deg, #3A3078, #2A2357);
+    color: #FFFFFF;
+    padding: 40px;
+    text-align: center;
+    // display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 300px;
+}
+
+.logo-container {
+    background: #FFFFFF;
+    border-radius: 10%;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+
+.welcome-text {
+    font-size: 28px;
+    font-weight: 600;
+    // margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.instruction-text {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+}
+
+.button-container {
+    width: 100%;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #183f00;
+    color: #FFFFFF;
+    box-shadow: 0 4px 6px rgba(215, 43, 39, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #C12622;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(215, 43, 39, 0.3);
+}
+
+.btn-logout {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+.btn-logout:hover {
+    background-color: #FFFFFF;
+    color: #3A3078;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .form-wrapper {
+        flex-direction: column;
+    }
+
+    .form-sidebar {
+        width: 100%;
+        padding: 30px;
+    }
+}
+
+.form-content {
+    padding: 40px;
+    width: 100%;
+}
+
+.form-heading {
+    color: #333333;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-label input {
+    margin-right: 5px;
+}
+
+.btn-submit {
+    background-color: #392e73;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-submit:hover {
+    background-color: #E31E25;
+}
+
+@media (max-width: 768px) {
+    .form-wrapper {
+        flex-direction: column;
+    }
+
+    .form-sidebar,
+    .form-content {
+        width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add this to your existing CSS */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Update the existing .form-control style */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+    /* Add some space between label and input */
+}
+
+/* Style for required fields, if needed */
+label[for="srNo"]::after,
+label[for="patientName"]::after,
+label[for="date"]::after,
+label[for="villageName"]::after,
+label[for="age"]::after,
+label[for="mobileNo"]::after {
+    content: " *";
+    color: #e74c3c;
+}

@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="button-group">
+    <button
+      mat-raised-button
+      class="py-4"
+      color="primary"
+      (click)="openFormDialog()"
+    >
+      Create User
+    </button>
+    <button
+      mat-raised-button
+      class="py-4"
+      color="primary"
+      (click)="getAllUsers()"
+    >
+      Manage User
+    </button>
+  </div>
+
+  <div *ngIf="users.length > 0" class="users-grid">
+    <div *ngFor="let user of users" class="users-card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> {{ user.username }}</mat-card-title>
+          <mat-card-subtitle
+            ><strong>Mobile No.:</strong> {{ user.mobileno }}</mat-card-subtitle
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Role:</strong> {{ user.role }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="openFormDialog(user)">
+            Edit
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog Template -->
+<ng-template #formDialog>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{
+        isEditMode ? "Edit User" : "Create User"
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="username" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile Numeber</mat-label>
+          <input matInput formControlName="mobileno" required type="number" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role" required>
+            <mat-option value="DOCTOR">Doctor</mat-option>
+            <mat-option value="INVESTER">Invester</mat-option>
+            <!-- <mat-option value="CPR_COLLECTOR">Information Collector</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit">
+            {{ isEditMode ? "Update" : "Submit" }}
+          </button>
+          <button
+            *ngIf="isEditMode"
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="deleteUser()"
+          >
+            Delete
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
