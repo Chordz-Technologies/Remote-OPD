@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from 'src/app/shared/service.service';
 
@@ -12,19 +12,19 @@ import { ServiceService } from 'src/app/shared/service.service';
 export class PatientInfoComponent implements OnInit {
   username: string | null = '';
   patientForm!: FormGroup;
+  diseases: any[] = [];
+  medicines: any[] = [];
+  villages: any[] = [];
+  camps: any[] = [];
 
-  constructor(private fb: FormBuilder, private patientService: ServiceService,
-    private router: Router,
-    private toastr: ToastrService) {
-
-  }
+  constructor(private fb: FormBuilder, private patientService: ServiceService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.patientForm = this.fb.group({
-      // srNo: ['', Validators.required],
       patientName: ['', Validators.required],
       date: ['', Validators.required],
       villageName: ['', Validators.required],
+      camp_name: ['', Validators.required],
       category: ['',],
       gender: ['',],
       age: ['', Validators.required],
@@ -44,6 +44,30 @@ export class PatientInfoComponent implements OnInit {
     });
 
     this.username = localStorage.getItem('username');
+
+    this.patientService.getAllVillages().subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.villages = response.all_Villages;
+      }
+    });
+
+    this.patientService.getAllDiseases().subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.diseases = response.all_diseases;
+      }
+    });
+
+    this.patientService.getAllMedicines().subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.medicines = response.all_mediciness;
+      }
+    });
+
+    this.patientService.getAllCamps().subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.camps = response.all_Camps;
+      }
+    });
   }
 
   onFileChange(event: any) {
@@ -64,13 +88,14 @@ export class PatientInfoComponent implements OnInit {
       this.patientService.addopdform(patientData).subscribe(
         (response) => {
           if (response.status === 'success') {
-            this.toastr.success('Patient data submitted successfully!', 'Success');
+            this.toastr.success('Patient Data Submitted Successfully!', 'Success');
             this.patientForm.reset();
           } else {
             this.toastr.error(response.msg, 'Error');
           }
+          this.patientForm.reset();
+          this.router.navigate(['/all_patient_info']);
 
-          this.patientForm.reset(); // Optionally reset the form
         },
         (error) => {
           // Handle error response
@@ -83,37 +108,4 @@ export class PatientInfoComponent implements OnInit {
       this.toastr.warning('Please fill all required fields.', 'Warning');
     }
   }
-
-  downloadExcelReport() {
-    this.patientService.downloadExcelReport().subscribe(
-      (response: Blob) => {
-        const url = window.URL.createObjectURL(response);
-        const a = document.createElement('a');
-        a.href = url;
-        const d = new Date();
-        a.download = `Shirwal OPD -${d.toLocaleDateString()}-${d.toLocaleTimeString()}.xlsx`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        this.toastr.success('Excel report downloaded successfully!', 'Success');
-      },
-      (error) => {
-        this.toastr.error('Failed to download Excel report.', 'Error');
-        console.error('Error downloading Excel report:', error);
-      }
-    );
-  }
-
-
-  logout() {
-    // Perform logout operations, e.g., clearing tokens, redirecting to login page
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('username');
-    this.toastr.success('Logged out successfully!', 'Success');
-    // Navigate to the login page or home page after logout
-    this.router.navigate(['/login']); // Uncomment and add Router to constructor
-  }
-
 }

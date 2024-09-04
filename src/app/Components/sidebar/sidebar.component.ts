@@ -12,19 +12,16 @@ export class SidebarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   username: string | null = '';
-  role!: string | null;
+  role: string | null = '';
+  ADMIN: boolean = localStorage.getItem('role') === 'ADMIN';
+  DOCTOR: boolean = localStorage.getItem('role') === 'DOCTOR';
+  INVESTER: boolean = localStorage.getItem('role') === 'INVESTER';
 
+  constructor(private router: Router, private toastr: ToastrService, private patientService: ServiceService) { }
 
-  constructor(
-    private router: Router, private toastr: ToastrService, private patientService: ServiceService,
-  ) {
-    // this.router.navigateByUrl('/user')
-  }
   ngOnInit(): void {
-    // this.username = localStorage.getItem('username');
     this.role = localStorage.getItem('role');
   }
-
 
   // Assume you have a method to handle login result
   handleLoginResult(result: any) {
@@ -44,7 +41,7 @@ export class SidebarComponent implements OnInit {
         const a = document.createElement('a');
         a.href = url;
         const d = new Date();
-        a.download = `Shirwal OPD -${d.toLocaleDateString()}-${d.toLocaleTimeString()}.xlsx`;
+        a.download = `Patient-Report-${d.toLocaleDateString()}-${d.toLocaleTimeString()}.xlsx`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -58,15 +55,11 @@ export class SidebarComponent implements OnInit {
     );
   }
 
-
   logout() {
-    // Perform logout operations, e.g., clearing tokens, redirecting to login page
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
     this.toastr.success('Logged out successfully!', 'Success');
-    // Navigate to the login page or home page after logout
-    this.router.navigate(['/login']); // Uncomment and add Router to constructor
+    this.router.navigate(['/login']);
   }
-
 }

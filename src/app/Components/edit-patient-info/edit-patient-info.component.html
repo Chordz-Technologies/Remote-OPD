@@ -1,0 +1,163 @@
+<div class="container-fluid">
+    <div class="form-wrapper">
+        <div class="form-content">
+            <h2 class="form-heading">Edit Patient Information</h2>
+            <form [formGroup]="patientForm">
+                <div class="form-grid">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="patientName">Patient Name</label>
+                            <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                                placeholder="Enter Patient Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date </label>
+                            <input id="date" type="date" formControlName="date" class="form-control"
+                                placeholder="Enter Date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="villageName">Village Name</label>
+                            <select id="villageName" formControlName="villageName" class="form-control">
+                                <option value="" disabled selected>Select Village</option>
+                                <optgroup *ngFor="let village of villages" [label]="village.name">
+                                    <option *ngFor="let vname of village.vnames" [value]="vname">
+                                        {{ vname }}
+                                    </option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" formControlName="category" class="form-control">
+                                <option value="" disabled selected>
+                                    Please Select Category
+                                </option>
+                                <option value="N">N</option>
+                                <option value="F">F</option>
+                                <option value="SC">SC</option>
+                                <option value="R">R</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="radio-group my-4">
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="male" />
+                                    <span>Male</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="female" />
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age </label>
+                            <input id="age" type="number" formControlName="age" class="form-control"
+                                placeholder="Enter Age" />
+                        </div>
+                        <div class="form-group">
+                            <label for="day">Day</label>
+                            <input id="day" type="text" formControlName="day" class="form-control"
+                                placeholder="Enter Day" />
+                        </div>
+                        <div class="form-group">
+                            <label for="month">Month</label>
+                            <input id="month" type="text" formControlName="month" class="form-control"
+                                placeholder="Enter Month" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dosage">Dosage</label>
+                            <input id="dosage" type="text" formControlName="dosage" class="form-control"
+                                placeholder="Enter Dosage" />
+                        </div>
+                        <div class="form-group">
+                            <label for="camp_name">Camp</label>
+                            <select id="camp_name" formControlName="camp_name" class="form-control">
+                                <option value="" disabled selected>Select Camp</option>
+                                <option *ngFor="let camp of camps" [value]="camp.name">
+                                    {{ camp.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="ageGroup">Age Group</label>
+                            <select id="ageGroup" formControlName="ageGroup" class="form-control">
+                                <option value="" disabled selected>
+                                    Please Select Age Group
+                                </option>
+                                <option>Child</option>
+                                <option>Adult</option>
+                                <option>Senior</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="week">Week</label>
+                            <input id="week" type="number" formControlName="week" class="form-control"
+                                placeholder="Enter Week" />
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileNo">Mobile No. </label>
+                            <input id="mobileNo" type="text" formControlName="mobileNo" class="form-control"
+                                placeholder="Enter Mobile No." />
+                        </div>
+                        <div class="form-group">
+                            <label for="signSymptoms">Sign and Symptoms</label>
+                            <input id="signSymptoms" type="text" formControlName="signSymptoms" class="form-control"
+                                placeholder="Enter Sign and Symptoms" />
+                        </div>
+                        <div class="form-group">
+                            <label for="physicalExamination">Physical Examination and Finding</label>
+                            <input id="physicalExamination" type="text" formControlName="physicalExamination"
+                                class="form-control" placeholder="Enter Physical Examination and Finding" />
+                        </div>
+                        <div class="form-group">
+                            <label for="investigation">Investigation</label>
+                            <input id="investigation" type="text" formControlName="investigation" class="form-control"
+                                placeholder="Enter Investigation" />
+                        </div>
+                        <div class="form-group">
+                            <label for="diagnosis">Diagnosis</label>
+                            <select id="diagnosis" formControlName="diagnosis" class="form-control">
+                                <option value="" disabled selected>Select Disease</option>
+                                <option *ngFor="let disease of diseases" [value]="disease.name">
+                                    {{ disease.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prescribedMedicine1">Prescribed Medicine 1</label>
+                            <select id="prescribedMedicine1" formControlName="prescribedMedicine1" class="form-control">
+                                <option value="" disabled selected>Select Prescribed Medicine 1</option>
+                                <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                                    {{ medicine.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prescribedMedicine1">Prescribed Medicine 2</label>
+                            <select id="prescribedMedicine1" formControlName="prescribedMedicine2" class="form-control">
+                                <option value="" disabled selected>Select Prescribed Medicine 2</option>
+                                <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                                    {{ medicine.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group mx-auto">
+                            <label for="treatmentRemark">Treatment Remark</label>
+                            <input id="treatmentRemark" type="text" formControlName="treatmentRemark"
+                                class="form-control" placeholder="Enter Treatment Remark" />
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="btn-submit" (click)="update()">Update</button>
+                    <button type="button" class="btn-submit" routerLink="/all_patient_info">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

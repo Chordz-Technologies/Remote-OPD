@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class ServiceService {
   private url = environment.apiUrl;
 
-
   constructor(private http: HttpClient) { }
 
   //Post/Create branch holder with bearer token
@@ -73,5 +72,32 @@ export class ServiceService {
     });
   }
 
+  //all patients info
+  getAllPatientsData(): Observable<any> {
+    return this.http.get<any>(`${this.url}/patient/allopdforms/`);
+  }
 
+  getPatientDataById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/patient/opdform/${id}/`);
+  }
+
+  updatePatient(data: any, id: number) {
+    return this.http.put<any>(`${this.url}/patient/opdform/${id}/update/`, data);
+  }
+
+  getAllVillages(): Observable<any> {
+    return this.http.get<any>(`${this.url}/villages/allvillages/`);
+  }
+
+  getAllDiseases(): Observable<any> {
+    return this.http.get<any>(`${this.url}/disease/alldisease/`);
+  }
+
+  getAllMedicines(): Observable<any> {
+    return this.http.get<any>(`${this.url}/medicines/allmedicines/`);
+  }
+
+  getAllCamps(): Observable<any> {
+    return this.http.get<any>(`${this.url}/camps/allcamps/`);
+  }
 }

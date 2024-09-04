@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card'
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -28,7 +28,8 @@ import { SidebarComponent } from './Components/sidebar/sidebar.component';
 import { AddusersbyAdminComponent } from './Components/addusersby-admin/addusersby-admin.component';
 import { AllusersComponent } from './Components/allusers/allusers.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
+import { AllPatientsComponent } from './Components/all-patients/all-patients.component';
+import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-patient-info.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     HomeComponent,
     SidebarComponent,
     AddusersbyAdminComponent,
-    AllusersComponent
+    AllusersComponent,
+    AllPatientsComponent,
+    EditPatientInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     MatDialogModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTableModule,
     MatProgressSpinnerModule,
     MatCardModule,
     MatSelectModule,

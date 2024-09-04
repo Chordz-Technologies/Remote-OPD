@@ -1,19 +1,9 @@
 <div class="container">
   <div class="button-group">
-    <button
-      mat-raised-button
-      class="py-4"
-      color="primary"
-      (click)="openFormDialog()"
-    >
+    <button mat-raised-button class="py-4" color="primary" (click)="openFormDialog()">
       Create User
     </button>
-    <button
-      mat-raised-button
-      class="py-4"
-      color="primary"
-      (click)="getAllUsers()"
-    >
+    <button mat-raised-button class="py-4" color="primary" (click)="getAllUsers()">
       Manage User
     </button>
   </div>
@@ -23,12 +13,10 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title> {{ user.username }}</mat-card-title>
-          <mat-card-subtitle
-            ><strong>Mobile No.:</strong> {{ user.mobileno }}</mat-card-subtitle
-          >
+          <mat-card-subtitle><strong>Mobile No :</strong> {{ user.mobileno }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p><strong>Role:</strong> {{ user.role }}</p>
+          <p><strong>Role :</strong> {{ user.role }}</p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button color="primary" (click)="openFormDialog(user)">
@@ -46,7 +34,7 @@
     <mat-card-header>
       <mat-card-title>{{
         isEditMode ? "Edit User" : "Create User"
-      }}</mat-card-title>
+        }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
@@ -70,7 +58,6 @@
           <mat-select formControlName="role" required>
             <mat-option value="DOCTOR">Doctor</mat-option>
             <mat-option value="INVESTER">Invester</mat-option>
-            <!-- <mat-option value="CPR_COLLECTOR">Information Collector</mat-option> -->
           </mat-select>
         </mat-form-field>
 
@@ -78,13 +65,7 @@
           <button mat-raised-button color="primary" type="submit">
             {{ isEditMode ? "Update" : "Submit" }}
           </button>
-          <button
-            *ngIf="isEditMode"
-            mat-raised-button
-            color="warn"
-            type="button"
-            (click)="deleteUser()"
-          >
+          <button *ngIf="isEditMode" mat-raised-button color="warn" type="button" (click)="deleteUser()">
             Delete
           </button>
         </div>

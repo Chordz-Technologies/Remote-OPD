@@ -5,6 +5,8 @@ import { PatientInfoComponent } from './Components/patient-info/patient-info.com
 import { HomeComponent } from './Components/home/home.component';
 import { AddusersbyAdminComponent } from './Components/addusersby-admin/addusersby-admin.component';
 import { AuthGuard } from './guard/auth.guard';
+import { AllPatientsComponent } from './Components/all-patients/all-patients.component';
+import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-patient-info.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,8 @@ const routes: Routes = [
     children: [
       { path: 'patient_info_form', component: PatientInfoComponent },
       { path: 'create_role', component: AddusersbyAdminComponent },
+      { path: 'all_patient_info', component: AllPatientsComponent },
+      { path: 'edit_patient_info/:id', component: EditPatientInfoComponent },
 
     ]
   },

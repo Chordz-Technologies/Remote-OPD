@@ -17,14 +17,7 @@ export class AddusersbyAdminComponent {
   isEditMode = false;
   currentUserId: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: ServiceService,
-    private toastr: ToastrService,
-    private dialog: MatDialog
-  ) {
-
-  }
+  constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -57,10 +50,8 @@ export class AddusersbyAdminComponent {
     } else {
       this.userForm.reset();
     }
-
     this.dialog.open(this.formDialog);
   }
-
 
   getAllUsers(): void {
     this.userService.getallusers().subscribe(
@@ -76,8 +67,7 @@ export class AddusersbyAdminComponent {
       }
     );
   }
-
-
+  
   onSubmit(): void {
     if (this.userForm.valid) {
       if (this.isEditMode && this.currentUserId) {
@@ -134,5 +124,4 @@ export class AddusersbyAdminComponent {
       );
     }
   }
-
 }
