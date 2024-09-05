@@ -30,6 +30,7 @@ import { AllusersComponent } from './Components/allusers/allusers.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AllPatientsComponent } from './Components/all-patients/all-patients.component';
 import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-patient-info.component';
+import { AllReportsComponent } from './Components/all-reports/all-reports.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-pa
     AddusersbyAdminComponent,
     AllusersComponent,
     AllPatientsComponent,
-    EditPatientInfoComponent
+    EditPatientInfoComponent,
+    AllReportsComponent
   ],
   imports: [
     BrowserModule,

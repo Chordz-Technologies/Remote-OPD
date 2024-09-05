@@ -34,9 +34,9 @@
         <span>All Patients</span>
       </button>
       <button mat-button *ngIf="ADMIN || INVESTER" class="menu-button" [routerLinkActive]="['active']"
-        (click)="downloadExcelReport()">
+      [routerLink]="['/all_reports']">
         <mat-icon>download</mat-icon>
-        <span>Patients Report</span>
+        <span>All Reports</span>
       </button>
       <button mat-button class="menu-button" (click)="logout()">
         <mat-icon>logout</mat-icon>

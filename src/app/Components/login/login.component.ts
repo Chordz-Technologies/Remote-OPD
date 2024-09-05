@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/patient_info_form']);
             } else if (role === 'INVESTER') {
               this.toastr.success('Login as Invester successfully!', 'Success');
-              this.router.navigate(['/']);
+              this.router.navigate(['/all_reports']);
             } else if (role === 'ADMIN') {
               this.toastr.success('Login as Admin successfully!', 'Success');
               this.router.navigate(['/create_role']);

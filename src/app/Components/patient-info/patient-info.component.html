@@ -10,8 +10,8 @@
         <div class="form-grid">
           <div class="form-column">
             <div class="form-group">
-              <label for="patientname">Patient Name</label>
-              <input id="patientname" type="text" formControlName="patientName" class="form-control"
+              <label for="patientName">Patient Name</label>
+              <input id="patientName" type="text" formControlName="patientName" class="form-control"
                 placeholder="Enter Patient Name" />
             </div>
             <div class="form-group">
@@ -19,8 +19,8 @@
               <input id="date" type="date" formControlName="date" class="form-control" placeholder="Enter Date" />
             </div>
             <div class="form-group">
-              <label for="villagename">Village Name</label>
-              <select id="villagename" formControlName="villageName" class="form-control">
+              <label for="villageName">Village Name</label>
+              <select id="villageName" formControlName="villageName" class="form-control">
                 <option value="" disabled selected>Select Village</option>
                 <optgroup *ngFor="let village of villages" [label]="village.name">
                   <option *ngFor="let vname of village.vnames" [value]="vname">
@@ -42,7 +42,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Gender</label>
+              <label for="gender">Gender</label>
               <div class="radio-group my-4">
                 <label class="radio-label">
                   <input type="radio" formControlName="gender" value="male" />

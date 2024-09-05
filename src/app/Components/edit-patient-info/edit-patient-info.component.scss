@@ -102,10 +102,10 @@ label {
     }
 }
 
-label[for="srNo"]::after,
 label[for="patientName"]::after,
 label[for="date"]::after,
 label[for="villageName"]::after,
+label[for="gender"]::after,
 label[for="age"]::after,
 label[for="mobileNo"]::after {
     content: " *";

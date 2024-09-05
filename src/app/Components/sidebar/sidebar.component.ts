@@ -34,26 +34,26 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  downloadExcelReport() {
-    this.patientService.downloadExcelReport().subscribe(
-      (response: Blob) => {
-        const url = window.URL.createObjectURL(response);
-        const a = document.createElement('a');
-        a.href = url;
-        const d = new Date();
-        a.download = `Patient-Report-${d.toLocaleDateString()}-${d.toLocaleTimeString()}.xlsx`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        this.toastr.success('Excel report downloaded successfully!', 'Success');
-      },
-      (error) => {
-        this.toastr.error('Failed to download Excel report.', 'Error');
-        console.error('Error downloading Excel report:', error);
-      }
-    );
-  }
+  // downloadExcelReport() {
+  //   this.patientService.downloadExcelReport().subscribe(
+  //     (response: Blob) => {
+  //       const url = window.URL.createObjectURL(response);
+  //       const a = document.createElement('a');
+  //       a.href = url;
+  //       const d = new Date();
+  //       a.download = `Patient-Report-${d.toLocaleDateString()}-${d.toLocaleTimeString()}.xlsx`;
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       document.body.removeChild(a);
+  //       window.URL.revokeObjectURL(url);
+  //       this.toastr.success('Excel report downloaded successfully!', 'Success');
+  //     },
+  //     (error) => {
+  //       this.toastr.error('Failed to download Excel report.', 'Error');
+  //       console.error('Error downloading Excel report:', error);
+  //     }
+  //   );
+  // }
 
   logout() {
     localStorage.removeItem('token');

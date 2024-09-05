@@ -59,18 +59,22 @@ export class ServiceService {
     return this.http.delete<any>(`${this.url}/user/deleteuser/${id}/`, { headers });
   }
 
-  //doenload excel repot of pateint data
-  downloadExcelReport(): Observable<Blob> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get(`${this.url}/patient/excelreport/`, {
-      headers: headers,
-      responseType: 'blob' // Set the response type to 'blob' for binary data
-    });
+  //download excel repot of patient data
+  downloadPatientReport(): Observable<Blob> {
+    return this.http.get(`${this.url}/patient/excelreport/`, { responseType: 'blob' });
   }
+
+  // downloadPatientReport(): Observable<Blob> {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //   });
+
+  //   return this.http.get(`${this.url}/patient/excelreport/`, {
+  //     headers: headers,
+  //     responseType: 'blob' // Set the response type to 'blob' for binary data
+  //   });
+  // }
 
   //all patients info
   getAllPatientsData(): Observable<any> {
