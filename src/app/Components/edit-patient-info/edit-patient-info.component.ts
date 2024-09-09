@@ -17,7 +17,9 @@ export class EditPatientInfoComponent implements OnInit {
   medicines: any[] = [];
   villages: any[] = [];
   camps: any[] = [];
-
+  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Days of the week
+  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
   constructor(private fb: FormBuilder, private service: ServiceService, private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
