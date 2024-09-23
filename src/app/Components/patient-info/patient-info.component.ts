@@ -16,9 +16,7 @@ export class PatientInfoComponent implements OnInit {
   medicines: any[] = [];
   villages: any[] = [];
   camps: any[] = [];
-  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Days of the week
-  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
+
   constructor(private fb: FormBuilder, private patientService: ServiceService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -27,18 +25,19 @@ export class PatientInfoComponent implements OnInit {
       date: ['', Validators.required],
       villageName: ['', Validators.required],
       camp_name: ['',],
-      category: ['',],
+      category: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', Validators.required],
-      day: ['',],
-      month: ['',],
-      ageGroup: ['',],
-      week: ['',],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
+      ageGroup: ['', Validators.required],
+      week: ['', Validators.required],
       mobileNo: ['', Validators.required],
       signSymptoms: ['',],
       physicalExamination: ['',],
       investigation: ['',],
-      diagnosis: ['',],
+      diagnosis: ['', Validators.required],
       prescribedMedicine1: ['',],
       prescribedMedicine2: ['',],
       dosage: ['',],
@@ -84,6 +83,23 @@ export class PatientInfoComponent implements OnInit {
     }
   }
 
+  onDateChange(event: any): void {
+    const selectedDate = new Date(event.target.value);
+
+    if (!isNaN(selectedDate.getTime())) {
+      const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' }); // Get day name (e.g., Monday)
+      const month = selectedDate.toLocaleString('en-US', { month: 'long' }); // Get month name (e.g., January)
+      const year = selectedDate.getFullYear();
+
+      // Update the day and month form controls
+      this.patientForm.patchValue({
+        day: dayOfWeek, // Monday, Tuesday, etc.
+        month: month, // January, February, etc.
+        year: year // 2024, 2025, etc.
+      });
+    }
+  }
+
   onSubmit() {
     if (this.patientForm.valid) {
       const patientData = this.patientForm.value;
@@ -107,7 +123,7 @@ export class PatientInfoComponent implements OnInit {
         }
       );
     } else {
-      this.toastr.warning('Please fill all required fields.', 'Warning');
+      this.toastr.error('Please fill all required fields.', 'Error');
     }
   }
 }

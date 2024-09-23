@@ -17,9 +17,7 @@ export class EditPatientInfoComponent implements OnInit {
   medicines: any[] = [];
   villages: any[] = [];
   camps: any[] = [];
-  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Days of the week
-  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
+
   constructor(private fb: FormBuilder, private service: ServiceService, private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -28,12 +26,13 @@ export class EditPatientInfoComponent implements OnInit {
       patientName: [''],
       date: [''],
       villageName: [''],
-      camp_name:[''],
+      camp_name: [''],
       category: [''],
       gender: [''],
       age: [''],
       day: [''],
       month: [''],
+      // year: [''],
       ageGroup: [''],
       week: [''],
       mobileNo: [''],
@@ -85,18 +84,35 @@ export class EditPatientInfoComponent implements OnInit {
     })
   }
 
+  onDateChange(event: any): void {
+    const selectedDate = new Date(event.target.value);
+
+    if (!isNaN(selectedDate.getTime())) {
+      const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' }); // Get day name (e.g., Monday)
+      const month = selectedDate.toLocaleString('en-US', { month: 'long' }); // Get month name (e.g., January)
+      const year = selectedDate.getFullYear();
+
+      this.patientForm.patchValue({
+        day: dayOfWeek, // Monday, Tuesday, etc.
+        month: month, // January, February, etc.
+        year: year // 2024, 2025, etc.
+      });
+    }
+  }
+
   fillFormToUpdate(patient: Patient_model) {
     this.patientForm.setValue({
       srNo: patient.srNo,
       patientName: patient.patientName,
       date: patient.date,
       villageName: patient.villageName,
-      camp_name:patient.camp_name,
+      camp_name: patient.camp_name,
       category: patient.category,
       gender: patient.gender,
       age: patient.age,
       day: patient.day,
       month: patient.month,
+      // year: patient.year,
       ageGroup: patient.ageGroup,
       week: patient.week,
       mobileNo: patient.mobileNo,

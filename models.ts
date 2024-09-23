@@ -9,14 +9,15 @@ export class Patient_model {
     age!: number;
     day!: string;
     month!: string;
+    year!: string;
     ageGroup!: string;
     week!: number;
-    mobileNo!:number;
+    mobileNo!: number;
     signSymptoms!: string;
     physicalExamination!: string;
     investigation!: string;
     diagnosis!: string;
-    prescribedMedicine1!:string;
+    prescribedMedicine1!: string;
     prescribedMedicine2!: string;
     dosage!: string;
     treatmentRemark!: string;

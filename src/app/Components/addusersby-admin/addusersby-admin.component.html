@@ -3,9 +3,9 @@
     <button mat-raised-button class="py-4" color="primary" (click)="openFormDialog()">
       Create User
     </button>
-    <button mat-raised-button class="py-4" color="primary" (click)="getAllUsers()">
+    <!-- <button mat-raised-button class="py-4" color="primary" (click)="getAllUsers()">
       Manage User
-    </button>
+    </button> -->
   </div>
 
   <div *ngIf="users.length > 0" class="users-grid">
@@ -50,7 +50,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Mobile Number</mat-label>
-          <input matInput formControlName="mobileno" required type="number" />
+          <input matInput formControlName="mobileno" maxlength="10" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
