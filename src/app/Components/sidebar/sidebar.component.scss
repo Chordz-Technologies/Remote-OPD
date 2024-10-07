@@ -16,11 +16,11 @@ mat-icon {
 .user {
     text-align: center;
     font-weight: 800;
-    margin-bottom: 2px;
+    // margin-bottom: 2px;
 
     img {
         margin-top: 16px;
-        // width: 120px;
+        width: 150px;
         // height: 120px;
     }
 
@@ -62,15 +62,36 @@ mat-icon {
     }
 
     .menu-button:hover {
-        background-color: #E31E25;
+        // background-color: #E31E25;
+        background: #333333;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to top, #dd1818, #333333);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #dd1818, #333333);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 
     }
 
     .menu-button:focus {
-        background-color: #050223;
+        // background-color: #050223;
+        background: #0f0c29;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to top, #24243e, #302b63, #0f0c29);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #24243e, #302b63, #0f0c29);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
 }
 
 .active {
-    background-color: #050223;
+    // background-color: #050223;
+    background: #0f0c29;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #24243e, #302b63, #0f0c29);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #24243e, #302b63, #0f0c29);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }

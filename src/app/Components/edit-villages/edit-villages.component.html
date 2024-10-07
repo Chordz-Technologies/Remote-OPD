@@ -1,0 +1,199 @@
+<div class="container" style="padding-top: 20px">
+  <div class="py-2">
+    <div class="card px-5 py-3 me-4">
+      <mat-card-title>
+        <h2 class="py-2 border-bottom">
+          <i class="fa-solid fa-circle-info"></i>Villages Details
+        </h2>
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="villageForm">
+          <div class="row mb-3">
+            <label for="village" class="col-sm-2 col-form-label"
+              >Main Village Name</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="village"
+                placeholder="Main Village Name"
+              />
+            </div>
+          </div>
+
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="subvillage">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <b>Sub Village Name </b>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <ng-container
+                    *ngIf="
+                      editingIndex !== dataSource.data.indexOf(row);
+                      else editMode
+                    "
+                  >
+                    {{ row.vnames }}
+                  </ng-container>
+                  <ng-template #editMode>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [formControl]="editSubVillageControl"
+                    />
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      (click)="saveSubVillage()"
+                    >
+                      <mat-icon>done</mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>
+                  <b>Action</b>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <!-- <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="editSubVillage(row)"
+                  >
+                    <mat-icon>{{
+                      editingIndex === dataSource.data.indexOf(row)
+                        ? "cancel"
+                        : "edit"
+                    }}</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="deleteSubVillage(dataSource.data.indexOf(row))"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button> -->
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="editingIndex !== dataSource.data.indexOf(row)"
+                    (click)="editSubVillage(row)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    *ngIf="editingIndex === dataSource.data.indexOf(row)"
+                    (click)="saveSubVillage()"
+                  >
+                    <mat-icon>save</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="editingIndex === dataSource.data.indexOf(row)"
+                    (click)="editSubVillage(row)"
+                  >
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="deleteSubVillage(dataSource.data.indexOf(row))"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+            </table>
+          </div>
+          <div class="row mt-4">
+            <label for="subvillage" class="col-sm-2 col-form-label"
+              >New Sub Village
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="subvillage"
+                placeholder="New Sub Village Name"
+              />
+            </div>
+          </div>
+          <button
+            class="my-3"
+            mat-raised-button
+            color="primary"
+            (click)="addNewSubVillage()"
+          >
+            Add Sub Village
+          </button>
+          <!-- 
+            <ng-template #loading>
+              <div class="spinner mx-auto">
+                <mat-spinner diameter="40"></mat-spinner>
+              </div>
+            </ng-template> -->
+
+          <br />
+
+          <div class="col-12 text-center">
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary me-2 mb-2"
+              *ngIf="showupdate"
+              (click)="updateVillage()"
+            >
+              Update
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary me-2 mb-2"
+              *ngIf="showsubmit"
+              (click)="submitVillage()"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger me-2 mb-2"
+              routerLink="/dashboard"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger me-2 mb-2"
+              *ngIf="showdelete"
+              (click)="openConfirmationDialog()"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </div>
+  </div>
+</div>
+
+<ng-template #confirmationDialogTemplate>
+  <h2 mat-dialog-title>Confirmation</h2>
+  <mat-dialog-content>
+    <p>Are you sure you want to delete this Village?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false">No</button>
+    <button mat-button color="warn" [mat-dialog-close]="true">Yes</button>
+  </mat-dialog-actions>
+</ng-template>

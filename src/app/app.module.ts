@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card'
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';;
 import { AppComponent } from './app.component';
@@ -31,6 +32,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AllPatientsComponent } from './Components/all-patients/all-patients.component';
 import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-patient-info.component';
 import { AllReportsComponent } from './Components/all-reports/all-reports.component';
+import { CampsComponent } from './Components/camps/camps.component';
+import { EditVillagesComponent } from './Components/edit-villages/edit-villages.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +47,10 @@ import { AllReportsComponent } from './Components/all-reports/all-reports.compon
     AllusersComponent,
     AllPatientsComponent,
     EditPatientInfoComponent,
-    AllReportsComponent
+    AllReportsComponent,
+    CampsComponent,
+    AllReportsComponent,
+    EditVillagesComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +73,10 @@ import { AllReportsComponent } from './Components/all-reports/all-reports.compon
     MatTooltipModule,
     MatRadioModule,
     MatMenuModule,
+    MatPaginatorModule,
     ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 

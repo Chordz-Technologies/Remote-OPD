@@ -1,7 +1,9 @@
 export class Patient_model {
     srNo!: number;
+    client_name!: string;
     patientName!: string;
     date!: string;
+    village!: string;
     villageName!: string;
     camp_name!: string;
     category!: string;
@@ -21,4 +23,11 @@ export class Patient_model {
     prescribedMedicine2!: string;
     dosage!: string;
     treatmentRemark!: string;
+}
+
+export class village_model {
+    id!: number;
+    name!: string;
+    vnames!: string;
+
 }

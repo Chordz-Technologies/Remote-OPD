@@ -1,190 +1,203 @@
 <div class="container-fluid">
-    <div class="form-wrapper">
-        <div class="form-content">
-            <h2 class="form-heading">Edit Patient Information</h2>
-            <form [formGroup]="patientForm">
-                <div class="form-grid">
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label for="patientName">Patient Name</label>
-                            <input id="patientName" type="text" formControlName="patientName" class="form-control"
-                                placeholder="Enter Patient Name" />
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="villageName">Village Name</label>
-                                <select id="villageName" formControlName="villageName" class="form-control">
-                                    <option value="" disabled selected>Select Village</option>
-                                    <optgroup *ngFor="let village of villages" [label]="village.name">
-                                        <option *ngFor="let vname of village.vnames" [value]="vname">
-                                            {{ vname }}
-                                        </option>
-                                    </optgroup>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender">Gender</label>
-                            <div class="radio-group my-4">
-                                <label class="radio-label">
-                                    <input type="radio" formControlName="gender" value="male" />
-                                    <span>Male</span>
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" formControlName="gender" value="female" />
-                                    <span>Female</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Date </label>
-                            <input id="date" type="date" formControlName="date" class="form-control"
-                                (change)="onDateChange($event)" />
-                        </div>
-                        <div class="form-group">
-                            <label for="day">Day</label>
-                            <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day"
-                                readonly />
-                        </div>
-                        <div class="form-group">
-                            <label for="month">Month</label>
-                            <input id="month" type="text" formControlName="month" class="form-control"
-                                placeholder="Month" readonly />
-                        </div>
-                        <div class="form-group">
-                            <label for="year">Year</label>
-                            <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year"
-                                readonly />
-                        </div>
-                        <div class="form-group">
-                            <label for="dosage">Dosage</label>
-                            <input id="dosage" type="text" formControlName="dosage" class="form-control"
-                                placeholder="Enter Dosage" />
-                        </div>
-                        <div class="form-group">
-                            <label for="physicalExamination">Physical Examination and Finding</label>
-                            <input id="physicalExamination" type="text" formControlName="physicalExamination"
-                                class="form-control" placeholder="Enter Physical Examination and Finding" />
-                        </div>
-                        <div class="form-group">
-                            <label for="investigation">Investigation</label>
-                            <input id="investigation" type="text" formControlName="investigation" class="form-control"
-                                placeholder="Enter Investigation" />
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="camp_name">Camp</label>
-                                <select id="camp_name" formControlName="camp_name" class="form-control">
-                                    <option value="" disabled selected>Select Camp</option>
-                                    <option *ngFor="let camp of camps" [value]="camp.name">
-                                        {{ camp.name }}
-                                    </option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label for="age">Age </label>
-                            <input id="age" type="number" formControlName="age" class="form-control"
-                                placeholder="Enter Age" />
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="ageGroup">Age Group</label>
-                                <select id="ageGroup" formControlName="ageGroup" class="form-control">
-                                    <option value="" disabled selected>
-                                        Please Select Age Group
-                                    </option>
-                                    <option>Child</option>
-                                    <option>Adult</option>
-                                    <option>Senior</option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="week">Week</label>
-                            <input id="week" type="number" formControlName="week" class="form-control"
-                                placeholder="Enter Week" />
-                        </div>
-                        <div class="form-group">
-                            <label for="mobileNo">Mobile No. </label>
-                            <input id="mobileNo" type="text" maxlength="10" formControlName="mobileNo"
-                                class="form-control" placeholder="Enter Mobile No." />
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="category">Category</label>
-                                <select id="category" formControlName="category" class="form-control">
-                                    <option value="" disabled selected>
-                                        Please Select Category
-                                    </option>
-                                    <option value="N">N</option>
-                                    <option value="F">F</option>
-                                    <option value="SC">SC</option>
-                                    <option value="R">R</option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="diagnosis">Diagnosis</label>
-                                <select id="diagnosis" formControlName="diagnosis" class="form-control">
-                                    <option value="" disabled selected>Select Disease</option>
-                                    <option *ngFor="let disease of diseases" [value]="disease.name">
-                                        {{ disease.name }}
-                                    </option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="signSymptoms">Sign and Symptoms</label>
-                            <input id="signSymptoms" type="text" formControlName="signSymptoms" class="form-control"
-                                placeholder="Enter Sign and Symptoms" />
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="prescribedMedicine1">Prescribed Medicine 1</label>
-                                <select id="prescribedMedicine1" formControlName="prescribedMedicine1"
-                                    class="form-control">
-                                    <option value="" disabled selected>Select Prescribed Medicine 1</option>
-                                    <option *ngFor="let medicine of medicines" [value]="medicine.name">
-                                        {{ medicine.name }}
-                                    </option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="dropdown-with-arrow">
-                                <label for="prescribedMedicine1">Prescribed Medicine 2</label>
-                                <select id="prescribedMedicine1" formControlName="prescribedMedicine2"
-                                    class="form-control">
-                                    <option value="" disabled selected>Select Prescribed Medicine 2</option>
-                                    <option *ngFor="let medicine of medicines" [value]="medicine.name">
-                                        {{ medicine.name }}
-                                    </option>
-                                </select>
-                                <div class="arrow-down"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="treatmentRemark">Treatment Remark</label>
-                            <input id="treatmentRemark" type="text" formControlName="treatmentRemark"
-                                class="form-control" placeholder="Enter Treatment Remark" />
-                        </div>
-                    </div>
-                </div>
-                <div class="button-container">
-                    <button type="submit" class="btn-submit" (click)="update()">Update</button>
-                    <button type="button" class="btn-submit" routerLink="/all_patient_info">Close</button>
-                </div>
-            </form>
+  <div class="form-wrapper">
+    <div class="form-content">
+      <h2 class="form-heading">Edit Patient Information</h2>
+      <form [formGroup]="patientForm">
+        <div class="form-grid">
+          <div class="form-column">
+            <div class="form-group">
+              <label for="client_name">Client Name</label>
+              <select id="client_name" formControlName="client_name" class="form-control">
+                <option value="" disabled selected>Select Client</option>
+                <option *ngFor="let client of clients" [value]="client.client_name">
+                  {{ client.client_name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="patientName">Patient Name</label>
+              <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                placeholder="Enter Patient Name" />
+            </div>
+            <div class="form-group">
+              <label for="date">Date </label>
+              <input id="date" type="date" formControlName="date" class="form-control"
+                (change)="onDateChange($event)" />
+            </div>
+            <div class="form-group">
+              <label for="day">Day</label>
+              <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
+            </div>
+            <div class="form-group">
+              <label for="week">Week</label>
+              <input id="week" type="number" formControlName="week" class="form-control" placeholder="Enter Week"
+                readonly />
+            </div>
+            <div class="form-group">
+              <label for="month">Month</label>
+              <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month" readonly />
+            </div>
+            <div class="form-group">
+              <label for="year">Year</label>
+              <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
+            </div>
+            <div class="form-group">
+              <div class="dropdown-with-arrow">
+                <label for="mainVillage">Main Village Name</label>
+                <select id="mainVillage" (change)="onMainVillageChange($event)" formControlName="village"
+                  class="form-control">
+                  <option value="" disabled selected>
+                    Select Main Village
+                  </option>
+                  <option *ngFor="let village of villages" [value]="village.id">
+                    {{ village.name }}
+                  </option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="dropdown-with-arrow">
+                <label for="subVillage">Sub-Village Name</label>
+                <select id="subVillage" formControlName="villageName" class="form-control">
+                  <option value="" disabled selected>Select Sub-Village</option>
+                  <option *ngFor="let subVillage of villageName" [value]="subVillage">
+                    {{ subVillage }}
+                  </option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-column">
+            <div class="form-group">
+              <div class="dropdown-with-arrow">
+                <label for="category">Category</label>
+                <select id="category" formControlName="category" class="form-control">
+                  <option value="" disabled selected>
+                    Please Select Category
+                  </option>
+                  <option value="N">N</option>
+                  <option value="F">F</option>
+                  <option value="SC">SC</option>
+                  <option value="R">R</option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <div class="radio-group my-4">
+                <label class="radio-label">
+                  <input type="radio" formControlName="gender" value="Male" />
+                  <span>Male</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" formControlName="gender" value="Female" />
+                  <span>Female</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="age">Age </label>
+              <input id="age" type="number" formControlName="age" class="form-control" placeholder="Enter Age"
+                (input)="onAgeChange($event)" />
+            </div>
+            <div class="form-group">
+              <div class="dropdown-with-arrow">
+                <label for="ageGroup">Age Group</label>
+                <select id="ageGroup" formControlName="ageGroup" class="form-control">
+                  <option value="" disabled selected>
+                    Please Select Age Group
+                  </option>
+                  <option value="Child">Child</option>
+                  <option value="Young">Young</option>
+                  <option value="Adult">Adult</option>
+                  <option value="Geriatric">Geriatric</option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mobileNo">Mobile Number </label>
+              <input id="mobileNo" type="text" maxlength="10" formControlName="mobileNo" class="form-control"
+                placeholder="Enter Mobile No." />
+            </div>
+            <div class="form-group">
+              <label for="signSymptoms">Sign and Symptoms</label>
+              <input id="signSymptoms" type="text" formControlName="signSymptoms" class="form-control"
+                placeholder="Enter Sign and Symptoms" />
+            </div>
+            <div class="form-group">
+              <label for="physicalExamination">Physical Examination & Findings</label>
+              <input id="physicalExamination" type="text" formControlName="physicalExamination" class="form-control"
+                placeholder="Enter Physical Examination and Finding" />
+            </div>
+            <div class="form-group">
+              <label for="investigation">Investigation</label>
+              <input id="investigation" type="text" formControlName="investigation" class="form-control"
+                placeholder="Enter Investigation" />
+            </div>
+            <div class="form-group">
+              <div class="dropdown-with-arrow">
+                <label for="diagnosis">Diagnosis</label>
+                <select id="diagnosis" formControlName="diagnosis" class="form-control">
+                  <option value="" disabled selected>Select Disease</option>
+                  <option *ngFor="let disease of diseases" [value]="disease.name">
+                    {{ disease.name }}
+                  </option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="prescribedMedicine1">Prescribed Medicine 1</label>
+            <select id="prescribedMedicine1" formControlName="prescribedMedicine1" class="form-control">
+              <option value="" disabled selected>
+                Select Prescribed Medicine 1
+              </option>
+              <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                {{ medicine.name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="prescribedMedicine2">Prescribed Medicine 2</label>
+            <select id="prescribedMedicine2" formControlName="prescribedMedicine2" class="form-control">
+              <option value="" disabled selected>
+                Select Prescribed Medicine 2
+              </option>
+              <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                {{ medicine.name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dosage">Dosage</label>
+          <input id="dosage" type="text" formControlName="dosage" class="form-control" placeholder="Enter Dosage" />
+        </div>
+        <div class="form-group">
+          <label for="treatmentRemark">Remarks</label>
+          <input id="treatmentRemark" type="text" formControlName="treatmentRemark" class="form-control"
+            placeholder="Enter Treatment Remark" />
+        </div>
+        <div class="button-container">
+          <button type="submit" class="btn-submit" (click)="update()">
+            Update
+          </button>
+          <button type="button" class="btn-submit" routerLink="/all_patient_info">
+            Close
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

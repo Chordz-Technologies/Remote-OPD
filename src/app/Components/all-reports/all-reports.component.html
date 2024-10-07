@@ -1,81 +1,125 @@
 <div class="button-container">
-    <form [formGroup]="patientForm">
-        <div class="row">
-            <!-- Village Dropdown -->
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div class="dropdown-with-arrow">
-                        <label for="village">Village Name</label>
-                        <select id="village" formControlName="village" class="form-control">
-                            <option value="" disabled selected>Select Village</option>
-                            <option *ngFor="let village of villages" [value]="village">{{ village }}</option>
-                        </select>
-                        <div class="arrow-down"></div>
-                    </div>
-                </div>
-            </div>
+  <form [formGroup]="patientForm">
+    <div class="row">
+      <!-- Village Dropdown -->
+      <div class="col-lg-4">
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="village">Village Name</label>
+            <select id="village" formControlName="village" class="form-control">
+              <option value="" disabled selected>Select Village</option>
+              <option *ngFor="let village of villages" [value]="village">
+                {{ village }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Month Dropdown -->
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div class="dropdown-with-arrow">
-                        <label for="month">Month</label>
-                        <select id="month" formControlName="month" class="form-control">
-                            <option value="" disabled selected>Select Month</option>
-                            <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-                        </select>
-                        <div class="arrow-down"></div>
-                    </div>
-                </div>
-            </div>
+      <!-- Month Dropdown -->
+      <div class="col-lg-4">
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="month">Month</label>
+            <select id="month" formControlName="month" class="form-control">
+              <option value="" disabled selected>Select Month</option>
+              <option *ngFor="let month of months" [value]="month">
+                {{ month }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Year Dropdown -->
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div class="dropdown-with-arrow">
-                        <label for="year">Year</label>
-                        <select id="year" formControlName="year" class="form-control">
-                            <option value="" disabled selected>Select Year</option>
-                            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                        </select>
-                        <div class="arrow-down"></div>
-                    </div>
-                </div>
-            </div>
+      <!-- Year Dropdown -->
+      <div class="col-lg-4">
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="year">Year</label>
+            <select id="year" formControlName="year" class="form-control">
+              <option value="" disabled selected>Select Year</option>
+              <option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
         </div>
-    </form>
+      </div>
 
-    <!-- Button Section -->
-    <div class="row mt-3">
-        <div class="col-lg-4">
-            <button mat-raised-button color="primary" (click)="downloadPatientReport()">
-                Download Patient Report
-            </button>
+      <!-- Client Dropdown (Optional) -->
+      <div class="col-lg-4 mt-2">
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="client_name">Client Name</label>
+            <select id="client_name" formControlName="client_name" class="form-control">
+              <option value="" disabled selected>Select Client</option>
+              <option *ngFor="let client of clients" [value]="client.client_name">
+                {{ client.client_name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
         </div>
-        <div class="col-lg-4">
-            <button mat-raised-button color="primary">
-                Download Weekly Report
-            </button>
-        </div>
-        <div class="col-lg-4">
-            <button mat-raised-button color="primary">
-                Download Village Wise Gender Report
-            </button>
-        </div>
-        <div class="col-lg-4 mt-2">
-            <button mat-raised-button color="primary">
-                Download Village Wise Age Group Report
-            </button>
-        </div>
-        <div class="col-lg-4 mt-2">
-            <button mat-raised-button color="primary">
-                Download Monthly Summary Report - Village Wise Disease Total Count
-            </button>
-        </div>
-        <div class="col-lg-4 mt-2">
-            <button mat-raised-button color="primary">
-                Download Monthly Summary Report - Disease Wise Week Wise - Male Female Count
-            </button>
-        </div>
+      </div>
     </div>
+  </form>
+
+  <!-- Button Section -->
+  <div class="row mt-3 mx-auto">
+    <div class="col-lg-4">
+      <button mat-raised-button color="primary" (click)="downloadPatientReport()">
+        Download Patient Report
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <button mat-raised-button color="primary" (click)="downloadWeeklyReport()">
+        Download Weekly Report
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <button mat-raised-button color="primary" (click)="downloadVillageWiseGenderReport()">
+        Download Village Wise Gender Report
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadVillageWiseAgeGroupReport()">
+        Download Village Wise Age Group Report
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadMonthlySummaryDiseaseTotalCount()">
+        Download Monthly Summary Report - Village Wise Disease Total Count
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadMonthlySummaryMaleFemaleCount()">
+        Download Monthly Summary Report - Disease Wise Week Wise - Male Female
+        Count
+      </button>
+    </div>
+
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadEyeScreeningCampReport()">
+        NCD – Eye Screening Camp
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadHBSreeningCampReport()">
+        NCD – Village Level HB Screening Camp
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadAarogyaCampReport()">
+        Aarogya Dhansampada Camp
+      </button>
+    </div>
+    <div class="col-lg-4 mt-2">
+      <button mat-raised-button color="primary" (click)="downloadMegaCampReport()">
+        Mega Camp
+      </button>
+    </div>
+  </div>
 </div>

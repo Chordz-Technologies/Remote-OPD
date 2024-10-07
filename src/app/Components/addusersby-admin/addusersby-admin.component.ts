@@ -1,6 +1,9 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from 'src/app/shared/service.service';
 
@@ -17,7 +20,15 @@ export class AddusersbyAdminComponent {
   isEditMode = false;
   currentUserId: string | null = null;
 
-  constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog) { }
+  public dataLoaded: boolean = false;
+
+  displayedColumns: string[] = ['id', 'name', 'action'];
+  dataSource!: MatTableDataSource<any>;
+
+  @ViewChild(MatSort) sort!: MatSort;
+  villages: any;
+
+  constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -28,6 +39,8 @@ export class AddusersbyAdminComponent {
     });
 
     this.getAllUsers();
+
+    this.getAllVillageList()
   }
 
   toggleForm(): void {
@@ -67,7 +80,7 @@ export class AddusersbyAdminComponent {
       }
     );
   }
-  
+
   onSubmit(): void {
     if (this.userForm.valid) {
       if (this.isEditMode && this.currentUserId) {
@@ -124,4 +137,39 @@ export class AddusersbyAdminComponent {
       );
     }
   }
+
+
+  getAllVillageList() {
+    this.userService.getAllVillages().subscribe({
+      next: (res: any) => {
+        this.dataLoaded = true;
+        this.villages = res.all_Villages;
+        this.dataSource = new MatTableDataSource(this.villages);
+        // this.dataSource.sort = this.sort;
+        // this.dataSource.paginator = this.paginator;
+      },
+      error: (err: any) => {
+        alert(err);
+      }
+    });
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
+  }
+  onChange(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/edit_villages/', id]);
+  }
+
+
 }

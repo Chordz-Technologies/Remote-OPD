@@ -16,7 +16,8 @@ export class EditPatientInfoComponent implements OnInit {
   diseases: any[] = [];
   medicines: any[] = [];
   villages: any[] = [];
-  camps: any[] = [];
+  villageName: any[] = []; // Subvillages will be stored here
+  clients: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
@@ -24,15 +25,16 @@ export class EditPatientInfoComponent implements OnInit {
     this.patientForm = this.fb.group({
       srNo: [''],
       patientName: [''],
+      client_name: [''],
       date: [''],
-      villageName: [''],
-      camp_name: [''],
+      village: [''], // Village selected
+      villageName: [''], // Subvillage selected
       category: [''],
       gender: [''],
       age: [''],
       day: [''],
       month: [''],
-      // year: [''],
+      year: [''],
       ageGroup: [''],
       week: [''],
       mobileNo: [''],
@@ -46,73 +48,131 @@ export class EditPatientInfoComponent implements OnInit {
       treatmentRemark: [''],
     });
 
+    // Fetch all required data
+    this.loadInitialData();
+
+    // Fetch patient data to edit
+    this.activatedRoute.params.subscribe(val => {
+      this.patientId = val['id'];
+      this.service.getPatientDataById(this.patientId)
+        .subscribe({
+          next: (res) => {
+            this.fillFormToUpdate(res.patient); // Populate form with patient data
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+    });
+  }
+
+  loadInitialData(): void {
+    // Fetch all villages
     this.service.getAllVillages().subscribe((response: any) => {
       if (response.status === 'success') {
         this.villages = response.all_Villages;
       }
     });
 
+    // Fetch all diseases
     this.service.getAllDiseases().subscribe((response: any) => {
       if (response.status === 'success') {
         this.diseases = response.all_diseases;
       }
     });
 
+    // Fetch all medicines
     this.service.getAllMedicines().subscribe((response: any) => {
       if (response.status === 'success') {
         this.medicines = response.all_mediciness;
       }
     });
 
-    this.service.getAllCamps().subscribe((response: any) => {
+    // Fetch client names
+    this.service.getClientNames().subscribe((response) => {
       if (response.status === 'success') {
-        this.camps = response.all_Camps;
+        this.clients = response.all_clients;
       }
     });
-
-    this.activatedRoute.params.subscribe(val => {
-      this.patientId = val['id'];
-      this.service.getPatientDataById(this.patientId)
-        .subscribe({
-          next: (res) => {
-            this.fillFormToUpdate(res.patient);
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        })
-    })
   }
 
+  // Handle village selection
+  onMainVillageChange(event: any): void {
+    const selectedVillageId = event.target.value;
+    const selectedVillage = this.villages.find(village => village.id === +selectedVillageId);
+
+    if (selectedVillage) {
+      this.villageName = selectedVillage.vnames;
+      this.patientForm.patchValue({ villageName: '' }); // Reset sub-village when main village changes
+    } else {
+      this.villageName = []; // Clear sub-villages if no main village is selected
+    }
+  }
+
+  // Handle date change and auto-fill day, month, year, week
   onDateChange(event: any): void {
     const selectedDate = new Date(event.target.value);
 
     if (!isNaN(selectedDate.getTime())) {
-      const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' }); // Get day name (e.g., Monday)
-      const month = selectedDate.toLocaleString('en-US', { month: 'long' }); // Get month name (e.g., January)
+      const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' });
+      const month = selectedDate.toLocaleString('en-US', { month: 'long' });
       const year = selectedDate.getFullYear();
+      const week = this.getWeekNumber(selectedDate);
 
       this.patientForm.patchValue({
-        day: dayOfWeek, // Monday, Tuesday, etc.
-        month: month, // January, February, etc.
-        year: year // 2024, 2025, etc.
+        day: dayOfWeek,
+        month: month,
+        year: year,
+        week: week
       });
     }
   }
 
+  // Function to calculate ISO week number
+  getWeekNumber(date: Date): number {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  }
+
+  // Handle age group auto-fill based on age
+  onAgeChange(event: any): void {
+    const age = parseInt(event.target.value, 10);
+
+    if (!isNaN(age)) {
+      let ageGroup = '';
+
+      if (age >= 0 && age <= 18) {
+        ageGroup = 'Child';
+      } else if (age >= 19 && age <= 35) {
+        ageGroup = 'Young';
+      } else if (age >= 36 && age <= 65) {
+        ageGroup = 'Adult';
+      } else if (age >= 66) {
+        ageGroup = 'Geriatric';
+      }
+
+      this.patientForm.patchValue({
+        ageGroup: ageGroup
+      });
+    }
+  }
+
+  // Fill form with patient data when editing
   fillFormToUpdate(patient: Patient_model) {
     this.patientForm.setValue({
       srNo: patient.srNo,
+      client_name: patient.client_name,
       patientName: patient.patientName,
       date: patient.date,
+      village: patient.village,
       villageName: patient.villageName,
-      camp_name: patient.camp_name,
       category: patient.category,
       gender: patient.gender,
       age: patient.age,
       day: patient.day,
       month: patient.month,
-      // year: patient.year,
+      year: patient.year,
       ageGroup: patient.ageGroup,
       week: patient.week,
       mobileNo: patient.mobileNo,
@@ -124,11 +184,33 @@ export class EditPatientInfoComponent implements OnInit {
       prescribedMedicine2: patient.prescribedMedicine2,
       dosage: patient.dosage,
       treatmentRemark: patient.treatmentRemark,
-    })
+    });
+
+    if (patient.village) {
+      const selectedVillage = this.villages.find(village => village.name === patient.village);
+      if (selectedVillage) {
+        this.patientForm.patchValue({ village: selectedVillage.id });
+        this.onMainVillageChange({ target: { value: selectedVillage.id } });
+
+        if (patient.villageName) {
+          const villageNameArray = Array.isArray(patient.villageName) ? patient.villageName : [patient.villageName];
+          this.patientForm.patchValue({
+            villageName: villageNameArray // Patch sub-village(s)
+          });
+        }
+      }
+    }
   }
 
+  // Update patient information
   update() {
-    this.service.updatePatient(this.patientForm.value, this.patientId)
+    const patientData = this.patientForm.value;
+    const selectedVillage = this.villages.find(village => village.id === +patientData.village);
+    if (selectedVillage) {
+      patientData.village = selectedVillage.name; // Set the village name instead of ID
+    }
+
+    this.service.updatePatient(patientData, this.patientId)
       .subscribe(res => {
         this.toastr.success('Patient Data Updated Successfully!', 'Success');
         this.router.navigate(['/all_patient_info']);
