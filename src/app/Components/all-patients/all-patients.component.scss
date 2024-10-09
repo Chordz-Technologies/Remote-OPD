@@ -50,6 +50,10 @@ table {
     mat-card {
         width: 50%;
     }
+
+    mat-form-field {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 400px) {
@@ -61,6 +65,10 @@ table {
     mat-card {
         width: 50%;
     }
+
+    mat-form-field {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 350px) {
@@ -71,6 +79,10 @@ table {
 
     mat-card {
         width: 50%;
+    }
+
+    mat-form-field {
+        width: 100%;
     }
 }
 

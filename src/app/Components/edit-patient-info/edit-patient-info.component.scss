@@ -122,6 +122,7 @@ label {
     }
 }
 
+label[for="client_name"]::after,
 label[for="patientName"]::after,
 label[for="date"]::after,
 label[for="mainVillage"]::after,

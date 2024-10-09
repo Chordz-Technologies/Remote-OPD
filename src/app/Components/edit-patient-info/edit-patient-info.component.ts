@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from 'src/app/shared/service.service';
 import { ToastrService } from 'ngx-toastr';
@@ -24,28 +24,28 @@ export class EditPatientInfoComponent implements OnInit {
   ngOnInit(): void {
     this.patientForm = this.fb.group({
       srNo: [''],
-      patientName: [''],
-      client_name: [''],
-      date: [''],
-      village: [''], // Village selected
-      villageName: [''], // Subvillage selected
-      category: [''],
-      gender: [''],
-      age: [''],
-      day: [''],
-      month: [''],
-      year: [''],
-      ageGroup: [''],
-      week: [''],
-      mobileNo: [''],
-      signSymptoms: [''],
-      physicalExamination: [''],
-      investigation: [''],
-      diagnosis: [''],
-      prescribedMedicine1: [''],
-      prescribedMedicine2: [''],
-      dosage: [''],
-      treatmentRemark: [''],
+      client_name: ['', Validators.required],
+      patientName: ['', Validators.required],
+      date: ['', Validators.required],
+      village: ['', Validators.required],
+      villageName: ['', Validators.required],
+      category: ['',],
+      gender: ['', Validators.required],
+      age: ['', Validators.required],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
+      ageGroup: ['', Validators.required],
+      week: ['', Validators.required],
+      mobileNo: ['',],
+      signSymptoms: ['',],
+      physicalExamination: ['',],
+      investigation: ['',],
+      diagnosis: ['', Validators.required],
+      prescribedMedicine1: ['',],
+      prescribedMedicine2: ['',],
+      dosage: ['',],
+      treatmentRemark: ['',]
     });
 
     // Fetch all required data
@@ -192,12 +192,9 @@ export class EditPatientInfoComponent implements OnInit {
         this.patientForm.patchValue({ village: selectedVillage.id });
         this.onMainVillageChange({ target: { value: selectedVillage.id } });
 
-        if (patient.villageName) {
-          const villageNameArray = Array.isArray(patient.villageName) ? patient.villageName : [patient.villageName];
-          this.patientForm.patchValue({
-            villageName: villageNameArray // Patch sub-village(s)
-          });
-        }
+        this.patientForm.patchValue({
+          villageName: patient.villageName // directly set as a string
+        });
       }
     }
   }
@@ -209,12 +206,21 @@ export class EditPatientInfoComponent implements OnInit {
     if (selectedVillage) {
       patientData.village = selectedVillage.name; // Set the village name instead of ID
     }
+    const selectedSubVillage = this.patientForm.get('villageName')?.value;
+    patientData.villageName = selectedSubVillage; // This should be a string
 
-    this.service.updatePatient(patientData, this.patientId)
-      .subscribe(res => {
-        this.toastr.success('Patient Data Updated Successfully!', 'Success');
-        this.router.navigate(['/all_patient_info']);
-        this.patientForm.reset();
-      });
+    if (this.patientForm.valid) {
+      this.service.updatePatient(patientData, this.patientId)
+        .subscribe(res => {
+          this.toastr.success('Patient Data Updated Successfully!', 'Success');
+          const clientName = this.patientForm.get('client_name')?.value;
+          this.patientForm.reset();
+          this.patientForm.patchValue({ client_name: clientName });
+          this.router.navigate(['/all_patient_info']);
+        });
+    }
+    else {
+      this.toastr.error('Please fill all required fields.', 'Error');
+    }
   }
 }

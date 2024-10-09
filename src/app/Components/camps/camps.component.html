@@ -1,189 +1,107 @@
 <div class="container mt-4">
-  <div class="row justify-content-around">
-    <div class="col-3">
-      <button
-        mat-raised-button
-        color="primary"
-        class="btn btn-primary w-100"
-        (click)="currentForm = 'ncd-eye-screening'"
-      >
+  <div class="row">
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" class="btn btn-primary w-100"
+        (click)="currentForm = 'ncd-eye-screening'">
         Eye Screening Camp
       </button>
     </div>
-    <div class="col-3">
-      <button
-        mat-raised-button
-        color="primary"
-        class="btn btn-primary w-100"
-        (click)="currentForm = 'ncd-hb-screening'"
-      >
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" class="btn btn-primary w-100"
+        (click)="currentForm = 'ncd-hb-screening'">
         Village Level HB Screening Camp
       </button>
     </div>
-    <div class="col-3">
-      <button
-        mat-raised-button
-        color="primary"
-        class="btn btn-primary w-100"
-        (click)="currentForm = 'aarogya-camp'"
-      >
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" class="btn btn-primary w-100" (click)="currentForm = 'aarogya-camp'">
         Aarogya Dhansampada Camp
       </button>
     </div>
-    <div class="col-3">
-      <button
-        mat-raised-button
-        color="primary"
-        class="btn btn-primary w-100"
-        (click)="currentForm = 'mega-camp'"
-      >
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" class="btn btn-primary w-100" (click)="currentForm = 'mega-camp'">
         Mega Camp
       </button>
     </div>
   </div>
 </div>
 
-<!--   NCD – Eye Screening Camp start -->
-
+<!--   NCD – Eye Screening Camp Form -->
 <div class="container-fluid">
   <div *ngIf="currentForm === 'ncd-eye-screening'">
     <div class="form-wrapper">
       <div class="form-content">
         <h2 class="form-heading">NCD – Eye Screening Camp Form</h2>
-        <form
-          [formGroup]="eyeScreeningForm"
-          (ngSubmit)="onSubmitEyeScreeningCamp()"
-        >
+        <div class="form-group">
+          <label for="file-upload">Upload File</label>
+          <input id="file-upload" type="file" (change)="onFileChange($event, eyeScreeningForm)" class="form-control" />
+        </div>
+        <form [formGroup]="eyeScreeningForm" (ngSubmit)="onSubmitEyeScreeningCamp()">
           <div class="form-grid">
             <div class="form-column">
               <div class="form-group">
                 <label for="client_name">Client Name</label>
-                <select
-                  id="client_name"
-                  formControlName="client_name"
-                  class="form-control"
-                >
-                  <option value="" disabled selected>Select Client</option>
-                  <option
-                    *ngFor="let client of clients"
-                    [value]="client.client_name"
-                  >
-                    {{ client.client_name }}
-                  </option>
-                </select>
+                <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                  placeholder="Enter Client Name" readonly />
               </div>
-
               <div class="form-group">
                 <label for="patientName">Patient Name</label>
-                <input
-                  id="patientName"
-                  type="text"
-                  formControlName="name"
-                  class="form-control"
-                  placeholder="Enter Patient Name"
-                />
+                <input id="patientName" type="text" formControlName="name" class="form-control"
+                  placeholder="Enter Patient Name" />
               </div>
-
               <div class="form-group">
                 <label for="date">Date </label>
-                <input
-                  id="date"
-                  type="date"
-                  formControlName="date"
-                  class="form-control"
-                  (change)="onDateChange($event)"
-                />
+                <input id="date" type="date" formControlName="date" class="form-control"
+                  (change)="onDateChange($event)" />
               </div>
               <div class="form-group">
                 <label for="day">Day</label>
-                <input
-                  id="day"
-                  type="text"
-                  formControlName="day"
-                  class="form-control"
-                  placeholder="Day"
-                  readonly
-                />
+                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
               </div>
               <div class="form-group">
                 <label for="month">Month</label>
-                <input
-                  id="month"
-                  type="text"
-                  formControlName="month"
-                  class="form-control"
-                  placeholder="Month"
-                  readonly
-                />
+                <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
+                  readonly />
               </div>
               <div class="form-group">
                 <label for="year">Year</label>
-                <input
-                  id="year"
-                  type="text"
-                  formControlName="year"
-                  class="form-control"
-                  placeholder="Year"
-                  readonly
-                />
+                <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
               </div>
             </div>
             <div class="form-column">
               <div class="form-group">
                 <div class="dropdown-with-arrow">
                   <label for="mainVillage">Main Village</label>
-                  <select
-                    id="mainVillage"
-                    (change)="onMainVillageChange($event)"
-                    formControlName="village"
-                    class="form-control"
-                  >
+                  <select id="mainVillage" (change)="onMainVillageChange($event)" formControlName="village"
+                    class="form-control">
                     <option value="" disabled selected>
                       Select Main Village
                     </option>
-                    <option
-                      *ngFor="let village of villages"
-                      [value]="village.id"
-                    >
+                    <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
                     </option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
-
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
                   <label for="subVillage">Sub-Village</label>
                   <div class="arrow-down"></div>
-                  <select
-                    id="subVillage"
-                    formControlName="subvillage"
-                    class="form-control"
-                  >
+                  <select id="subVillage" formControlName="subvillage" class="form-control">
                     <option value="" disabled selected>
                       Select Sub-Village
                     </option>
-                    <option
-                      *ngFor="let subVillage of subVillages"
-                      [value]="subVillage"
-                    >
+                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
                     </option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
-
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input
-                  id="contactNo"
-                  type="text"
-                  formControlName="contact"
-                  class="form-control"
-                  placeholder="Enter Contact No."
-                />
+                <input id="contactNo" type="text" formControlName="contact" class="form-control"
+                  placeholder="Enter Contact No." />
               </div>
               <div class="form-group">
                 <label for="gender">Gender</label>
@@ -200,66 +118,37 @@
               </div>
               <div class="form-group">
                 <label for="age">Age </label>
-                <input
-                  id="age"
-                  type="number"
-                  formControlName="age"
-                  class="form-control"
-                  placeholder="Enter Age"
-                />
+                <input id="age" type="number" formControlName="age" class="form-control" placeholder="Enter Age" />
               </div>
               <div class="form-group">
                 <div class="dropdown-with-arrow">
                   <label for="code">Unique Code</label>
-                  <select
-                    formControlName="code"
-                    (change)="onUniqueCodeChange($event)"
-                    class="form-control"
-                  >
+                  <select formControlName="code" (change)="onUniqueCodeChange($event)" class="form-control">
                     <option value="">Select Unique Code</option>
-                    <option value="no fit">No Fit</option>
-                    <option value="correction">Correction</option>
-                    <option value="healthy">Healthy</option>
-                    <option value="impairment">Impairment</option>
-                    <option value="dryness">Dryness</option>
-                    <option value="white part">White Part</option>
+                    <option value="No Fit">No Fit</option>
+                    <option value="Correction">Correction</option>
+                    <option value="Healthy">Healthy</option>
+                    <option value="Impairment">Impairment</option>
+                    <option value="Dryness">Dryness</option>
+                    <option value="White Part">White Part</option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="eyeDiseases">Eye Diseases </label>
-                <textarea
-                  class="form-control"
-                  formControlName="description"
-                  id="eyeDiseases"
-                  rows="2"
-                  cols="30"
-                  placeholder="Eye Diseases"
-                  readonly
-                ></textarea>
+                <textarea class="form-control" formControlName="description" id="eyeDiseases" rows="2" cols="30"
+                  placeholder="Eye Diseases" readonly></textarea>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="Opinion">Opinion</label>
-            <input
-              id="opinion"
-              type="text"
-              formControlName="opinion"
-              class="form-control"
-              placeholder="Enter Opinion"
-            />
+            <input id="opinion" type="text" formControlName="opinion" class="form-control"
+              placeholder="Enter Opinion" />
           </div>
-
-          <!-- Submit Button -->
           <div class="text-center mt-3">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!eyeScreeningForm.valid"
-            >
+            <button mat-raised-button color="primary" type="submit">
               Submit
             </button>
           </div>
@@ -268,7 +157,6 @@
     </div>
   </div>
 </div>
-<!--   NCD – Eye Screening Camp End -->
 
 <!-- NCD – Village Level HB Screening Camp Form -->
 <div class="container-fluid">
@@ -276,82 +164,42 @@
     <div class="form-wrapper">
       <div class="form-content">
         <h2 class="form-heading">NCD – Village Level HB Screening Camp Form</h2>
+        <div class="form-group">
+          <label for="file-upload">Upload File</label>
+          <input id="file-upload" type="file" (change)="onFileChange($event, hbScreeningForm)" class="form-control" />
+        </div>
         <form [formGroup]="hbScreeningForm" (ngSubmit)="onSubmitHBScreening()">
           <div class="form-grid">
             <div class="form-column">
               <div class="form-group">
                 <label for="client_name">Client Name</label>
-                <select
-                  id="client_name"
-                  formControlName="client_name"
-                  class="form-control"
-                >
-                  <option value="" disabled selected>Select Client</option>
-                  <option
-                    *ngFor="let client of clients"
-                    [value]="client.client_name"
-                  >
-                    {{ client.client_name }}
-                  </option>
-                </select>
+                <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                  placeholder="Enter Client Name" readonly />
               </div>
-
               <div class="form-group">
                 <label for="patientName">Patient Name</label>
-                <input
-                  id="patientName"
-                  type="text"
-                  formControlName="name"
-                  class="form-control"
-                  placeholder="Enter Patient Name"
-                />
+                <input id="patientName" type="text" formControlName="name" class="form-control"
+                  placeholder="Enter Patient Name" />
               </div>
-
               <div class="form-group">
                 <label for="date">Date</label>
-                <input
-                  id="date"
-                  type="date"
-                  formControlName="date"
-                  class="form-control"
-                  (change)="onDateChange($event)"
-                />
+                <input id="date" type="date" formControlName="date" class="form-control"
+                  (change)="onDateChange($event)" />
               </div>
               <div class="form-group">
                 <label for="day">Day</label>
-                <input
-                  id="day"
-                  type="text"
-                  formControlName="day"
-                  class="form-control"
-                  placeholder="Day"
-                  readonly
-                />
+                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
               </div>
               <div class="form-group">
                 <label for="month">Month</label>
-                <input
-                  id="month"
-                  type="text"
-                  formControlName="month"
-                  class="form-control"
-                  placeholder="Month"
-                  readonly
-                />
+                <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
+                  readonly />
               </div>
               <div class="form-group">
                 <label for="year">Year</label>
-                <input
-                  id="year"
-                  type="text"
-                  formControlName="year"
-                  class="form-control"
-                  placeholder="Year"
-                  readonly
-                />
+                <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
               </div>
             </div>
-
             <div class="form-column">
               <div class="form-group">
                 <label for="gender">Gender</label>
@@ -366,110 +214,59 @@
                   </label>
                 </div>
               </div>
-
               <div class="form-group">
                 <label for="age">Age</label>
-                <input
-                  id="age"
-                  type="number"
-                  formControlName="age"
-                  class="form-control"
-                  placeholder="Enter Age"
-                />
+                <input id="age" type="number" formControlName="age" class="form-control" placeholder="Enter Age" />
               </div>
-
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input
-                  id="contactNo"
-                  type="text"
-                  formControlName="contact"
-                  class="form-control"
-                  placeholder="Enter Contact No."
-                />
+                <input id="contactNo" type="text" formControlName="contact" class="form-control"
+                  placeholder="Enter Contact No." />
               </div>
-
               <div class="form-group">
                 <div class="dropdown-with-arrow">
                   <label for="mainVillage">Main Village</label>
-                  <select
-                    id="mainVillage"
-                    (change)="onMainVillageChange($event)"
-                    formControlName="village"
-                    class="form-control"
-                  >
+                  <select id="mainVillage" (change)="onMainVillageChange($event)" formControlName="village"
+                    class="form-control">
                     <option value="" disabled selected>
                       Select Main Village
                     </option>
-                    <option
-                      *ngFor="let village of villages"
-                      [value]="village.id"
-                    >
+                    <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
                     </option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
-
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
                   <label for="subVillage">Sub-Village</label>
                   <div class="arrow-down"></div>
-                  <select
-                    id="subVillage"
-                    formControlName="subvillage"
-                    class="form-control"
-                  >
+                  <select id="subVillage" formControlName="subvillage" class="form-control">
                     <option value="" disabled selected>
                       Select Sub-Village
                     </option>
-                    <option
-                      *ngFor="let subVillage of subVillages"
-                      [value]="subVillage"
-                    >
+                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
                     </option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
-
-              <!-- HB (Hemoglobin) Field -->
               <div class="form-group">
                 <label for="HB">HB (Hemoglobin)</label>
-                <input
-                  id="HB"
-                  type="number"
-                  formControlName="HB"
-                  class="form-control"
-                  placeholder="Enter Hemoglobin Level"
-                  (input)="onHBChange()"
-                />
+                <input id="HB" type="number" formControlName="HB" class="form-control"
+                  placeholder="Enter Hemoglobin Level" (input)="onHBChange()" />
               </div>
             </div>
           </div>
-          <!-- HB Status (auto-populated) -->
           <div class="form-group">
             <label for="HBReadings">HB Readings</label>
-            <input
-              id="HBReadings"
-              type="text"
-              formControlName="HBReadings"
-              class="form-control"
-              placeholder="HB Readings"
-              readonly
-            />
+            <input id="HBReadings" type="text" formControlName="HBReadings" class="form-control"
+              placeholder="HB Readings" readonly />
           </div>
-
-          <!-- Submit Button -->
           <div class="text-center mt-3">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!hbScreeningForm.valid"
-            >
+            <button mat-raised-button color="primary" type="submit">
               Submit
             </button>
           </div>
@@ -478,114 +275,71 @@
     </div>
   </div>
 </div>
-<!-- NCD – Village Level HB Screening Camp End -->
 
-<!--  Aarogya Dhansampada Camp -->
+<!--  Aarogya Dhansampada Camp Form -->
 <div class="container-fluid">
   <div *ngIf="currentForm === 'aarogya-camp'">
     <div class="form-wrapper">
       <div class="form-content">
         <h2 class="form-heading text-center">Aarogya Dhansampada Camp Form</h2>
+        <div class="form-group">
+          <label for="file-upload">Upload File</label>
+          <input id="file-upload" type="file" (change)="onFileChange($event, aarogyaCampForm)" class="form-control" />
+        </div>
         <form [formGroup]="aarogyaCampForm" (ngSubmit)="onSubmitAarogyaCamp()">
           <div class="row">
-            <!-- First Column -->
             <div class="col-md-6">
               <div class="form-group">
-                <label for="patientName">Patient Name</label>
-                <input
-                  id="patientName"
-                  type="text"
-                  formControlName="patientName"
-                  class="form-control"
-                  placeholder="Enter Name"
-                />
+                <label for="client_name">Client Name</label>
+                <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                  placeholder="Enter Client Name" readonly />
               </div>
-
+              <div class="form-group">
+                <label for="patientName">Patient Name</label>
+                <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                  placeholder="Enter Name" />
+              </div>
               <div class="form-group">
                 <label for="date">Date</label>
-                <input
-                  id="date"
-                  type="date"
-                  formControlName="date"
-                  class="form-control"
-                  (change)="onDateChange($event)"
-                />
+                <input id="date" type="date" formControlName="date" class="form-control"
+                  (change)="onDateChange($event)" />
               </div>
-
               <div class="form-group">
                 <label for="day">Day</label>
-                <input
-                  id="day"
-                  type="text"
-                  formControlName="day"
-                  class="form-control"
-                  placeholder="Day"
-                  readonly
-                />
+                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
               </div>
-
               <div class="form-group">
                 <label for="month">Month</label>
-                <input
-                  id="month"
-                  type="text"
-                  formControlName="month"
-                  class="form-control"
-                  placeholder="Month"
-                  readonly
-                />
+                <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
+                  readonly />
               </div>
-
               <div class="form-group">
                 <label for="year">Year</label>
-                <input
-                  id="year"
-                  type="text"
-                  formControlName="year"
-                  class="form-control"
-                  placeholder="Year"
-                  readonly
-                />
+                <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
               </div>
-
               <div class="form-group">
                 <div class="dropdown-with-arrow">
                   <label for="mainVillage">Main Village</label>
-                  <select
-                    id="mainVillage"
-                    formControlName="mainVillage"
-                    class="form-control"
-                    (change)="onMainVillageChange($event)"
-                  >
+                  <select id="mainVillage" formControlName="mainVillage" class="form-control"
+                    (change)="onMainVillageChange($event)">
                     <option value="" disabled selected>
                       Select Main Village
                     </option>
-                    <option
-                      *ngFor="let village of villages"
-                      [value]="village.id"
-                    >
+                    <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
                     </option>
                   </select>
                   <div class="arrow-down"></div>
                 </div>
               </div>
-
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
                   <label for="subVillage">Sub-Village</label>
-                  <select
-                    id="subVillage"
-                    formControlName="subVillage"
-                    class="form-control"
-                  >
+                  <select id="subVillage" formControlName="subVillage" class="form-control">
                     <option value="" disabled selected>
                       Select Sub-Village
                     </option>
-                    <option
-                      *ngFor="let subVillage of subVillages"
-                      [value]="subVillage"
-                    >
+                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
                     </option>
                   </select>
@@ -593,28 +347,15 @@
                 </div>
               </div>
             </div>
-
-            <!-- Second Column -->
             <div class="col-md-6">
               <div class="form-group">
                 <label for="age">Age</label>
-                <input
-                  id="age"
-                  type="number"
-                  formControlName="age"
-                  class="form-control"
-                  placeholder="Enter Age"
-                />
+                <input id="age" type="number" formControlName="age" class="form-control" placeholder="Enter Age" />
               </div>
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input
-                  id="contactNo"
-                  type="text"
-                  formControlName="contactNo"
-                  class="form-control"
-                  placeholder="Enter Contact No."
-                />
+                <input id="contactNo" type="text" formControlName="contactNo" class="form-control"
+                  placeholder="Enter Contact No." />
               </div>
               <div class="form-group">
                 <label for="gender">Gender</label>
@@ -624,147 +365,60 @@
                     <span>Male</span>
                   </label>
                   <label class="radio-label">
-                    <input
-                      type="radio"
-                      formControlName="gender"
-                      value="female"
-                    />
+                    <input type="radio" formControlName="gender" value="female" />
                     <span>Female</span>
                   </label>
                 </div>
               </div>
-
-              <!-- <div class="form-group">
-                <label for="villageName">Village Name</label>
-                <select
-                  id="villageName"
-                  formControlName="villageName"
-                  class="form-control"
-                >
-                  <option value="" disabled selected>Select Village</option>
-                  <optgroup
-                    *ngFor="let village of villages"
-                    [label]="village.name"
-                  >
-                    <option
-                      *ngFor="let vname of village.vnames"
-                      [value]="vname"
-                    >
-                      {{ vname }}
-                    </option>
-                  </optgroup>
-                </select>
-              </div> -->
-
               <div class="form-group">
                 <label for="schoolName">School Name</label>
-                <input
-                  id="schoolName"
-                  type="text"
-                  formControlName="schoolName"
-                  class="form-control"
-                  placeholder="Enter School Name"
-                />
+                <input id="schoolName" type="text" formControlName="schoolName" class="form-control"
+                  placeholder="Enter School Name" />
               </div>
-
               <div class="form-group">
                 <label for="standard">Standard</label>
-                <input
-                  id="standard"
-                  type="text"
-                  formControlName="standard"
-                  class="form-control"
-                  placeholder="Enter Standard"
-                />
+                <input id="standard" type="text" formControlName="standard" class="form-control"
+                  placeholder="Enter Standard" />
               </div>
-
               <div class="form-group">
                 <label for="weight">Weight (kg)</label>
-                <input
-                  id="weight"
-                  type="number"
-                  formControlName="weight"
-                  class="form-control"
-                  placeholder="Enter Weight"
-                />
+                <input id="weight" type="number" formControlName="weight" class="form-control"
+                  placeholder="Enter Weight" />
               </div>
-
               <div class="form-group">
                 <label for="height">Height (cm)</label>
-                <input
-                  id="height"
-                  type="number"
-                  formControlName="height"
-                  class="form-control"
-                  placeholder="Enter Height"
-                />
+                <input id="height" type="number" formControlName="height" class="form-control"
+                  placeholder="Enter Height" />
               </div>
             </div>
           </div>
-
-          <!-- BMI and HB Information -->
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="bmi">BMI</label>
-                <input
-                  id="bmi"
-                  type="number"
-                  formControlName="bmi"
-                  class="form-control"
-                  placeholder="BMI"
-                  readonly
-                />
+                <input id="bmi" type="number" formControlName="bmi" class="form-control" placeholder="BMI" readonly />
               </div>
-
               <div class="form-group">
                 <label for="bmiStatus">BMI Status</label>
-                <input
-                  id="bmiStatus"
-                  type="text"
-                  formControlName="bmiStatus"
-                  class="form-control"
-                  placeholder="BMI Status"
-                  readonly
-                />
+                <input id="bmiStatus" type="text" formControlName="bmiStatus" class="form-control"
+                  placeholder="BMI Status" readonly />
               </div>
             </div>
-
             <div class="col-md-6">
               <div class="form-group">
                 <label for="hb">HB (Hemoglobin)</label>
-                <input
-                  id="hb"
-                  type="number"
-                  formControlName="hb"
-                  class="form-control"
-                  placeholder="Enter Hemoglobin Level"
-                  (input)="onHBChangeAarogyaCamp()"
-                />
+                <input id="hb" type="number" formControlName="hb" class="form-control"
+                  placeholder="Enter Hemoglobin Level" (input)="onHBChangeAarogyaCamp()" />
               </div>
-
               <div class="form-group">
-                <label for="hbStatus">HB Status</label>
-                <input
-                  id="hbStatus"
-                  type="text"
-                  formControlName="hbStatus"
-                  class="form-control"
-                  placeholder="HB Status"
-                  readonly
-                />
+                <label for="HBReadings">HB Readings</label>
+                <input id="HBReadings" type="text" formControlName="HBReadings" class="form-control"
+                  placeholder="HB Readings" readonly />
               </div>
             </div>
           </div>
-
-          <!-- Submit Button -->
           <div class="text-center mt-4">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!aarogyaCampForm.valid"
-            >
+            <button mat-raised-button color="primary" type="submit">
               Submit
             </button>
           </div>
@@ -780,77 +434,43 @@
     <div class="form-wrapper">
       <div class="form-content">
         <h2 class="form-heading">Mega Camp Form</h2>
+        <div class="form-group">
+          <label for="file-upload">Upload File</label>
+          <input id="file-upload" type="file" (change)="onFileChange($event, megaCampForm)" class="form-control" />
+        </div>
         <form [formGroup]="megaCampForm" (ngSubmit)="onSubmitMegaCamp()">
           <div class="form-grid">
-            <!-- First Column -->
             <div class="form-column">
-              <!-- Name -->
+              <div class="form-group">
+                <label for="client_name">Client Name</label>
+                <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                  placeholder="Enter Client Name" readonly />
+              </div>
               <div class="form-group">
                 <label for="patientName">Patient Name</label>
-                <input
-                  id="patientName"
-                  type="text"
-                  formControlName="patientName"
-                  class="form-control"
-                  placeholder="Enter Name"
-                />
+                <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                  placeholder="Enter Name" />
               </div>
-
-              <!-- Date -->
               <div class="form-group">
                 <label for="date">Date</label>
-                <input
-                  id="date"
-                  type="date"
-                  formControlName="date"
-                  class="form-control"
-                  (change)="onDateChange($event)"
-                />
+                <input id="date" type="date" formControlName="date" class="form-control"
+                  (change)="onDateChange($event)" />
               </div>
-
-              <!-- Day -->
               <div class="form-group">
                 <label for="day">Day</label>
-                <input
-                  id="day"
-                  type="text"
-                  formControlName="day"
-                  class="form-control"
-                  placeholder="Day"
-                  readonly
-                />
+                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
               </div>
-
-              <!-- Month -->
               <div class="form-group">
                 <label for="month">Month</label>
-                <input
-                  id="month"
-                  type="text"
-                  formControlName="month"
-                  class="form-control"
-                  placeholder="Month"
-                  readonly
-                />
+                <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
+                  readonly />
               </div>
-
-              <!-- Year -->
               <div class="form-group">
                 <label for="year">Year</label>
-                <input
-                  id="year"
-                  type="text"
-                  formControlName="year"
-                  class="form-control"
-                  placeholder="Year"
-                  readonly
-                />
+                <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
               </div>
             </div>
-
-            <!-- Second Column -->
             <div class="form-column">
-              <!-- Gender -->
               <div class="form-group">
                 <label for="gender">Gender</label>
                 <div class="radio-group my-4">
@@ -859,49 +479,24 @@
                     <span>Male</span>
                   </label>
                   <label class="radio-label">
-                    <input
-                      type="radio"
-                      formControlName="gender"
-                      value="female"
-                    />
+                    <input type="radio" formControlName="gender" value="female" />
                     <span>Female</span>
                   </label>
                 </div>
               </div>
-
-              <!-- Age -->
               <div class="form-group">
                 <label for="age">Age</label>
-                <input
-                  id="age"
-                  type="number"
-                  formControlName="age"
-                  class="form-control"
-                  placeholder="Enter Age"
-                />
+                <input id="age" type="number" formControlName="age" class="form-control" placeholder="Enter Age" />
               </div>
-
-              <!-- Contact No -->
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input
-                  id="contactNo"
-                  type="text"
-                  formControlName="contactNo"
-                  class="form-control"
-                  placeholder="Enter Contact No."
-                />
+                <input id="contactNo" type="text" formControlName="contactNo" class="form-control"
+                  placeholder="Enter Contact No." />
               </div>
-
-              <!-- Village Name -->
               <div class="form-group">
                 <label for="mainVillage">Main Village</label>
-                <select
-                  id="mainVillage"
-                  formControlName="mainVillage"
-                  class="form-control"
-                  (change)="onMainVillageChange($event)"
-                >
+                <select id="mainVillage" formControlName="mainVillage" class="form-control"
+                  (change)="onMainVillageChange($event)">
                   <option value="" disabled selected>
                     Select Main Village
                   </option>
@@ -910,130 +505,62 @@
                   </option>
                 </select>
               </div>
-
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <label for="subVillage">Sub-Village</label>
-                <select
-                  id="subVillage"
-                  formControlName="subVillage"
-                  class="form-control"
-                >
+                <select id="subVillage" formControlName="subVillage" class="form-control">
                   <option value="" disabled selected>Select Sub-Village</option>
-                  <option
-                    *ngFor="let subVillage of subVillages"
-                    [value]="subVillage"
-                  >
+                  <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                     {{ subVillage }}
                   </option>
                 </select>
               </div>
-              <!-- <div class="form-group">
-                <label for="villageName">Village Name</label>
-                <select
-                  id="villageName"
-                  formControlName="villageName"
-                  class="form-control"
-                >
-                  <option value="" disabled selected>Select Village</option>
-                  <optgroup
-                    *ngFor="let village of villages"
-                    [label]="village.name"
-                  >
-                    <option
-                      *ngFor="let vname of village.vnames"
-                      [value]="vname"
-                    >
-                      {{ vname }}
-                    </option>
-                  </optgroup>
-                </select>
-              </div> -->
             </div>
           </div>
-
-          <!-- Dropdowns for Cancer and TB Test -->
           <div class="form-grid">
             <div class="form-column">
-              <!-- Breast Cancer -->
               <div class="form-group">
                 <label for="breastCancer">Breast Cancer Test</label>
-                <select
-                  id="breastCancer"
-                  formControlName="breastCancer"
-                  class="form-control"
-                >
+                <select id="breastCancer" formControlName="breastCancer" class="form-control">
                   <option value="" disabled selected>Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </select>
               </div>
-
-              <!-- Oral Cancer -->
               <div class="form-group">
                 <label for="oralCancer">Oral Cancer Test</label>
-                <select
-                  id="oralCancer"
-                  formControlName="oralCancer"
-                  class="form-control"
-                >
+                <select id="oralCancer" formControlName="oralCancer" class="form-control">
                   <option value="" disabled selected>Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </select>
               </div>
             </div>
-
             <div class="form-column">
-              <!-- Cervical Cancer -->
               <div class="form-group">
                 <label for="cervicalCancer">Cervical Cancer Test</label>
-                <select
-                  id="cervicalCancer"
-                  formControlName="cervicalCancer"
-                  class="form-control"
-                >
+                <select id="cervicalCancer" formControlName="cervicalCancer" class="form-control">
                   <option value="" disabled selected>Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </select>
               </div>
-
-              <!-- TB Test -->
               <div class="form-group">
                 <label for="tbTest">TB Test</label>
-                <select
-                  id="tbTest"
-                  formControlName="tbTest"
-                  class="form-control"
-                >
+                <select id="tbTest" formControlName="tbTest" class="form-control">
                   <option value="" disabled selected>Select Option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </select>
               </div>
             </div>
           </div>
-
-          <!-- Description -->
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea
-              id="description"
-              formControlName="description"
-              class="form-control"
-              rows="4"
-              placeholder="Enter description"
-            ></textarea>
+            <textarea id="description" formControlName="description" class="form-control" rows="4"
+              placeholder="Enter description"></textarea>
           </div>
-
-          <!-- Submit Button -->
           <div class="text-center mt-3">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!megaCampForm.valid"
-            >
+            <button mat-raised-button color="primary" type="submit">
               Submit
             </button>
           </div>

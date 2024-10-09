@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceService } from 'src/app/shared/service.service';
@@ -9,7 +11,7 @@ import { ServiceService } from 'src/app/shared/service.service';
   templateUrl: './patient-info.component.html',
   styleUrls: ['./patient-info.component.scss']
 })
-export class PatientInfoComponent implements OnInit {
+export class PatientInfoComponent implements OnInit, AfterViewInit {
   username: string | null = '';
   patientForm!: FormGroup;
   diseases: any[] = [];
@@ -18,12 +20,20 @@ export class PatientInfoComponent implements OnInit {
   villageName: string[] = [];
   camps: any[] = [];
   clients: any[] = [];
+  displayedColumns: string[] = ['patientName', 'date', 'category', 'diagnosis'];
+  searchPatientName: string = '';
+  dataSource = new MatTableDataSource<any>([]);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  changeDetectorRef: any;
 
   constructor(private fb: FormBuilder, private patientService: ServiceService, private router: Router, private toastr: ToastrService) { }
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.patientForm = this.fb.group({
-      client_name: ['',],
+      client_name: ['', Validators.required],
       patientName: ['', Validators.required],
       date: ['', Validators.required],
       village: ['', Validators.required],
@@ -73,12 +83,39 @@ export class PatientInfoComponent implements OnInit {
       }
     });
 
-    // Fetch client names
     this.patientService.getClientNames().subscribe((response) => {
       if (response.status === 'success') {
         this.clients = response.all_clients;
+        if (this.clients.length === 1) {
+          const singleClientName = this.clients[0].client_name;
+          this.patientForm.get('client_name')?.setValue(singleClientName);
+        }
       }
     });
+  }
+
+  // Function to fetch patient history by name
+  fetchPatientHistory(patientName: string): void {
+    this.patientService.getPatientHistory(patientName).subscribe({
+      next: (response) => {
+        if (response && response.status === 'success') {
+          // Convert the single object data to an array of one object for MatTable compatibility
+          const formattedData = [response.data];
+          this.dataSource.data = formattedData;
+          this.changeDetectorRef.detectChanges(); // Manually trigger change detection
+        } else {
+          this.toastr.error('No patient found with the given name', 'Error'); // Toastr error message
+        }
+      },
+      error: (err) => {
+        this.toastr.error('No patient found with the given name.', 'Error'); // Toastr error message
+      }
+    });
+  }
+
+  // Function triggered when the search button is clicked
+  onSearch(): void {
+    this.fetchPatientHistory(this.searchPatientName.trim());
   }
 
   onMainVillageChange(event: any): void {
@@ -192,7 +229,9 @@ export class PatientInfoComponent implements OnInit {
         (response) => {
           if (response.status === 'success') {
             this.toastr.success('Patient Data Submitted Successfully!', 'Success');
+            const clientName = this.patientForm.get('client_name')?.value;
             this.patientForm.reset();
+            this.patientForm.patchValue({ client_name: clientName });
             this.router.navigate(['/all_patient_info']);
           } else {
             this.toastr.error(response.msg, 'Error');

@@ -1,3 +1,53 @@
+<div class="container my-4">
+  <!-- Search input and button -->
+  <div class="search-bar">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Search Patient Name</mat-label>
+      <input matInput [(ngModel)]="searchPatientName" placeholder="Enter Patient Name" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onSearch()" class="mt-2">
+      Search
+    </button>
+  </div>
+
+  <!-- MatTable for displaying patient history -->
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- SrNo Column -->
+    <ng-container matColumnDef="srNo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sr No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+    </ng-container>
+
+    <!-- Patient Name Column -->
+    <ng-container matColumnDef="patientName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.patientName }}</td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+    </ng-container>
+
+    <!-- Diagnosis Column -->
+    <ng-container matColumnDef="diagnosis">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Diagnosis</th>
+      <td mat-cell *matCellDef="let element">{{ element.diagnosis }}</td>
+    </ng-container>
+
+    <!-- Table Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
 <div class="container-fluid">
   <div class="form-wrapper">
     <div class="form-content">
@@ -11,12 +61,8 @@
           <div class="form-column">
             <div class="form-group">
               <label for="client_name">Client Name</label>
-              <select id="client_name" formControlName="client_name" class="form-control">
-                <option value="" disabled selected>Select Client</option>
-                <option *ngFor="let client of clients" [value]="client.client_name">
-                  {{ client.client_name }}
-                </option>
-              </select>
+              <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                placeholder="Enter Client Name" readonly />
             </div>
             <div class="form-group">
               <label for="patientName">Patient Name</label>

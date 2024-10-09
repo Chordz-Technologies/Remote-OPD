@@ -18,16 +18,8 @@ export class CampsComponent implements OnInit {
   hbScreeningForm!: FormGroup;
   aarogyaCampForm!: FormGroup;
   megaCampForm!: FormGroup;
-  // uniqueCode: string[] = ['No Fit', 'Correction', 'Operation Done', 'Healthy', 'Impairment', 'Dryness', 'White Part']; // Example villages
 
-  constructor(private fb: FormBuilder,
-    private patientService: ServiceService,
-    private eyeScreeningService: ServiceService,
-    private hbScreeningService: ServiceService,
-    private router: Router,
-    private toastr: ToastrService) {
-
-  }
+  constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     //Eye Screening Camp
@@ -37,7 +29,7 @@ export class CampsComponent implements OnInit {
       date: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', Validators.required],
-      contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Regex for 10-digit mobile number
+      contact: ['',],
       village: ['', Validators.required],
       subvillage: ['', Validators.required],
       code: ['', Validators.required],
@@ -58,7 +50,7 @@ export class CampsComponent implements OnInit {
       year: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', Validators.required],
-      contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      contact: ['',],
       village: ['', Validators.required],
       subvillage: ['', Validators.required],
       HB: ['', [Validators.required, Validators.min(1)]], // HB field
@@ -70,20 +62,20 @@ export class CampsComponent implements OnInit {
       client_name: ['', Validators.required],
       patientName: ['', Validators.required],
       date: ['', Validators.required],
-      day: [{ value: '', disabled: true }],
-      month: [{ value: '', disabled: true }],
-      year: [{ value: '', disabled: true }],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', Validators.required],
-      contactNo: ['', Validators.required],
+      contactNo: ['',],
       mainVillage: ['', Validators.required],
       subVillage: ['', Validators.required],
-      schoolName: ['', Validators.required],
-      standard: ['', Validators.required],
+      schoolName: ['',],
+      standard: ['',],
       weight: ['', Validators.required],
       height: ['', Validators.required],
-      bmi: [{ value: '', disabled: true }], // Auto-calculated BMI
-      bmiStatus: [{ value: '', disabled: true }], // Auto-populated BMI status
+      bmi: ['', Validators.required], // Auto-calculated BMI
+      bmiStatus: ['', Validators.required], // Auto-populated BMI status
       hb: ['', [Validators.required, Validators.min(1)]], // HB field
       HBReadings: ['', Validators.required], // HB status field
     });
@@ -102,38 +94,67 @@ export class CampsComponent implements OnInit {
       client_name: ['', Validators.required],
       patientName: ['', Validators.required],
       date: ['', Validators.required],
-      day: [{ value: '', disabled: true }],
-      month: [{ value: '', disabled: true }],
-      year: [{ value: '', disabled: true }],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(0)]],
-      contactNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Adjust pattern for phone numbers if needed
+      contactNo: ['',],
       mainVillage: ['', Validators.required],
       subVillage: ['', Validators.required],
-      breastCancer: ['', Validators.required],
-      oralCancer: ['', Validators.required],
-      cervicalCancer: ['', Validators.required],
-      tbTest: ['', Validators.required],
-      description: ['', Validators.required],
+      breastCancer: ['',],
+      oralCancer: ['',],
+      cervicalCancer: ['',],
+      tbTest: ['',],
+      description: ['',],
     });
-
-
     this.getVillages();
   }
 
   getVillages(): void {
-    this.patientService.getAllVillages().subscribe((response: any) => {
+    this.service.getAllVillages().subscribe((response: any) => {
       if (response.status === 'success') {
         this.villages = response.all_Villages;
       }
     });
 
-    // Fetch client names
-    this.patientService.getClientNames().subscribe((response) => {
+    this.service.getClientNames().subscribe((response) => {
       if (response.status === 'success') {
         this.clients = response.all_clients;
+
+        if (this.clients.length === 1) {
+          const singleClientName = this.clients[0].client_name;
+          this.eyeScreeningForm.get('client_name')?.setValue(singleClientName);
+          this.hbScreeningForm.get('client_name')?.setValue(singleClientName);
+          this.aarogyaCampForm.get('client_name')?.setValue(singleClientName);
+          this.megaCampForm.get('client_name')?.setValue(singleClientName);
+        }
       }
     });
+  }
+
+  onFileChange(event: any, form: FormGroup) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const jsonData = JSON.parse(e.target.result);
+
+        // Map village name to corresponding id
+        const selectedVillage = this.villages.find(v => v.name === jsonData.village);
+        if (selectedVillage) {
+          jsonData.village = selectedVillage.id; // Set the id of the village
+          this.onMainVillageChange({ target: { value: selectedVillage.id } }); // Trigger village change to populate sub-villages
+
+          // Set the sub-village if it exists
+          if (selectedVillage.vnames.includes(jsonData.villageName)) {
+            form.patchValue({ villageName: jsonData.villageName });
+          }
+        }
+        form.patchValue(jsonData);
+      };
+      reader.readAsText(file);
+    }
   }
 
   onMainVillageChange(event: any): void {
@@ -150,49 +171,32 @@ export class CampsComponent implements OnInit {
 
   onDateChange(event: any): void {
     const selectedDate = new Date(event.target.value);
-
     if (!isNaN(selectedDate.getTime())) {
       const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' }); // Get day name (e.g., Monday)
       const month = selectedDate.toLocaleString('en-US', { month: 'long' }); // Get month name (e.g., January)
       const year = selectedDate.getFullYear();
-      const week = this.getWeekNumber(selectedDate); // Calculate week number
-
-      // Update the day and month form controls
       this.eyeScreeningForm.patchValue({
         day: dayOfWeek,
         month: month,
         year: year,
-        week: week // Week number
       });
       this.hbScreeningForm.patchValue({
         day: dayOfWeek,
         month: month,
         year: year,
-        week: week // Week number
       });
       this.aarogyaCampForm.patchValue({
         day: dayOfWeek,
         month: month,
         year: year,
-        week: week // Week number
       });
       this.megaCampForm.patchValue({
         day: dayOfWeek,
         month: month,
         year: year,
-        week: week // Week number
       });
     }
   }
-
-  // Function to calculate the ISO week number
-  getWeekNumber(date: Date): number {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
-
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-  }
-
 
   //Eye Screening Camp
   onUniqueCodeChange(event: any): void {
@@ -247,11 +251,13 @@ export class CampsComponent implements OnInit {
       }
 
       // Now submit the formData object with village name
-      this.eyeScreeningService.postEyeCampForm(formData).subscribe(
+      this.service.postEyeCampForm(formData).subscribe(
         (response) => {
           if (response.status === 'success') {
             this.toastr.success('Eye Screening Camp details submitted successfully!', 'Success');
+            const clientName = this.eyeScreeningForm.get('client_name')?.value;
             this.eyeScreeningForm.reset();
+            this.eyeScreeningForm.patchValue({ client_name: clientName });
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
@@ -264,35 +270,9 @@ export class CampsComponent implements OnInit {
         }
       );
     } else {
-      this.toastr.warning('Please fill in all required fields.', 'Warning');
+      this.toastr.error('Please fill all required fields.', 'Error');
     }
   }
-  // onSubmitEyeScreeningCamp(): void {
-  //   if (this.eyeScreeningForm.valid) {
-
-  //     const formData = this.eyeScreeningForm.value;
-  //     this.eyeScreeningService.postEyeCampForm(formData).subscribe(
-  //       (response) => {
-  //         if (response.status === 'success') {
-  //           this.toastr.success('Eye Screening Camp details submitted successfully!', 'Success');
-  //           this.eyeScreeningForm.reset();
-  //           this.subVillages = []; // Clear sub-villages
-  //           this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
-  //         } else {
-  //           this.toastr.error(response.msg, 'Error');
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error('Error submitting Eye Screening Camp details:', error);
-  //         this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
-  //       }
-  //     );
-  //   } else {
-  //     this.toastr.warning('Please fill in all required fields.', 'Warning');
-  //   }
-  // }
-
-  // HB Screening Camp Form------------------------------------------------------------------------
 
   onHBChange(): void {
     const hbValue = this.hbScreeningForm.get('HB')?.value;
@@ -307,7 +287,6 @@ export class CampsComponent implements OnInit {
     } else if (hbValue > 11.9) {
       HBReadings = 'Healthy (No Anaemia)';
     }
-
     this.hbScreeningForm.patchValue({
       HBReadings: HBReadings,
     });
@@ -324,11 +303,13 @@ export class CampsComponent implements OnInit {
       }
 
       // Now submit the formData object with village name
-      this.hbScreeningService.postHBCampForm(formData).subscribe(
+      this.service.postHBCampForm(formData).subscribe(
         (response) => {
           if (response.status === 'success') {
             this.toastr.success('HB Screening Camp details submitted successfully!', 'Success');
+            const clientName = this.eyeScreeningForm.get('client_name')?.value;
             this.hbScreeningForm.reset();
+            this.hbScreeningForm.patchValue({ client_name: clientName });
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
@@ -341,11 +322,10 @@ export class CampsComponent implements OnInit {
         }
       );
     } else {
-      this.toastr.warning('Please fill in all required fields.', 'Warning');
+      this.toastr.error('Please fill all required fields.', 'Error');
     }
   }
 
-  //Aarogya Dhansampada Camp-------------------------------------------------------------------------
   calculateBMI(): void {
     const weight = this.aarogyaCampForm.get('weight')?.value;
     const height = this.aarogyaCampForm.get('height')?.value;
@@ -397,18 +377,69 @@ export class CampsComponent implements OnInit {
 
   onSubmitAarogyaCamp(): void {
     if (this.aarogyaCampForm.valid) {
-      console.log(this.aarogyaCampForm.value);
-      // Logic to submit the form
+      const formData = this.aarogyaCampForm.value;
+
+      // Replace the village ID with its corresponding name
+      const selectedVillage = this.villages.find(village => village.id === +formData.village);
+      if (selectedVillage) {
+        formData.village = selectedVillage.name; // Set the village name instead of ID
+      }
+
+      // Now submit the formData object with village name
+      this.service.postAarogyaCampForm(formData).subscribe(
+        (response) => {
+          if (response.status === 'success') {
+            this.toastr.success('Aarogya Dhansampada Camp details submitted successfully!', 'Success');
+            const clientName = this.aarogyaCampForm.get('client_name')?.value;
+            this.aarogyaCampForm.reset();
+            this.aarogyaCampForm.patchValue({ client_name: clientName });
+            this.subVillages = []; // Clear sub-villages
+            this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
+          } else {
+            this.toastr.error(response.msg, 'Error');
+          }
+        },
+        (error) => {
+          console.error('Error submitting HB Screening Camp details:', error);
+          this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
+        }
+      );
+    } else {
+      this.toastr.error('Please fill all required fields.', 'Error');
     }
   }
 
-  //Mega Camp------------------------------------------------------------------------------
   onSubmitMegaCamp(): void {
     if (this.megaCampForm.valid) {
-      // Handle the form submission
-      console.log(this.megaCampForm.value);
-      // Implement your submission logic (e.g., API call)
+      const formData = this.megaCampForm.value;
+
+      // Replace the village ID with its corresponding name
+      const selectedVillage = this.villages.find(village => village.id === +formData.village);
+      if (selectedVillage) {
+        formData.village = selectedVillage.name; // Set the village name instead of ID
+      }
+
+      // Now submit the formData object with village name
+      this.service.postMegaCampForm(formData).subscribe(
+        (response) => {
+          if (response.status === 'success') {
+            this.toastr.success('Mega Camp details submitted successfully!', 'Success');
+            const clientName = this.megaCampForm.get('client_name')?.value;
+            this.megaCampForm.reset();
+            this.megaCampForm.patchValue({ client_name: clientName });
+            this.subVillages = []; // Clear sub-villages
+            this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
+          } else {
+            this.toastr.error(response.msg, 'Error');
+          }
+        },
+        (error) => {
+          console.error('Error submitting HB Screening Camp details:', error);
+          this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
+        }
+      );
+    } else {
+      this.toastr.error('Please fill all required fields.', 'Error');
     }
   }
-
 }

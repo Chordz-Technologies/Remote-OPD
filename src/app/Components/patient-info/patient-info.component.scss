@@ -115,6 +115,7 @@ label {
     }
 }
 
+label[for="client_name"]::after,
 label[for="patientName"]::after,
 label[for="date"]::after,
 label[for="mainVillage"]::after,
@@ -129,4 +130,148 @@ label[for="ageGroup"]::after,
 label[for="diagnosis"]::after {
     content: " *";
     color: #e74c3c;
+}
+
+// Search Bar Styles
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    mat-form-field {
+        width: 300px;
+        margin-right: 10px;
+    }
+
+    button {
+        height: 40px;
+    }
+}
+
+// Table Styles
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    mat-header-row,
+    mat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    // Table Header Styles
+    mat-header-cell {
+        font-weight: bold;
+        text-align: left;
+        color: #424242;
+        padding: 12px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    // Table Row Styles
+    mat-cell {
+        text-align: left;
+        padding: 12px;
+        color: #616161;
+        border-bottom: 1px solid #e0e0e0;
+
+        // Alternate row background color
+        &:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    }
+}
+
+// MatPaginator Styles
+mat-paginator {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    .mat-paginator-outer-container {
+        padding: 0 20px;
+    }
+
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+        color: #616161;
+    }
+
+    .mat-icon-button {
+        color: #616161;
+    }
+
+    .mat-paginator-page-size-select {
+        mat-select-trigger {
+            color: #616161;
+        }
+    }
+
+    // Override the primary color for paginator controls
+    .mat-paginator-navigation-button {
+        background: #f1f1f1;
+        border-radius: 4px;
+
+        &:hover {
+            background: #e0e0e0;
+        }
+    }
+}
+
+// Custom Scrollbar for Table
+.mat-table {
+    ::ng-deep {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #c1c1c1 #f7f8fc;
+
+        &::-webkit-scrollbar {
+            height: 8px;
+            background: #f7f8fc;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .search-bar {
+        flex-direction: column;
+
+        mat-form-field {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    table {
+
+        .mat-header-cell,
+        .mat-cell {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
 }

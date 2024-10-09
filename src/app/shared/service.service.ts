@@ -298,4 +298,17 @@ export class ServiceService {
   postHBCampForm(data: any): Observable<any> {
     return this.http.post<any>(`${this.url}/hbcamp/addhbcamp/`, data);
   }
+
+  postAarogyaCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/`, data);
+  }
+
+  postMegaCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/`, data);
+  }
+
+  // Get Patient past data
+  getPatientHistory(patientName: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/patient/PatientHistory/?patientName=${patientName}`);
+  }
 }
