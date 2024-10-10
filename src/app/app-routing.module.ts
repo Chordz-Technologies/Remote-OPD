@@ -11,8 +11,6 @@ import { AllReportsComponent } from './Components/all-reports/all-reports.compon
 import { CampsComponent } from './Components/camps/camps.component';
 import { EditVillagesComponent } from './Components/edit-villages/edit-villages.component';
 
-
-
 const routes: Routes = [
   {
     path: '',

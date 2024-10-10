@@ -1,9 +1,4 @@
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'enviroment';
 import { Observable } from 'rxjs';
@@ -22,7 +17,6 @@ export class ServiceService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
     return this.http.post<any>(`${this.url}/patient/addopdform/`, patientData, {
       headers,
     });
@@ -69,129 +63,121 @@ export class ServiceService {
   }
 
   //download excel repot of patient data
-  downloadPatientReport(): Observable<Blob> {
+  downloadAllPatientExcelsheet(): Observable<Blob> {
     return this.http.get(`${this.url}/patient/excelreport/`, {
       responseType: 'blob',
     });
   }
 
   //download exel report of patient weekly report
-  downloadWeeklyReport(): Observable<Blob> {
+  downloadWeeklyExcelsheet(): Observable<Blob> {
     return this.http.get(`${this.url}/patient/weeklyreport/`, {
       responseType: 'blob',
     });
   }
 
+  downloadEyeCampExcelsheet(): Observable<Blob> {
+    return this.http.get(`${this.url}/eyecamp/eyecampExcelsheet/`, {
+      responseType: 'blob',
+    });
+  }
+
+  downloadHBCampExcelsheet(): Observable<Blob> {
+    return this.http.get(`${this.url}/hbcamp/hbcampExcelsheet/`, {
+      responseType: 'blob',
+    });
+  }
+
+  downloadAarogyaCampExcelsheet(): Observable<Blob> {
+    return this.http.get(`${this.url}/reports/aarogyaDhansampada/`, {
+      responseType: 'blob',
+    });
+  }
+
+  downloadMegaCampExcelsheet(): Observable<Blob> {
+    return this.http.get(`${this.url}/reports/megaCamp/`, {
+      responseType: 'blob',
+    });
+  }
+
+  downloadMonthWisePatientReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/patient/FilteredExcelReport/`, {
+      responseType: 'blob',
+      params: { village, month, year, client_name },
+    });
+  }
+
+  downloadMonthWiseWeeklyReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/patient/FilteredWeeklyReport/`, {
+      responseType: 'blob',
+      params: { village, month, year, client_name },
+    });
+  }
+
   // Download village-wise gender report with filters
-  downloadVillageWiseGenderReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
+  downloadVillageWiseGenderReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/patient/VillageWiseGenderReport/`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download village-wise age group report with filters
-  downloadVillageWiseAgeGroupReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
+  downloadVillageWiseAgeGroupReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/patient/VillageWiseAgeGroupReport/`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download monthly summary report - disease total count
-  downloadMonthlySummaryDiseaseTotalCount(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
+  downloadMonthlySummaryDiseaseTotalCount(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/patient/MonthlySummaryReport/`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download monthly summary report - disease-wise week-wise male-female count
-  downloadMonthlySummaryMaleFemaleCount(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
-    return this.http.get(
-      `${this.url}/patient/SummaryDiseaseWiseWeeklyReport/`,
-      {
-        responseType: 'blob',
-        params: { village, month, year },
-      }
+  downloadMonthlySummaryMaleFemaleCount(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/patient/SummaryDiseaseWiseWeeklyReport/`, {
+      responseType: 'blob',
+      params: { village, month, year, client_name },
+    }
     );
   }
 
   // Download NCD – Eye Screening Camp Report
-  downloadEyeScreeningCampReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/eyeScreeningCamp`, {
+  downloadEyeScreeningCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/eyecamp/eyecampMonthlyReport/`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download NCD – Village Level HB Screening Camp Report
-  downloadHBSreeningCampReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/hbScreeningCamp`, {
+  downloadHBSreeningCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/hbcamp/hbcampReport/`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download Aarogya Dhansampada Camp Report
-  downloadAarogyaCampReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
+  downloadAarogyaCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/reports/aarogyaDhansampada`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
 
   // Download Mega Camp Report
-  downloadMegaCampReport(
-    village: string,
-    month: string,
-    year: string
-  ): Observable<Blob> {
+  downloadMegaCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/reports/megaCamp`, {
       responseType: 'blob',
-      params: { village, month, year },
+      params: { village, month, year, client_name },
     });
   }
-
-  // downloadPatientReport(): Observable<Blob> {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-
-  //   return this.http.get(`${this.url}/patient/excelreport/`, {
-  //     headers: headers,
-  //     responseType: 'blob' // Set the response type to 'blob' for binary data
-  //   });
-  // }
 
   //get client Name
   getClientNames(): Observable<any> {
@@ -207,7 +193,6 @@ export class ServiceService {
       });
     }
     return this.http.get(`${this.url}/patient/opdsearch/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
-    // /patient/opdsearch /? from_month = May & to_month=August & search_term=shirwal
   }
 
 
@@ -218,28 +203,8 @@ export class ServiceService {
       .set('to_month', toMonth)
       .set('start_index', pageIndex.toString())
       .set('limit', pageSize.toString());
-
     return this.http.get(`${this.url}/patient/opdforms_paginated/`, { params });
   }
-  // getAllPatientsData(page: number, searchTerm: string, year: string, fromMonth: string, toMonth: string): Observable<any> {
-  //   const startIndex = (page - 1) * 50;
-  //   let params = new HttpParams()
-  //     .set('start_index', startIndex.toString())
-  //     .set('limit', '50')
-  //     .set('search_term', searchTerm);
-
-  //   if (year) {
-  //     params = params.set('year', year);
-  //   }
-  //   if (fromMonth) {
-  //     params = params.set('from_month', fromMonth);
-  //   }
-  //   if (toMonth) {
-  //     params = params.set('to_month', toMonth);
-  //   }
-
-  //   return this.http.get<any>(`${this.url}/patient/opdforms_paginated/`, { params });
-  // }
 
   getPatientDataById(id: number): Observable<any> {
     return this.http.get<any>(`${this.url}/patient/opdform/${id}/`);
@@ -247,9 +212,7 @@ export class ServiceService {
 
   updatePatient(data: any, id: number) {
     return this.http.put<any>(
-      `${this.url}/patient/opdform/${id}/update/`,
-      data
-    );
+      `${this.url}/patient/opdform/${id}/update/`, data);
   }
 
   getAllVillages(): Observable<any> {
@@ -267,16 +230,12 @@ export class ServiceService {
 
   updateVillage(data: any, id: number) {
     return this.http.put<any>(
-      `${this.url}/villages/updateVillage/${id}/update`,
-      data
-    );
+      `${this.url}/villages/updateVillage/${id}/update`, data);
   }
 
   deleteVillageById(id: any): Observable<any> {
     return this.http.delete<any>(
-      `${this.url}/villages/deleteVillage/${id}/`,
-      id
-    );
+      `${this.url}/villages/deleteVillage/${id}/`, id);
   }
 
   getAllDiseases(): Observable<any> {

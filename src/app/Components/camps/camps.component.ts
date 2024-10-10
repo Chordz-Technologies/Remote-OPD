@@ -60,23 +60,23 @@ export class CampsComponent implements OnInit {
     //Aarogya Dhansampada Camp
     this.aarogyaCampForm = this.fb.group({
       client_name: ['', Validators.required],
-      patientName: ['', Validators.required],
+      name: ['', Validators.required],
       date: ['', Validators.required],
       day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', Validators.required],
-      contactNo: ['',],
-      mainVillage: ['', Validators.required],
-      subVillage: ['', Validators.required],
+      contact: ['',],
+      village: ['', Validators.required],
+      subvillage: ['', Validators.required],
       schoolName: ['',],
       standard: ['',],
       weight: ['', Validators.required],
       height: ['', Validators.required],
       bmi: ['', Validators.required], // Auto-calculated BMI
       bmiStatus: ['', Validators.required], // Auto-populated BMI status
-      hb: ['', [Validators.required, Validators.min(1)]], // HB field
+      HB: ['', [Validators.required, Validators.min(1)]], // HB field
       HBReadings: ['', Validators.required], // HB status field
     });
 
@@ -92,16 +92,16 @@ export class CampsComponent implements OnInit {
     //Mega Camp
     this.megaCampForm = this.fb.group({
       client_name: ['', Validators.required],
-      patientName: ['', Validators.required],
+      name: ['', Validators.required],
       date: ['', Validators.required],
       day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(0)]],
-      contactNo: ['',],
-      mainVillage: ['', Validators.required],
-      subVillage: ['', Validators.required],
+      contact: ['',],
+      village: ['', Validators.required],
+      subvillage: ['', Validators.required],
       breastCancer: ['',],
       oralCancer: ['',],
       cervicalCancer: ['',],

@@ -27,7 +27,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './Components/home/home.component';
 import { SidebarComponent } from './Components/sidebar/sidebar.component';
 import { AddusersbyAdminComponent } from './Components/addusersby-admin/addusersby-admin.component';
-import { AllusersComponent } from './Components/allusers/allusers.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AllPatientsComponent } from './Components/all-patients/all-patients.component';
 import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-patient-info.component';
@@ -44,7 +43,6 @@ import { EditVillagesComponent } from './Components/edit-villages/edit-villages.
     HomeComponent,
     SidebarComponent,
     AddusersbyAdminComponent,
-    AllusersComponent,
     AllPatientsComponent,
     EditPatientInfoComponent,
     AllReportsComponent,

@@ -296,7 +296,7 @@
               </div>
               <div class="form-group">
                 <label for="patientName">Patient Name</label>
-                <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                <input id="patientName" type="text" formControlName="name" class="form-control"
                   placeholder="Enter Name" />
               </div>
               <div class="form-group">
@@ -320,7 +320,7 @@
               <div class="form-group">
                 <div class="dropdown-with-arrow">
                   <label for="mainVillage">Main Village</label>
-                  <select id="mainVillage" formControlName="mainVillage" class="form-control"
+                  <select id="mainVillage" formControlName="village" class="form-control"
                     (change)="onMainVillageChange($event)">
                     <option value="" disabled selected>
                       Select Main Village
@@ -335,7 +335,7 @@
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
                   <label for="subVillage">Sub-Village</label>
-                  <select id="subVillage" formControlName="subVillage" class="form-control">
+                  <select id="subVillage" formControlName="subvillage" class="form-control">
                     <option value="" disabled selected>
                       Select Sub-Village
                     </option>
@@ -354,18 +354,18 @@
               </div>
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input id="contactNo" type="text" formControlName="contactNo" class="form-control"
+                <input id="contactNo" type="text" formControlName="contact" class="form-control"
                   placeholder="Enter Contact No." />
               </div>
               <div class="form-group">
                 <label for="gender">Gender</label>
                 <div class="radio-group my-4">
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="male" />
+                    <input type="radio" formControlName="gender" value="M" />
                     <span>Male</span>
                   </label>
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="female" />
+                    <input type="radio" formControlName="gender" value="F" />
                     <span>Female</span>
                   </label>
                 </div>
@@ -406,8 +406,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="hb">HB (Hemoglobin)</label>
-                <input id="hb" type="number" formControlName="hb" class="form-control"
+                <label for="HB">HB (Hemoglobin)</label>
+                <input id="HB" type="number" formControlName="HB" class="form-control"
                   placeholder="Enter Hemoglobin Level" (input)="onHBChangeAarogyaCamp()" />
               </div>
               <div class="form-group">
@@ -448,7 +448,7 @@
               </div>
               <div class="form-group">
                 <label for="patientName">Patient Name</label>
-                <input id="patientName" type="text" formControlName="patientName" class="form-control"
+                <input id="patientName" type="text" formControlName="name" class="form-control"
                   placeholder="Enter Name" />
               </div>
               <div class="form-group">
@@ -475,11 +475,11 @@
                 <label for="gender">Gender</label>
                 <div class="radio-group my-4">
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="male" />
+                    <input type="radio" formControlName="gender" value="M" />
                     <span>Male</span>
                   </label>
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="female" />
+                    <input type="radio" formControlName="gender" value="F" />
                     <span>Female</span>
                   </label>
                 </div>
@@ -490,12 +490,12 @@
               </div>
               <div class="form-group">
                 <label for="contactNo">Contact No.</label>
-                <input id="contactNo" type="text" formControlName="contactNo" class="form-control"
+                <input id="contactNo" type="text" formControlName="contact" class="form-control"
                   placeholder="Enter Contact No." />
               </div>
               <div class="form-group">
                 <label for="mainVillage">Main Village</label>
-                <select id="mainVillage" formControlName="mainVillage" class="form-control"
+                <select id="mainVillage" formControlName="village" class="form-control"
                   (change)="onMainVillageChange($event)">
                   <option value="" disabled selected>
                     Select Main Village
@@ -507,7 +507,7 @@
               </div>
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <label for="subVillage">Sub-Village</label>
-                <select id="subVillage" formControlName="subVillage" class="form-control">
+                <select id="subVillage" formControlName="subvillage" class="form-control">
                   <option value="" disabled selected>Select Sub-Village</option>
                   <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                     {{ subVillage }}

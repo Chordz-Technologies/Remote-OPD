@@ -3,13 +3,13 @@
     <img src=".../../../assets/img/kolumbusLogo.jpeg" alt="Image" />
     <h4 class="name pt-4 text-center">
       {{
-        role === "ADMIN"
-          ? "ADMIN"
-          : role === "DOCTOR"
-          ? "DOCTOR"
-          : role === "INVESTOR"
-          ? "INVESTOR"
-          : "USER"
+      role === "ADMIN"
+      ? "ADMIN"
+      : role === "DOCTOR"
+      ? "DOCTOR"
+      : role === "INVESTOR"
+      ? "INVESTOR"
+      : "USER"
       }}
     </h4>
   </div>
@@ -18,57 +18,32 @@
       <span>Dashboard</span>
     </div>
     <div class="menu-item">
-      <button
-        mat-button
-        *ngIf="ADMIN"
-        class="menu-button"
-        [routerLinkActive]="['active']"
-        [routerLink]="['/dashboard']"
-      >
+      <button mat-button *ngIf="ADMIN" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/dashboard']">
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
       </button>
 
-      <button
-        mat-button
-        *ngIf="ADMIN || DOCTOR"
-        class="menu-button"
-        [routerLinkActive]="['active']"
-        [routerLink]="['/patient_info_form']"
-      >
+      <button mat-button *ngIf="ADMIN || DOCTOR" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/patient_info_form']">
         <mat-icon>assignment</mat-icon>
         <span>Patient Form</span>
       </button>
 
-      <button
-        mat-button
-        *ngIf="ADMIN || DOCTOR"
-        class="menu-button"
-        [routerLinkActive]="['active']"
-        [routerLink]="['/all_patient_info']"
-      >
+      <button mat-button *ngIf="ADMIN || DOCTOR" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/all_patient_info']">
         <mat-icon>people</mat-icon>
         <span>All Patients</span>
       </button>
 
-      <button
-        mat-button
-        *ngIf="ADMIN || DOCTOR"
-        class="menu-button"
-        [routerLinkActive]="['active']"
-        [routerLink]="['/all_camps']"
-      >
+      <button mat-button *ngIf="ADMIN || DOCTOR" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/all_camps']">
         <mat-icon>holiday_village</mat-icon>
         <span>All Camps</span>
       </button>
 
-      <button
-        mat-button
-        *ngIf="ADMIN || INVESTOR"
-        class="menu-button"
-        [routerLinkActive]="['active']"
-        [routerLink]="['/all_reports']"
-      >
+      <button mat-button *ngIf="ADMIN || INVESTOR" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/all_reports']">
         <mat-icon>download</mat-icon>
         <span>All Reports</span>
       </button>

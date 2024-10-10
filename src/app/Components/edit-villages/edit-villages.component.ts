@@ -67,26 +67,6 @@ export class EditVillagesComponent implements OnInit {
           console.log(err)
         }
       })
-
-      // this.service.getVillageById(this.villageID).subscribe({
-      //   next: (res) => {
-      //     this.onEdit(res.Villages);
-      //     this.villageDetails = res.Villages;
-      //     if (Array.isArray(this.villageDetails.vnames)) {
-      //       this.dataSource = new MatTableDataSource(this.villageDetails.vnames.map((vnames: string) => ({ vnames })));
-      //       // this.dataSource.paginator = this.paginator;
-      //       this.dataSource.sort = this.sort;
-      //     } else {
-      //       console.error('vname is not an array');
-      //       // Handle the situation where vnames is not an array
-      //       // For example, set dataSource to an empty array or handle it in another appropriate way
-      //       // this.dataSource = new MatTableDataSource([]);
-      //     }
-      //     console.log('Village Details:', res.Villages);
-      //   }, error: (err) => {
-      //     console.log(err);
-      //   }
-      // });
     });
 
     this.showsubmit = true;
@@ -102,8 +82,6 @@ export class EditVillagesComponent implements OnInit {
     this.villageForm.setValue({
       village: Village.name,
       subvillage: Village.vnames,
-
-
     })
     this.villageForm.get('subvillage')?.setValue('');
 

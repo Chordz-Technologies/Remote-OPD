@@ -9,16 +9,9 @@
       <mat-card-content>
         <form [formGroup]="villageForm">
           <div class="row mb-3">
-            <label for="village" class="col-sm-2 col-form-label"
-              >Main Village Name</label
-            >
+            <label for="village" class="col-sm-2 col-form-label">Main Village Name</label>
             <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="village"
-                placeholder="Main Village Name"
-              />
+              <input type="text" class="form-control" formControlName="village" placeholder="Main Village Name" />
             </div>
           </div>
 
@@ -29,25 +22,15 @@
                   <b>Sub Village Name </b>
                 </th>
                 <td mat-cell *matCellDef="let row">
-                  <ng-container
-                    *ngIf="
+                  <ng-container *ngIf="
                       editingIndex !== dataSource.data.indexOf(row);
                       else editMode
-                    "
-                  >
+                    ">
                     {{ row.vnames }}
                   </ng-container>
                   <ng-template #editMode>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [formControl]="editSubVillageControl"
-                    />
-                    <button
-                      mat-icon-button
-                      color="primary"
-                      (click)="saveSubVillage()"
-                    >
+                    <input type="text" class="form-control" [formControl]="editSubVillageControl" />
+                    <button mat-icon-button color="primary" (click)="saveSubVillage()">
                       <mat-icon>done</mat-icon>
                     </button>
                   </ng-template>
@@ -59,53 +42,19 @@
                   <b>Action</b>
                 </th>
                 <td mat-cell *matCellDef="let row">
-                  <!-- <button
-                    mat-icon-button
-                    color="primary"
-                    (click)="editSubVillage(row)"
-                  >
-                    <mat-icon>{{
-                      editingIndex === dataSource.data.indexOf(row)
-                        ? "cancel"
-                        : "edit"
-                    }}</mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    (click)="deleteSubVillage(dataSource.data.indexOf(row))"
-                  >
-                    <mat-icon>delete</mat-icon>
-                  </button> -->
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    *ngIf="editingIndex !== dataSource.data.indexOf(row)"
-                    (click)="editSubVillage(row)"
-                  >
+                  <button mat-icon-button color="primary" *ngIf="editingIndex !== dataSource.data.indexOf(row)"
+                    (click)="editSubVillage(row)">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    *ngIf="editingIndex === dataSource.data.indexOf(row)"
-                    (click)="saveSubVillage()"
-                  >
+                  <button mat-icon-button color="warn" *ngIf="editingIndex === dataSource.data.indexOf(row)"
+                    (click)="saveSubVillage()">
                     <mat-icon>save</mat-icon>
                   </button>
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    *ngIf="editingIndex === dataSource.data.indexOf(row)"
-                    (click)="editSubVillage(row)"
-                  >
+                  <button mat-icon-button color="primary" *ngIf="editingIndex === dataSource.data.indexOf(row)"
+                    (click)="editSubVillage(row)">
                     <mat-icon>cancel</mat-icon>
                   </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    (click)="deleteSubVillage(dataSource.data.indexOf(row))"
-                  >
+                  <button mat-icon-button color="warn" (click)="deleteSubVillage(dataSource.data.indexOf(row))">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>
@@ -118,66 +67,31 @@
             </table>
           </div>
           <div class="row mt-4">
-            <label for="subvillage" class="col-sm-2 col-form-label"
-              >New Sub Village
+            <label for="subvillage" class="col-sm-2 col-form-label">New Sub Village
             </label>
             <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="subvillage"
-                placeholder="New Sub Village Name"
-              />
+              <input type="text" class="form-control" formControlName="subvillage" placeholder="New Sub Village Name" />
             </div>
           </div>
-          <button
-            class="my-3"
-            mat-raised-button
-            color="primary"
-            (click)="addNewSubVillage()"
-          >
+          <button class="my-3" mat-raised-button color="primary" (click)="addNewSubVillage()">
             Add Sub Village
           </button>
-          <!-- 
-            <ng-template #loading>
-              <div class="spinner mx-auto">
-                <mat-spinner diameter="40"></mat-spinner>
-              </div>
-            </ng-template> -->
 
           <br />
 
           <div class="col-12 text-center">
             <br />
-            <button
-              type="submit"
-              class="btn btn-primary me-2 mb-2"
-              *ngIf="showupdate"
-              (click)="updateVillage()"
-            >
+            <button type="submit" class="btn btn-primary me-2 mb-2" *ngIf="showupdate" (click)="updateVillage()">
               Update
             </button>
-            <button
-              type="submit"
-              class="btn btn-primary me-2 mb-2"
-              *ngIf="showsubmit"
-              (click)="submitVillage()"
-            >
+            <button type="submit" class="btn btn-primary me-2 mb-2" *ngIf="showsubmit" (click)="submitVillage()">
               Submit
             </button>
-            <button
-              type="button"
-              class="btn btn-danger me-2 mb-2"
-              routerLink="/dashboard"
-            >
+            <button type="button" class="btn btn-danger me-2 mb-2" routerLink="/dashboard">
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-danger me-2 mb-2"
-              *ngIf="showdelete"
-              (click)="openConfirmationDialog()"
-            >
+            <button type="button" class="btn btn-danger me-2 mb-2" *ngIf="showdelete"
+              (click)="openConfirmationDialog()">
               Delete
             </button>
           </div>

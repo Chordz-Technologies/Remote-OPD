@@ -10,11 +10,7 @@
           <mat-icon (click)="sidebar.toggle()">menu</mat-icon>
           <span class="mx-auto">Mobile OPD</span>
           <div class="user-info" *ngIf="userName">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="userMenu"
-              aria-label="User menu"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
               <mat-icon>account_circle</mat-icon>
             </button>
             <mat-menu #userMenu="matMenu" class="user-menu">
