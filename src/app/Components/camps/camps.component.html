@@ -54,10 +54,6 @@
                   (change)="onDateChange($event)" />
               </div>
               <div class="form-group">
-                <label for="day">Day</label>
-                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
-              </div>
-              <div class="form-group">
                 <label for="month">Month</label>
                 <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
                   readonly />
@@ -136,15 +132,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="eyeDiseases">Eye Diseases </label>
-                <textarea class="form-control" formControlName="description" id="eyeDiseases" rows="2" cols="30"
-                  placeholder="Eye Diseases" readonly></textarea>
+                <label for="Description">Eye Diseases </label>
+                <textarea class="form-control" formControlName="Description" id="Description" rows="2" cols="30"
+                  placeholder="Eye Diseases Description" readonly></textarea>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="Opinion">Opinion</label>
-            <input id="opinion" type="text" formControlName="opinion" class="form-control"
+            <input id="Opinion" type="text" formControlName="Opinion" class="form-control"
               placeholder="Enter Opinion" />
           </div>
           <div class="text-center mt-3">
@@ -185,10 +181,6 @@
                 <label for="date">Date</label>
                 <input id="date" type="date" formControlName="date" class="form-control"
                   (change)="onDateChange($event)" />
-              </div>
-              <div class="form-group">
-                <label for="day">Day</label>
-                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
               </div>
               <div class="form-group">
                 <label for="month">Month</label>
@@ -305,10 +297,6 @@
                   (change)="onDateChange($event)" />
               </div>
               <div class="form-group">
-                <label for="day">Day</label>
-                <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day" readonly />
-              </div>
-              <div class="form-group">
                 <label for="month">Month</label>
                 <input id="month" type="text" formControlName="month" class="form-control" placeholder="Month"
                   readonly />
@@ -332,10 +320,10 @@
                   <div class="arrow-down"></div>
                 </div>
               </div>
-              <div class="form-group" *ngIf="subVillages.length > 0">
+              <div class="form-group" *ngIf="villageName.length > 0">
                 <div class="dropdown-with-arrow">
                   <label for="subVillage">Sub-Village</label>
-                  <select id="subVillage" formControlName="subvillage" class="form-control">
+                  <select id="subVillage" formControlName="villageName" class="form-control">
                     <option value="" disabled selected>
                       Select Sub-Village
                     </option>
@@ -358,24 +346,6 @@
                   placeholder="Enter Contact No." />
               </div>
               <div class="form-group">
-                <label for="gender">Gender</label>
-                <div class="radio-group my-4">
-                  <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="M" />
-                    <span>Male</span>
-                  </label>
-                  <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="F" />
-                    <span>Female</span>
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="schoolName">School Name</label>
-                <input id="schoolName" type="text" formControlName="schoolName" class="form-control"
-                  placeholder="Enter School Name" />
-              </div>
-              <div class="form-group">
                 <label for="standard">Standard</label>
                 <input id="standard" type="text" formControlName="standard" class="form-control"
                   placeholder="Enter Standard" />
@@ -395,13 +365,13 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="bmi">BMI</label>
-                <input id="bmi" type="number" formControlName="bmi" class="form-control" placeholder="BMI" readonly />
+                <label for="BMI">BMI</label>
+                <input id="BMI" type="number" formControlName="BMI" class="form-control" placeholder="BMI" readonly />
               </div>
               <div class="form-group">
-                <label for="bmiStatus">BMI Status</label>
-                <input id="bmiStatus" type="text" formControlName="bmiStatus" class="form-control"
-                  placeholder="BMI Status" readonly />
+                <label for="BMIReadings">BMI Status</label>
+                <input id="BMIReadings" type="text" formControlName="BMIReadings" class="form-control"
+                  placeholder="BMI Readings" readonly />
               </div>
             </div>
             <div class="col-md-6">

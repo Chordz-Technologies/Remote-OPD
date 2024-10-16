@@ -19,8 +19,11 @@ export class Patient_model {
     physicalExamination!: string;
     investigation!: string;
     diagnosis!: string;
+    diagnosis2!: string;
     prescribedMedicine1!: string;
     prescribedMedicine2!: string;
+    prescribedMedicine3!: string;
+    prescribedMedicine4!: string;
     dosage!: string;
     treatmentRemark!: string;
 }
@@ -29,5 +32,4 @@ export class village_model {
     id!: number;
     name!: string;
     vnames!: string;
-
 }

@@ -190,9 +190,9 @@
             </div>
             <div class="form-group">
               <div class="dropdown-with-arrow">
-                <label for="diagnosis">Diagnosis</label>
+                <label for="diagnosis">Diagnosis 1</label>
                 <select id="diagnosis" formControlName="diagnosis" class="form-control">
-                  <option value="" disabled selected>Select Disease</option>
+                  <option value="" disabled selected>Select Disease 1</option>
                   <option *ngFor="let disease of diseases" [value]="disease.name">
                     {{ disease.name }}
                   </option>
@@ -200,6 +200,18 @@
                 <div class="arrow-down"></div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="diagnosis2">Diagnosis 2</label>
+            <select id="diagnosis2" formControlName="diagnosis2" class="form-control">
+              <option value="" disabled selected>Select Disease 2</option>
+              <option *ngFor="let disease of diseases" [value]="disease.name">
+                {{ disease.name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
           </div>
         </div>
         <div class="form-group">
@@ -222,6 +234,34 @@
             <select id="prescribedMedicine2" formControlName="prescribedMedicine2" class="form-control">
               <option value="" disabled selected>
                 Select Prescribed Medicine 2
+              </option>
+              <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                {{ medicine.name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="prescribedMedicine3">Prescribed Medicine 3</label>
+            <select id="prescribedMedicine3" formControlName="prescribedMedicine3" class="form-control">
+              <option value="" disabled selected>
+                Select Prescribed Medicine 3
+              </option>
+              <option *ngFor="let medicine of medicines" [value]="medicine.name">
+                {{ medicine.name }}
+              </option>
+            </select>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="dropdown-with-arrow">
+            <label for="prescribedMedicine4">Prescribed Medicine 4</label>
+            <select id="prescribedMedicine4" formControlName="prescribedMedicine4" class="form-control">
+              <option value="" disabled selected>
+                Select Prescribed Medicine 4
               </option>
               <option *ngFor="let medicine of medicines" [value]="medicine.name">
                 {{ medicine.name }}

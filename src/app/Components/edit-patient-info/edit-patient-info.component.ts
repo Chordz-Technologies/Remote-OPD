@@ -44,6 +44,9 @@ export class EditPatientInfoComponent implements OnInit {
       diagnosis: ['', Validators.required],
       prescribedMedicine1: ['',],
       prescribedMedicine2: ['',],
+      prescribedMedicine3: ['',],
+      prescribedMedicine4: ['',],
+      diagnosis2: ['',],
       dosage: ['',],
       treatmentRemark: ['',]
     });
@@ -180,8 +183,11 @@ export class EditPatientInfoComponent implements OnInit {
       physicalExamination: patient.physicalExamination,
       investigation: patient.investigation,
       diagnosis: patient.diagnosis,
+      diagnosis2: patient.diagnosis2,
       prescribedMedicine1: patient.prescribedMedicine1,
       prescribedMedicine2: patient.prescribedMedicine2,
+      prescribedMedicine3: patient.prescribedMedicine3,
+      prescribedMedicine4: patient.prescribedMedicine4,
       dosage: patient.dosage,
       treatmentRemark: patient.treatmentRemark,
     });

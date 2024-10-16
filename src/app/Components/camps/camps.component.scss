@@ -139,12 +139,11 @@ label[for="diagnosis"]::after,
 label[for="code"]::after,
 label[for="HB"]::after,
 label[for="HBReadings"]::after,
-label[for="eyeDiseases"]::after,
-label[for="hb"]::after,
+label[for="Description"]::after,
 label[for="weight"]::after,
 label[for="height"]::after,
-label[for="bmi"]::after,
-label[for="bmiStatus"]::after {
+label[for="BMI"]::after,
+label[for="BMIReadings"]::after {
     content: " *";
     color: #e74c3c;
 }

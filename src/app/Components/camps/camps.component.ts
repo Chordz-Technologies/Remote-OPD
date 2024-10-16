@@ -18,6 +18,7 @@ export class CampsComponent implements OnInit {
   hbScreeningForm!: FormGroup;
   aarogyaCampForm!: FormGroup;
   megaCampForm!: FormGroup;
+  villageName: string[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private toastr: ToastrService) { }
 
@@ -33,9 +34,8 @@ export class CampsComponent implements OnInit {
       village: ['', Validators.required],
       subvillage: ['', Validators.required],
       code: ['', Validators.required],
-      description: ['', Validators.required],
-      opinion: [''],
-      day: ['', Validators.required],
+      Description: ['', Validators.required],
+      Opinion: [''],
       month: ['', Validators.required],
       year: ['', Validators.required],
     });
@@ -45,7 +45,6 @@ export class CampsComponent implements OnInit {
       client_name: ['', Validators.required],
       name: ['', Validators.required],
       date: ['', Validators.required],
-      day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
       gender: ['', Validators.required],
@@ -62,20 +61,17 @@ export class CampsComponent implements OnInit {
       client_name: ['', Validators.required],
       name: ['', Validators.required],
       date: ['', Validators.required],
-      day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
-      gender: ['', Validators.required],
       age: ['', Validators.required],
-      contact: ['',],
       village: ['', Validators.required],
-      subvillage: ['', Validators.required],
-      schoolName: ['',],
+      villageName: ['', Validators.required],
       standard: ['',],
+      contact: ['',],
       weight: ['', Validators.required],
       height: ['', Validators.required],
-      bmi: ['', Validators.required], // Auto-calculated BMI
-      bmiStatus: ['', Validators.required], // Auto-populated BMI status
+      BMI: ['', Validators.required], // Auto-calculated BMI
+      BMIReadings: ['', Validators.required], // Auto-populated BMI status
       HB: ['', [Validators.required, Validators.min(1)]], // HB field
       HBReadings: ['', Validators.required], // HB status field
     });
@@ -106,7 +102,7 @@ export class CampsComponent implements OnInit {
       oralCancer: ['',],
       cervicalCancer: ['',],
       tbTest: ['',],
-      description: ['',],
+      Description: ['',],
     });
     this.getVillages();
   }
@@ -162,6 +158,9 @@ export class CampsComponent implements OnInit {
     const selectedVillage = this.villages.find(village => village.id === +selectedVillageId);
 
     if (selectedVillage) {
+      this.villageName = selectedVillage.vnames;
+      this.aarogyaCampForm.patchValue({ villageName: '' });
+
       this.subVillages = selectedVillage.vnames;
       this.megaCampForm.patchValue({ subVillage: '' }); // Reset sub-village when main village changes
     } else {
@@ -176,17 +175,14 @@ export class CampsComponent implements OnInit {
       const month = selectedDate.toLocaleString('en-US', { month: 'long' }); // Get month name (e.g., January)
       const year = selectedDate.getFullYear();
       this.eyeScreeningForm.patchValue({
-        day: dayOfWeek,
         month: month,
         year: year,
       });
       this.hbScreeningForm.patchValue({
-        day: dayOfWeek,
         month: month,
         year: year,
       });
       this.aarogyaCampForm.patchValue({
-        day: dayOfWeek,
         month: month,
         year: year,
       });
@@ -205,36 +201,36 @@ export class CampsComponent implements OnInit {
     switch (selectedUniqueCode) {
       case 'no fit':
         this.eyeScreeningForm.patchValue({
-          description: 'Cataract detected but patient is not fit for operation'
+          Description: 'Cataract detected but patient is not fit for operation'
         });
         break;
       case 'correction':
         this.eyeScreeningForm.patchValue({
-          description: 'Detection of Refractive Index & correction required'
+          Description: 'Detection of Refractive Index & correction required'
         });
         break;
       case 'healthy':
         this.eyeScreeningForm.patchValue({
-          description: 'No eye illness found - Healthy Eyes'
+          Description: 'No eye illness found - Healthy Eyes'
         });
         break;
       case 'impairment':
         this.eyeScreeningForm.patchValue({
-          description: 'Presbyopia and Vision Impairment'
+          Description: 'Presbyopia and Vision Impairment'
         });
         break;
       case 'dryness':
         this.eyeScreeningForm.patchValue({
-          description: 'Detection of eye diseases esp. Eye dryness'
+          Description: 'Detection of eye diseases esp. Eye dryness'
         });
         break;
       case 'white part':
         this.eyeScreeningForm.patchValue({
-          description: 'Pterygium (This growth covers the white part of the eye and extends onto the cornea)'
+          Description: 'Pterygium (This growth covers the white part of the eye and extends onto the cornea)'
         });
         break;
       default:
-        this.eyeScreeningForm.patchValue({ description: '' });
+        this.eyeScreeningForm.patchValue({ Description: '' });
         break;
     }
   }
@@ -261,11 +257,10 @@ export class CampsComponent implements OnInit {
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
-            this.toastr.error(response.msg, 'Error');
+            this.toastr.error('Something went wrong. Please try again.', 'Error');
           }
         },
         (error) => {
-          console.error('Error submitting Eye Screening Camp details:', error);
           this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
         }
       );
@@ -313,11 +308,10 @@ export class CampsComponent implements OnInit {
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
-            this.toastr.error(response.msg, 'Error');
+            this.toastr.error('Something went wrong. Please try again.', 'Error');
           }
         },
         (error) => {
-          console.error('Error submitting HB Screening Camp details:', error);
           this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
         }
       );
@@ -335,29 +329,31 @@ export class CampsComponent implements OnInit {
       const heightInMeters = height / 100;
       const bmi = weight / (heightInMeters * heightInMeters);
 
-      this.aarogyaCampForm.get('bmi')?.setValue(bmi.toFixed(2));
-      this.updateBMIStatus(bmi);
+      // Round the BMI to an integer (no decimal places)
+      const roundedBMI = Math.round(bmi);
+      this.aarogyaCampForm.get('BMI')?.setValue(roundedBMI);
+      this.updateBMIStatus(bmi); // Optionally keep the full value for other uses
     }
   }
 
   updateBMIStatus(bmi: number): void {
-    let bmiStatus = '';
+    let BMIReadings = '';
 
     if (bmi < 18.5) {
-      bmiStatus = 'Underweight';
+      BMIReadings = 'Underweight';
     } else if (bmi >= 18.5 && bmi <= 24.9) {
-      bmiStatus = 'Normal weight';
+      BMIReadings = 'Normal weight';
     } else if (bmi >= 25 && bmi <= 29.9) {
-      bmiStatus = 'Overweight';
+      BMIReadings = 'Overweight';
     } else if (bmi >= 30) {
-      bmiStatus = 'Obesity';
+      BMIReadings = 'Obesity';
     }
 
-    this.aarogyaCampForm.get('bmiStatus')?.setValue(bmiStatus);
+    this.aarogyaCampForm.get('BMIReadings')?.setValue(BMIReadings);
   }
 
   onHBChangeAarogyaCamp(): void {
-    const hbValue = this.aarogyaCampForm.get('hb')?.value;
+    const hbValue = this.aarogyaCampForm.get('HB')?.value;
 
     let HBReadings = '';
     if (hbValue >= 11 && hbValue <= 11.9) {
@@ -396,11 +392,10 @@ export class CampsComponent implements OnInit {
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
-            this.toastr.error(response.msg, 'Error');
+            this.toastr.error('Something went wrong. Please try again.', 'Error');
           }
         },
         (error) => {
-          console.error('Error submitting HB Screening Camp details:', error);
           this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
         }
       );
@@ -430,11 +425,10 @@ export class CampsComponent implements OnInit {
             this.subVillages = []; // Clear sub-villages
             this.router.navigate(['/all_camps']); // Navigate to a success page or wherever needed
           } else {
-            this.toastr.error(response.msg, 'Error');
+            this.toastr.error('Something went wrong. Please try again.', 'Error');
           }
         },
         (error) => {
-          console.error('Error submitting HB Screening Camp details:', error);
           this.toastr.error(error?.error?.msg || 'Something went wrong. Please try again', 'Error');
         }
       );

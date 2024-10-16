@@ -89,7 +89,7 @@ export class ServiceService {
   }
 
   downloadAarogyaCampExcelsheet(): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/aarogyaDhansampada/`, {
+    return this.http.get(`${this.url}/adcamp/adcampExcelsheet/`, {
       responseType: 'blob',
     });
   }
@@ -164,8 +164,15 @@ export class ServiceService {
   }
 
   // Download Aarogya Dhansampada Camp Report
-  downloadAarogyaCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/aarogyaDhansampada`, {
+  downloadADCampBMIReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/adcamp/adcampBMIReport/`, {
+      responseType: 'blob',
+      params: { village, month, year, client_name },
+    });
+  }
+
+  downloadADCampHBReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/adcamp/adcampHBReport/`, {
       responseType: 'blob',
       params: { village, month, year, client_name },
     });
@@ -259,7 +266,7 @@ export class ServiceService {
   }
 
   postAarogyaCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/`, data);
+    return this.http.post<any>(`${this.url}/adcamp/addadcamp/`, data);
   }
 
   postMegaCampForm(data: any): Observable<any> {

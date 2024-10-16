@@ -53,6 +53,9 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
       diagnosis: ['', Validators.required],
       prescribedMedicine1: ['',],
       prescribedMedicine2: ['',],
+      prescribedMedicine3: ['',],
+      prescribedMedicine4: ['',],
+      diagnosis2: ['',],
       dosage: ['',],
       treatmentRemark: ['',]
     });
@@ -154,18 +157,6 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
       reader.readAsText(file);
     }
   }
-
-  // onFileChange(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const jsonData = JSON.parse(e.target.result);
-  //       this.patientForm.patchValue(jsonData);
-  //     };
-  //     reader.readAsText(file);
-  //   }
-  // }
 
   onDateChange(event: any): void {
     const selectedDate = new Date(event.target.value);
