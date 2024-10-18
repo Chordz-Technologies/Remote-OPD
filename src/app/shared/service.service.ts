@@ -95,7 +95,7 @@ export class ServiceService {
   }
 
   downloadMegaCampExcelsheet(): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/megaCamp/`, {
+    return this.http.get(`${this.url}/megacamp/excelsheetmegacamp/`, {
       responseType: 'blob',
     });
   }
@@ -179,12 +179,12 @@ export class ServiceService {
   }
 
   // Download Mega Camp Report
-  downloadMegaCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
-    return this.http.get(`${this.url}/reports/megaCamp`, {
-      responseType: 'blob',
-      params: { village, month, year, client_name },
-    });
-  }
+  // downloadMegaCampReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+  //   return this.http.get(`${this.url}/reports/megaCamp`, {
+  //     responseType: 'blob',
+  //     params: { village, month, year, client_name },
+  //   });
+  // }
 
   //get client Name
   getClientNames(): Observable<any> {
@@ -270,7 +270,7 @@ export class ServiceService {
   }
 
   postMegaCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/`, data);
+    return this.http.post<any>(`${this.url}/megacamp/addmegacamp/`, data);
   }
 
   // Get Patient past data

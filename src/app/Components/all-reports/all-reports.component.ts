@@ -189,13 +189,13 @@ export class AllReportsComponent {
   }
 
   // Download Mega Camp Report
-  downloadMegaCampReport() {
-    const { village, month, year, client_name } = this.getFilterValues();
-    this.service.downloadMegaCampReport(village, month, year, client_name).subscribe((response: Blob) => {
-      this.downloadFile(response, 'Mega Camp Report.xlsx');
-    },
-      (error) => {
-        this.toastr.error('Please Select Year, Month, Village Name & Client Name.', 'Error');
-      });
-  }
+  // downloadMegaCampReport() {
+  //   const { village, month, year, client_name } = this.getFilterValues();
+  //   this.service.downloadMegaCampReport(village, month, year, client_name).subscribe((response: Blob) => {
+  //     this.downloadFile(response, 'Mega Camp Report.xlsx');
+  //   },
+  //     (error) => {
+  //       this.toastr.error('Please Select Year, Month, Village Name & Client Name.', 'Error');
+  //     });
+  // }
 }

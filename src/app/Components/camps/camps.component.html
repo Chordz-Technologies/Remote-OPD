@@ -439,17 +439,15 @@
                 <label for="year">Year</label>
                 <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year" readonly />
               </div>
-            </div>
-            <div class="form-column">
               <div class="form-group">
                 <label for="gender">Gender</label>
                 <div class="radio-group my-4">
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="M" />
+                    <input type="radio" formControlName="gender" value="Male" />
                     <span>Male</span>
                   </label>
                   <label class="radio-label">
-                    <input type="radio" formControlName="gender" value="F" />
+                    <input type="radio" formControlName="gender" value="Female" />
                     <span>Female</span>
                   </label>
                 </div>
@@ -463,64 +461,117 @@
                 <input id="contactNo" type="text" formControlName="contact" class="form-control"
                   placeholder="Enter Contact No." />
               </div>
+            </div>
+            <div class="form-column">
               <div class="form-group">
-                <label for="mainVillage">Main Village</label>
-                <select id="mainVillage" formControlName="village" class="form-control"
-                  (change)="onMainVillageChange($event)">
-                  <option value="" disabled selected>
-                    Select Main Village
-                  </option>
-                  <option *ngFor="let village of villages" [value]="village.id">
-                    {{ village.name }}
-                  </option>
-                </select>
+                <div class="dropdown-with-arrow">
+                  <label for="mainVillage">Main Village</label>
+                  <select id="mainVillage" formControlName="village" class="form-control"
+                    (change)="onMainVillageChange($event)">
+                    <option value="" disabled selected>
+                      Select Main Village
+                    </option>
+                    <option *ngFor="let village of villages" [value]="village.id">
+                      {{ village.name }}
+                    </option>
+                  </select>
+                  <div class="arrow-down"></div>
+                </div>
               </div>
-              <div class="form-group" *ngIf="subVillages.length > 0">
-                <label for="subVillage">Sub-Village</label>
-                <select id="subVillage" formControlName="subvillage" class="form-control">
-                  <option value="" disabled selected>Select Sub-Village</option>
-                  <option *ngFor="let subVillage of subVillages" [value]="subVillage">
-                    {{ subVillage }}
-                  </option>
-                </select>
+              <div class="form-group" *ngIf="villageName.length > 0">
+                <div class="dropdown-with-arrow">
+                  <label for="subVillage">Sub-Village</label>
+                  <select id="subVillage" formControlName="villagename" class="form-control">
+                    <option value="" disabled selected>
+                      Select Sub-Village
+                    </option>
+                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
+                      {{ subVillage }}
+                    </option>
+                  </select>
+                  <div class="arrow-down"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="Weight">Weight</label>
+                <input id="Weight" type="text" formControlName="weight" class="form-control"
+                  placeholder="Enter Weight" />
+              </div>
+              <div class="form-group">
+                <label for="Height">Height</label>
+                <input id="Height" type="text" formControlName="height" class="form-control"
+                  placeholder="Enter Height" />
+              </div>
+              <div class="form-group">
+                <label for="BP">BP</label>
+                <input id="BP" type="text" formControlName="bp" class="form-control" placeholder="Enter BP" />
+              </div>
+              <div class="form-group">
+                <label for="Pulse">Pulse</label>
+                <input id="Pulse" type="text" formControlName="pulse" class="form-control" placeholder="Enter Pulse" />
+              </div>
+              <div class="form-group">
+                <label for="Temperature">Temperature</label>
+                <input id="Temperature" type="text" formControlName="temperature" class="form-control"
+                  placeholder="Enter Temperature" />
+              </div>
+              <div class="form-group">
+                <label for="BloodTest">Blood Test</label>
+                <input id="BloodTest" type="text" formControlName="bloodtest" class="form-control"
+                  placeholder="Enter BloodTest" />
+              </div>
+              <div class="form-group">
+                <label for="hb">HB</label>
+                <input id="hb" type="text" formControlName="hb" class="form-control" placeholder="Enter HB" />
+              </div>
+              <div class="form-group">
+                <label for="X-RAY">X-RAY</label>
+                <input id="X-RAY" type="text" formControlName="xray" class="form-control" placeholder="Enter X-RAY" />
               </div>
             </div>
           </div>
           <div class="form-grid">
             <div class="form-column">
               <div class="form-group">
-                <label for="breastCancer">Breast Cancer Test</label>
-                <select id="breastCancer" formControlName="breastCancer" class="form-control">
-                  <option value="" disabled selected>Select Option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <label for="ECG">ECG</label>
+                <input id="ECG" type="text" formControlName="ecg" class="form-control" placeholder="Enter ECG" />
               </div>
               <div class="form-group">
-                <label for="oralCancer">Oral Cancer Test</label>
-                <select id="oralCancer" formControlName="oralCancer" class="form-control">
-                  <option value="" disabled selected>Select Option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <label for="EyeTest">Eye Test</label>
+                <input id="EyeTest" type="text" formControlName="eyetest" class="form-control"
+                  placeholder="Enter Eye Test" />
+              </div>
+              <div class="form-group">
+                <label for="Audiometry">Audiometry</label>
+                <input id="Audiometry" type="text" formControlName="audiometry" class="form-control"
+                  placeholder="Enter Audiometry" />
+              </div>
+              <div class="form-group">
+                <label for="Spirometry">Spirometry</label>
+                <input id="Spirometry" type="text" formControlName="spirometry" class="form-control"
+                  placeholder="Enter Spirometry" />
               </div>
             </div>
             <div class="form-column">
               <div class="form-group">
-                <label for="cervicalCancer">Cervical Cancer Test</label>
-                <select id="cervicalCancer" formControlName="cervicalCancer" class="form-control">
-                  <option value="" disabled selected>Select Option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <label for="breastCancer">Breast Screening Test</label>
+                <input id="breastCancer" type="text" formControlName="breastcancer" class="form-control"
+                  placeholder="Enter Breast Screening Test" />
               </div>
               <div class="form-group">
-                <label for="tbTest">TB Test</label>
-                <select id="tbTest" formControlName="tbTest" class="form-control">
-                  <option value="" disabled selected>Select Option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <label for="cervicalCancer">Cervical / Gynea Screening Test</label>
+                <input id="cervicalCancer" type="text" formControlName="cervicalcancer" class="form-control"
+                  placeholder="Enter Cervical / Gynea Screening Test" />
+              </div>
+              <div class="form-group">
+                <label for="oralCancer">Oral Screening Test</label>
+                <input id="oralCancer" type="text" formControlName="oralcancer" class="form-control"
+                  placeholder="Enter Oral Screening Test" />
+              </div>
+              <div class="form-group">
+                <label for="tb">TB Screening Test</label>
+                <input id="tb" type="text" formControlName="tb" class="form-control"
+                  placeholder="Enter TB Screening Test" />
               </div>
             </div>
           </div>
