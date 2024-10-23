@@ -37,6 +37,12 @@
       </button>
 
       <button mat-button *ngIf="ADMIN || DOCTOR" class="menu-button" [routerLinkActive]="['active']"
+        [routerLink]="['/camps_forms']">
+        <mat-icon>assignment</mat-icon>
+        <span>Camps Form</span>
+      </button>
+
+      <button mat-button *ngIf="ADMIN || DOCTOR" class="menu-button" [routerLinkActive]="['active']"
         [routerLink]="['/all_camps']">
         <mat-icon>holiday_village</mat-icon>
         <span>All Camps</span>

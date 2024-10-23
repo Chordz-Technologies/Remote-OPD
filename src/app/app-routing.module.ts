@@ -10,6 +10,7 @@ import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-pa
 import { AllReportsComponent } from './Components/all-reports/all-reports.component';
 import { CampsComponent } from './Components/camps/camps.component';
 import { EditVillagesComponent } from './Components/edit-villages/edit-villages.component';
+import { AllCampsComponent } from './Components/all-camps/all-camps.component';
 
 const routes: Routes = [
   {
@@ -23,9 +24,9 @@ const routes: Routes = [
       { path: 'add_villages', component: EditVillagesComponent },
       { path: 'edit_villages/:id', component: EditVillagesComponent },
       { path: 'all_reports', component: AllReportsComponent },
-      { path: 'all_camps', component: CampsComponent },
+      { path: 'camps_forms', component: CampsComponent },
+      { path: 'all_camps', component: AllCampsComponent },
       { path: 'all_reports', component: AllReportsComponent }
-
     ]
   },
 

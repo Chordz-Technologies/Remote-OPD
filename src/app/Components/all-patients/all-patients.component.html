@@ -78,11 +78,11 @@
         <td mat-cell *matCellDef="let row">{{ row.year }}</td>
       </ng-container>
       <ng-container matColumnDef="village">
-        <th mat-header-cell *matHeaderCellDef><b>Village</b></th>
+        <th mat-header-cell *matHeaderCellDef><b>Site Name</b></th>
         <td mat-cell *matCellDef="let row">{{ row.village }}</td>
       </ng-container>
       <ng-container matColumnDef="villageName">
-        <th mat-header-cell *matHeaderCellDef><b>Sub-Village Name</b></th>
+        <th mat-header-cell *matHeaderCellDef><b>Village Name</b></th>
         <td mat-cell *matCellDef="let row">{{ row.villageName }}</td>
       </ng-container>
       <ng-container matColumnDef="category">
@@ -145,7 +145,5 @@
     </table>
   </div>
   <br />
-  <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50, 100]"
-    [showFirstLastButtons]="true">
-  </mat-paginator>
+  <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [showFirstLastButtons]="true"></mat-paginator>
 </div>

@@ -170,6 +170,4 @@ export class AddusersbyAdminComponent {
   edit(id: number) {
     this.router.navigate(['/edit_villages/', id]);
   }
-
-
 }

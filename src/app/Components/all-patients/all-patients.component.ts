@@ -128,6 +128,4 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
   edit(id: number): void {
     this.router.navigate(['/edit_patient_info', id]);
   }
-
-
 }

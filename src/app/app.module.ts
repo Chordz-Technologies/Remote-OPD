@@ -33,6 +33,7 @@ import { EditPatientInfoComponent } from './Components/edit-patient-info/edit-pa
 import { AllReportsComponent } from './Components/all-reports/all-reports.component';
 import { CampsComponent } from './Components/camps/camps.component';
 import { EditVillagesComponent } from './Components/edit-villages/edit-villages.component';
+import { AllCampsComponent } from './Components/all-camps/all-camps.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { EditVillagesComponent } from './Components/edit-villages/edit-villages.
     AllReportsComponent,
     CampsComponent,
     AllReportsComponent,
-    EditVillagesComponent
+    EditVillagesComponent,
+    AllCampsComponent
   ],
   imports: [
     BrowserModule,

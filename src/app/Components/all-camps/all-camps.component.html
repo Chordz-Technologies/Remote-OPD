@@ -1,0 +1,411 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <button mat-raised-button color="primary" class="btn btn-primary w-100"
+                (click)="currentForm = 'ncd-eye-screening'">
+                Eye Screening Camp
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="primary" class="btn btn-primary w-100"
+                (click)="currentForm = 'ncd-hb-screening'">
+                Village Level HB Screening Camp
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="primary" class="btn btn-primary w-100"
+                (click)="currentForm = 'aarogya-camp'">
+                Aarogya Dhansampada Camp
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="primary" class="btn btn-primary w-100" (click)="currentForm = 'mega-camp'">
+                Mega Camp
+            </button>
+        </div>
+    </div>
+</div>
+
+<!--   NCD – Eye Screening Camp Details -->
+<div class="container-fluid">
+    <div *ngIf="currentForm === 'ncd-eye-screening'">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <h2 class="form-heading">NCD – Eye Screening Camp Details</h2>
+                <div class="main-div">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource1" class="mat-table" class="mat-elevation-z8">
+                            <ng-container matColumnDef="SrNo">
+                                <th mat-header-cell *matHeaderCellDef><b>Sr. No.</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.SrNo }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="client_name">
+                                <th mat-header-cell *matHeaderCellDef><b>Client Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef><b>Patient Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="village">
+                                <th mat-header-cell *matHeaderCellDef><b>Site Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.village }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="subvillage">
+                                <th mat-header-cell *matHeaderCellDef><b>Village Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.subvillage }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef><b>Date</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="month">
+                                <th mat-header-cell *matHeaderCellDef><b>Month</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.month }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th mat-header-cell *matHeaderCellDef><b>Year</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef><b>Gender</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef><b>Age</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="contact">
+                                <th mat-header-cell *matHeaderCellDef><b>Contact</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.contact }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef><b>Code</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.code }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Description">
+                                <th mat-header-cell *matHeaderCellDef><b>Description</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.Description }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Opinion">
+                                <th mat-header-cell *matHeaderCellDef><b>Opinion</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.Opinion }}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+                        </table>
+                    </div>
+                    <br />
+                    <mat-paginator [length]="totalRecords1" [pageSize]="pageSize1" [showFirstLastButtons]="true"
+                        (page)="onPageChange1($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NCD – Village Level HB Screening Camp Details -->
+<div class="container-fluid">
+    <div *ngIf="currentForm === 'ncd-hb-screening'">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <h2 class="form-heading">NCD – Village Level HB Screening Camp Details</h2>
+                <div class="main-div">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource2" class="mat-table" class="mat-elevation-z8">
+                            <ng-container matColumnDef="SrNo">
+                                <th mat-header-cell *matHeaderCellDef><b>Sr. No.</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.SrNo }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="client_name">
+                                <th mat-header-cell *matHeaderCellDef><b>Client Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef><b>Patient Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="village">
+                                <th mat-header-cell *matHeaderCellDef><b>Site Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.village }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="subvillage">
+                                <th mat-header-cell *matHeaderCellDef><b>Village Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.subvillage }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef><b>Date</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="month">
+                                <th mat-header-cell *matHeaderCellDef><b>Month</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.month }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th mat-header-cell *matHeaderCellDef><b>Year</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef><b>Gender</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef><b>Age</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="contact">
+                                <th mat-header-cell *matHeaderCellDef><b>Contact</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.contact }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="HB">
+                                <th mat-header-cell *matHeaderCellDef><b>HB</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.HB }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="HBReadings">
+                                <th mat-header-cell *matHeaderCellDef><b>HB Readings</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.HBReadings }}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+                        </table>
+                    </div>
+                    <br />
+                    <mat-paginator [length]="totalRecords2" [pageSize]="pageSize2" [showFirstLastButtons]="true"
+                        (page)="onPageChange2($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  Aarogya Dhansampada Camp Details -->
+<div class="container-fluid">
+    <div *ngIf="currentForm === 'aarogya-camp'">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <h2 class="form-heading">Aarogya Dhansampada Camp Details</h2>
+                <div class="main-div">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource3" class="mat-table" class="mat-elevation-z8">
+                            <ng-container matColumnDef="SrNo">
+                                <th mat-header-cell *matHeaderCellDef><b>Sr. No.</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.SrNo }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="client_name">
+                                <th mat-header-cell *matHeaderCellDef><b>Client Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef><b>Patient Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="village">
+                                <th mat-header-cell *matHeaderCellDef><b>Site Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.village }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="subvillage">
+                                <th mat-header-cell *matHeaderCellDef><b>Village Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.villageName }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef><b>Date</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="month">
+                                <th mat-header-cell *matHeaderCellDef><b>Month</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.month }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th mat-header-cell *matHeaderCellDef><b>Year</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef><b>Age</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="contact">
+                                <th mat-header-cell *matHeaderCellDef><b>Contact</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.contact }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="standard">
+                                <th mat-header-cell *matHeaderCellDef><b>Standard</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.standard }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                                <th mat-header-cell *matHeaderCellDef><b>Weight</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.weight }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="height">
+                                <th mat-header-cell *matHeaderCellDef><b>Height</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.height }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="HB">
+                                <th mat-header-cell *matHeaderCellDef><b>HB</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.HB }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="HBReadings">
+                                <th mat-header-cell *matHeaderCellDef><b>HB Readings</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.HBReadings }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="BMI">
+                                <th mat-header-cell *matHeaderCellDef><b>BMI</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.BMI }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="BMIReadings">
+                                <th mat-header-cell *matHeaderCellDef><b>BMI Readings</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.BMIReadings }}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns3"></tr>
+                        </table>
+                    </div>
+                    <br />
+                    <mat-paginator [length]="totalRecords3" [pageSize]="pageSize3" [showFirstLastButtons]="true"
+                        (page)="onPageChange3($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mega Camp Details -->
+<div class="container-fluid">
+    <div *ngIf="currentForm === 'mega-camp'">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <h2 class="form-heading">Mega Camp Details</h2>
+                <div class="main-div">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource4" class="mat-table" class="mat-elevation-z8">
+                            <ng-container matColumnDef="SrNo">
+                                <th mat-header-cell *matHeaderCellDef><b>Sr. No.</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.srno }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="client_name">
+                                <th mat-header-cell *matHeaderCellDef><b>Client Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef><b>Patient Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="village">
+                                <th mat-header-cell *matHeaderCellDef><b>Site Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.village }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="villagename">
+                                <th mat-header-cell *matHeaderCellDef><b>Village Name</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.villagename }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef><b>Date</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="day">
+                                <th mat-header-cell *matHeaderCellDef><b>Day</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.day }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="month">
+                                <th mat-header-cell *matHeaderCellDef><b>Month</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.month }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th mat-header-cell *matHeaderCellDef><b>Year</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef><b>Gender</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef><b>Age</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.age }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="contact">
+                                <th mat-header-cell *matHeaderCellDef><b>Contact</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.contact }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                                <th mat-header-cell *matHeaderCellDef><b>Weight</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.weight }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="height">
+                                <th mat-header-cell *matHeaderCellDef><b>Height</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.height }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="bp">
+                                <th mat-header-cell *matHeaderCellDef><b>BP</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.bp }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="pulse">
+                                <th mat-header-cell *matHeaderCellDef><b>Pulse</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.pulse }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="temperature">
+                                <th mat-header-cell *matHeaderCellDef><b>Temperature</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.temperature }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="bloodtest">
+                                <th mat-header-cell *matHeaderCellDef><b>Blood Test</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.bloodtest }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="hb">
+                                <th mat-header-cell *matHeaderCellDef><b>HB</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.hb }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="xray">
+                                <th mat-header-cell *matHeaderCellDef><b>X-RAY</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.xray }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ecg">
+                                <th mat-header-cell *matHeaderCellDef><b>ECG</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.ecg }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="eyetest">
+                                <th mat-header-cell *matHeaderCellDef><b>Eye Test</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.eyetest }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="audiometry">
+                                <th mat-header-cell *matHeaderCellDef><b>Audiometry</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.audiometry }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="spirometry">
+                                <th mat-header-cell *matHeaderCellDef><b>Spirometry</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.spirometry }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="breastcancer">
+                                <th mat-header-cell *matHeaderCellDef><b>Breast Cancer</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.breastcancer }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="cervicalcancer">
+                                <th mat-header-cell *matHeaderCellDef><b>Cervical Cancer</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.cervicalcancer }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="oralcancer">
+                                <th mat-header-cell *matHeaderCellDef><b>Oral Cancer</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.oralcancer }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="tb">
+                                <th mat-header-cell *matHeaderCellDef><b>TB</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.tb }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef><b>Description</b></th>
+                                <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns4"></tr>
+                        </table>
+                    </div>
+                    <br />
+                    <mat-paginator [length]="totalRecords4" [pageSize]="pageSize4" [showFirstLastButtons]="true"
+                        (page)="onPageChange4($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

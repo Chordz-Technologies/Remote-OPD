@@ -66,11 +66,11 @@
             <div class="form-column">
               <div class="form-group">
                 <div class="dropdown-with-arrow">
-                  <label for="mainVillage">Main Village</label>
+                  <label for="mainVillage">Site Name</label>
                   <select id="mainVillage" (change)="onMainVillageChange($event)" formControlName="village"
                     class="form-control">
                     <option value="" disabled selected>
-                      Select Main Village
+                      Select Site Name
                     </option>
                     <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
@@ -81,11 +81,11 @@
               </div>
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
-                  <label for="subVillage">Sub-Village</label>
+                  <label for="subVillage">Village Name</label>
                   <div class="arrow-down"></div>
                   <select id="subVillage" formControlName="subvillage" class="form-control">
                     <option value="" disabled selected>
-                      Select Sub-Village
+                      Select Village Name
                     </option>
                     <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
@@ -217,11 +217,11 @@
               </div>
               <div class="form-group">
                 <div class="dropdown-with-arrow">
-                  <label for="mainVillage">Main Village</label>
+                  <label for="mainVillage">Site Name</label>
                   <select id="mainVillage" (change)="onMainVillageChange($event)" formControlName="village"
                     class="form-control">
                     <option value="" disabled selected>
-                      Select Main Village
+                      Select Site Name
                     </option>
                     <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
@@ -232,11 +232,11 @@
               </div>
               <div class="form-group" *ngIf="subVillages.length > 0">
                 <div class="dropdown-with-arrow">
-                  <label for="subVillage">Sub-Village</label>
+                  <label for="subVillage">Village Name</label>
                   <div class="arrow-down"></div>
                   <select id="subVillage" formControlName="subvillage" class="form-control">
                     <option value="" disabled selected>
-                      Select Sub-Village
+                      Select Village Name
                     </option>
                     <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
@@ -307,11 +307,11 @@
               </div>
               <div class="form-group">
                 <div class="dropdown-with-arrow">
-                  <label for="mainVillage">Main Village</label>
+                  <label for="mainVillage">Site Name</label>
                   <select id="mainVillage" formControlName="village" class="form-control"
                     (change)="onMainVillageChange($event)">
                     <option value="" disabled selected>
-                      Select Main Village
+                      Select Site Name
                     </option>
                     <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
@@ -322,10 +322,10 @@
               </div>
               <div class="form-group" *ngIf="villageName.length > 0">
                 <div class="dropdown-with-arrow">
-                  <label for="subVillage">Sub-Village</label>
+                  <label for="subVillage">Village Name</label>
                   <select id="subVillage" formControlName="villageName" class="form-control">
                     <option value="" disabled selected>
-                      Select Sub-Village
+                      Select Village Name
                     </option>
                     <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}
@@ -465,11 +465,11 @@
             <div class="form-column">
               <div class="form-group">
                 <div class="dropdown-with-arrow">
-                  <label for="mainVillage">Main Village</label>
+                  <label for="mainVillage">Site Name</label>
                   <select id="mainVillage" formControlName="village" class="form-control"
                     (change)="onMainVillageChange($event)">
                     <option value="" disabled selected>
-                      Select Main Village
+                      Select Site Name
                     </option>
                     <option *ngFor="let village of villages" [value]="village.id">
                       {{ village.name }}
@@ -480,10 +480,10 @@
               </div>
               <div class="form-group" *ngIf="villageName.length > 0">
                 <div class="dropdown-with-arrow">
-                  <label for="subVillage">Sub-Village</label>
+                  <label for="subVillage">Village Name</label>
                   <select id="subVillage" formControlName="villagename" class="form-control">
                     <option value="" disabled selected>
-                      Select Sub-Village
+                      Select Village Name
                     </option>
                     <option *ngFor="let subVillage of subVillages" [value]="subVillage">
                       {{ subVillage }}

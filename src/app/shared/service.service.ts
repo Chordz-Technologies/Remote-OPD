@@ -273,6 +273,34 @@ export class ServiceService {
     return this.http.post<any>(`${this.url}/megacamp/addmegacamp/`, data);
   }
 
+  getEyeCampRecords(pageIndex: number, pageSize: number): Observable<any> {
+    let params = new HttpParams()
+      .set('start_index', pageIndex.toString())
+      .set('limit', pageSize.toString());
+    return this.http.get(`${this.url}/eyecamp/getalleyecamp/`, { params });
+  }
+
+  getHBCampRecords(pageIndex: number, pageSize: number): Observable<any> {
+    let params = new HttpParams()
+      .set('start_index', pageIndex.toString())
+      .set('limit', pageSize.toString());
+    return this.http.get(`${this.url}/hbcamp/getallhbcamp/`, { params });
+  }
+
+  getAarogyaCampRecords(pageIndex: number, pageSize: number): Observable<any> {
+    let params = new HttpParams()
+      .set('start_index', pageIndex.toString())
+      .set('limit', pageSize.toString());
+    return this.http.get(`${this.url}/adcamp/getalladcamp/`, { params });
+  }
+
+  getMegaCampRecords(pageIndex: number, pageSize: number): Observable<any> {
+    let params = new HttpParams()
+      .set('start_index', pageIndex.toString())
+      .set('limit', pageSize.toString());
+    return this.http.get(`${this.url}/megacamp/getallmegacamp`, { params });
+  }
+
   // Get Patient past data
   getPatientHistory(patientName: string): Observable<any> {
     return this.http.get<any>(`${this.url}/patient/PatientHistory/?patientName=${patientName}`);
