@@ -32,6 +32,10 @@
         <div class="form-wrapper">
             <div class="form-content">
                 <h2 class="form-heading">NCD – Eye Screening Camp Details</h2>
+                <mat-form-field style="width: 100%">
+                    <mat-label><mat-icon>search</mat-icon> Search</mat-label>
+                    <input matInput (keyup)="searchEyeCampRecords($event)" #input />
+                </mat-form-field>
                 <div class="main-div">
                     <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource1" class="mat-table" class="mat-elevation-z8">
@@ -111,6 +115,10 @@
         <div class="form-wrapper">
             <div class="form-content">
                 <h2 class="form-heading">NCD – Village Level HB Screening Camp Details</h2>
+                <mat-form-field style="width: 100%">
+                    <mat-label><mat-icon>search</mat-icon> Search</mat-label>
+                    <input matInput (keyup)="searchHBCampRecords($event)" #input />
+                </mat-form-field>
                 <div class="main-div">
                     <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource2" class="mat-table" class="mat-elevation-z8">
@@ -186,6 +194,10 @@
         <div class="form-wrapper">
             <div class="form-content">
                 <h2 class="form-heading">Aarogya Dhansampada Camp Details</h2>
+                <mat-form-field style="width: 100%">
+                    <mat-label><mat-icon>search</mat-icon> Search</mat-label>
+                    <input matInput (keyup)="searchADCampRecords($event)" #input />
+                </mat-form-field>
                 <div class="main-div">
                     <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource3" class="mat-table" class="mat-elevation-z8">
@@ -277,6 +289,10 @@
         <div class="form-wrapper">
             <div class="form-content">
                 <h2 class="form-heading">Mega Camp Details</h2>
+                <mat-form-field style="width: 100%">
+                    <mat-label><mat-icon>search</mat-icon> Search</mat-label>
+                    <input matInput (keyup)="searchMegaCampRecords($event)" #input />
+                </mat-form-field>
                 <div class="main-div">
                     <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource4" class="mat-table" class="mat-elevation-z8">

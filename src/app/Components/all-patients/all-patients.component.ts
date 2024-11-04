@@ -24,7 +24,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  years: string[] = ['2020', '2021', '2022', '2023', '2024'];
+  years: string[] = ['2021', '2022', '2023', '2024', '2025'];
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [

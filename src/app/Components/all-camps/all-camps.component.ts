@@ -51,6 +51,9 @@ export class AllCampsComponent {
   @ViewChild('paginator3') paginator3!: MatPaginator;
   @ViewChild('paginator4') paginator4!: MatPaginator;
 
+  selectedFromMonth: string = 'January';
+  selectedToMonth: string = 'December';
+
 
   constructor(private service: ServiceService) { }
 
@@ -167,5 +170,109 @@ export class AllCampsComponent {
     this.pageIndex4 = event.pageIndex;
     this.pageSize4 = event.pageSize;
     this.loadMegaCampData();
+  }
+
+  searchEyeCampRecords(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.pageIndex1 = 0;
+    if (this.paginator1) {
+      this.paginator1.pageIndex = 0;
+    }
+
+    if (filterValue) {
+      this.service.searchEyeCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth).subscribe({
+        next: (response) => {
+          this.dataSource1.data = response.patients || [];
+          this.totalRecords1 = response.total_records || 0;
+          if (this.paginator1) {
+            this.paginator1.length = this.totalRecords1;
+            this.paginator1.pageIndex = 0;
+          }
+        },
+        error: (error) => {
+          console.error('Error searching records:', error);
+        }
+      });
+    } else {
+      this.loadEyeScreeningData();
+    }
+  }
+
+  searchHBCampRecords(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.pageIndex2 = 0;
+    if (this.paginator2) {
+      this.paginator2.pageIndex = 0;
+    }
+
+    if (filterValue) {
+      this.service.searchHBCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth).subscribe({
+        next: (response) => {
+          this.dataSource2.data = response.patients || [];
+          this.totalRecords2 = response.total_records || 0;
+          if (this.paginator2) {
+            this.paginator2.length = this.totalRecords2;
+            this.paginator2.pageIndex = 0;
+          }
+        },
+        error: (error) => {
+          console.error('Error searching records:', error);
+        }
+      });
+    } else {
+      this.loadHBScreeningData();
+    }
+  }
+
+  searchADCampRecords(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.pageIndex3 = 0;
+    if (this.paginator3) {
+      this.paginator3.pageIndex = 0;
+    }
+
+    if (filterValue) {
+      this.service.searchADCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth).subscribe({
+        next: (response) => {
+          this.dataSource3.data = response.patients || [];
+          this.totalRecords3 = response.total_records || 0;
+          if (this.paginator3) {
+            this.paginator3.length = this.totalRecords3;
+            this.paginator3.pageIndex = 0;
+          }
+        },
+        error: (error) => {
+          console.error('Error searching records:', error);
+        }
+      });
+    } else {
+      this.loadAarogyaCampData();
+    }
+  }
+
+  searchMegaCampRecords(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.pageIndex4 = 0;
+    if (this.paginator4) {
+      this.paginator4.pageIndex = 0;
+    }
+
+    if (filterValue) {
+      this.service.searchMegaCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth).subscribe({
+        next: (response) => {
+          this.dataSource4.data = response.patients || [];
+          this.totalRecords4 = response.total_records || 0;
+          if (this.paginator4) {
+            this.paginator4.length = this.totalRecords4;
+            this.paginator4.pageIndex = 0;
+          }
+        },
+        error: (error) => {
+          console.error('Error searching records:', error);
+        }
+      });
+    } else {
+      this.loadMegaCampData();
+    }
   }
 }
