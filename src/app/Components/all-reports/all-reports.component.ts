@@ -125,6 +125,16 @@ export class AllReportsComponent {
       });
   }
 
+  downloadVillageWiseCategoryReport() {
+    const { village, month, year, client_name } = this.getFilterValues();
+    this.service.downloadVillageWiseCategoryReport(village, month, year, client_name).subscribe((response: Blob) => {
+      this.downloadFile(response, 'Village Wise Category Wise Report.xlsx');
+    },
+      (error) => {
+        this.toastr.error('Please Select Year, Month, Village Name & Client Name.', 'Error');
+      });
+  }
+
   downloadMonthlySummaryDiseaseTotalCount() {
     const { village, month, year, client_name } = this.getFilterValues();
     this.service.downloadMonthlySummaryDiseaseTotalCount(village, month, year, client_name).subscribe((response: Blob) => {

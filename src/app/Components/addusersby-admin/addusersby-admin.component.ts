@@ -1,7 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -19,15 +18,17 @@ export class AddusersbyAdminComponent {
   showForm = false;
   isEditMode = false;
   currentUserId: string | null = null;
-
+  currentForm!: string;
   public dataLoaded: boolean = false;
-
-  displayedColumns: string[] = ['id', 'name', 'action'];
-  dataSource!: MatTableDataSource<any>;
-
-  @ViewChild(MatSort) sort!: MatSort;
+  displayedColumns1: string[] = ['id', 'name', 'action'];
+  dataSource1!: MatTableDataSource<any>;
+  displayedColumns2: string[] = ['id', 'name', 'action'];
+  dataSource2!: MatTableDataSource<any>;
+  displayedColumns3: string[] = ['id', 'name', 'action'];
+  dataSource3!: MatTableDataSource<any>;
   villages: any;
-
+  diseases: any;
+  medicines: any;
   constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
@@ -39,8 +40,9 @@ export class AddusersbyAdminComponent {
     });
 
     this.getAllUsers();
-
-    this.getAllVillageList()
+    this.getAllVillageList();
+    this.getAllDiseases();
+    this.getAllMedicines();
   }
 
   toggleForm(): void {
@@ -138,36 +140,52 @@ export class AddusersbyAdminComponent {
     }
   }
 
-
   getAllVillageList() {
     this.userService.getAllVillages().subscribe({
       next: (res: any) => {
         this.dataLoaded = true;
         this.villages = res.all_Villages;
-        this.dataSource = new MatTableDataSource(this.villages);
-        // this.dataSource.sort = this.sort;
-        // this.dataSource.paginator = this.paginator;
+        this.dataSource1 = new MatTableDataSource(this.villages);
       },
       error: (err: any) => {
-        alert(err);
+        console.log(err);
       }
     });
   }
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+  getAllDiseases() {
+    this.userService.getAllDiseases().subscribe({
+      next: (res: any) => {
+        this.dataLoaded = true;
+        this.diseases = res.all_diseases;
+        this.dataSource2 = new MatTableDataSource(this.diseases);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
   }
-  onChange(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  getAllMedicines() {
+    this.userService.getAllMedicines().subscribe({
+      next: (res: any) => {
+        this.dataLoaded = true;
+        this.medicines = res.all_mediciness;
+        this.dataSource3 = new MatTableDataSource(this.medicines);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
   }
 
-  edit(id: number) {
+  editVillages(id: number) {
     this.router.navigate(['/edit_villages/', id]);
+  }
+  editDiseases(id: number) {
+    this.router.navigate(['/edit_diseases/', id]);
+  }
+  editMedicines(id: number) {
+    this.router.navigate(['/edit_medicines/', id]);
   }
 }

@@ -18,7 +18,6 @@ export class EditVillagesComponent implements OnInit {
   @ViewChild('confirmationDialogTemplate') confirmationDialogTemplate!: TemplateRef<any>;
   editSubVillageControl = new FormControl();
 
-
   villageForm!: FormGroup;
   villageID!: number;
   village_model: village_model = new village_model();
@@ -62,7 +61,6 @@ export class EditVillagesComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.villageDetails.vnames.map((vnames: string) => ({ vnames })));
           // this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log('Category Details:', res.Villages);
         }, error: (err) => {
           console.log(err)
         }
@@ -256,7 +254,6 @@ export class EditVillagesComponent implements OnInit {
       this.toastr.error('New sub village cannot be empty', 'Error'); // Show error toast
     }
   }
-
 }
 
 

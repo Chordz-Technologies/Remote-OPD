@@ -130,6 +130,14 @@ export class ServiceService {
     });
   }
 
+  // Download village-wise category report with filters
+  downloadVillageWiseCategoryReport(village: string, month: string, year: string, client_name: string): Observable<Blob> {
+    return this.http.get(`${this.url}/patient/VillageWiseCategoryWiseReport/`, {
+      responseType: 'blob',
+      params: { village, month, year, client_name },
+    });
+  }
+
   // Download monthly summary report - disease total count
   downloadMonthlySummaryDiseaseTotalCount(village: string, month: string, year: string, client_name: string): Observable<Blob> {
     return this.http.get(`${this.url}/patient/MonthlySummaryReport/`, {
@@ -289,8 +297,40 @@ export class ServiceService {
     return this.http.get<any>(`${this.url}/disease/alldisease/`);
   }
 
+  addDiseases(diseases: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/disease/createDisease/`, diseases);
+  }
+
+  getDiseaseById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/disease/diseasebyid/${id}/`);
+  }
+
+  updateDiseases(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/disease/updateDisease/${id}/`, data);
+  }
+
+  deleteDiseases(id: any): Observable<any> {
+    return this.http.delete<any>(`${this.url}/disease/deleteDisease/${id}/`, id);
+  }
+
   getAllMedicines(): Observable<any> {
     return this.http.get<any>(`${this.url}/medicines/allmedicines/`);
+  }
+
+  addMedicines(medicines: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/medicines/createmedicines/`, medicines);
+  }
+
+  getMedicineById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/medicines/medicinesbyid/${id}/`);
+  }
+
+  updateMedicines(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/medicines/updatemedicines/${id}/`, data);
+  }
+
+  deleteMedicines(id: any): Observable<any> {
+    return this.http.delete<any>(`${this.url}/medicines/deletemedicines/${id}/`, id);
   }
 
   getAllCamps(): Observable<any> {
