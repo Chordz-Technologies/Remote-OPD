@@ -7,8 +7,8 @@
       ? "ADMIN"
       : role === "DOCTOR"
       ? "DOCTOR"
-      : role === "INVESTOR"
-      ? "INVESTOR"
+      : role === "INVESTER"
+      ? "INVESTER"
       : "USER"
       }}
     </h4>
@@ -48,7 +48,7 @@
         <span>All Camps</span>
       </button>
 
-      <button mat-button *ngIf="ADMIN || INVESTOR" class="menu-button" [routerLinkActive]="['active']"
+      <button mat-button *ngIf="ADMIN || INVESTER" class="menu-button" [routerLinkActive]="['active']"
         [routerLink]="['/all_reports']">
         <mat-icon>download</mat-icon>
         <span>All Reports</span>

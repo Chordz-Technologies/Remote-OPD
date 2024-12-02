@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
             if (role === 'DOCTOR') {
               this.toastr.success('Login as Doctor successfully!', 'Success');
               this.router.navigate(['/patient_info_form']);
-            } else if (role === 'INVESTOR') {
+            } else if (role === 'INVESTER') {
               this.toastr.success('Login as Invester successfully!', 'Success');
               this.router.navigate(['/all_reports']);
             } else if (role === 'ADMIN') {

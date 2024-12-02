@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   role: string | null = '';
   ADMIN: boolean = localStorage.getItem('role') === 'ADMIN';
   DOCTOR: boolean = localStorage.getItem('role') === 'DOCTOR';
-  INVESTOR: boolean = localStorage.getItem('role') === 'INVESTOR';
+  INVESTER: boolean = localStorage.getItem('role') === 'INVESTER';
 
   constructor(private router: Router, private toastr: ToastrService, private patientService: ServiceService) { }
 
