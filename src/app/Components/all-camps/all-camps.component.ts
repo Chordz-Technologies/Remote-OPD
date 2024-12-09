@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ServiceService } from 'src/app/shared/service.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class AllCampsComponent {
   pageSize1: number = 50;
   pageIndex1: number = 0;
   dataSource1 = new MatTableDataSource<any>();
-  displayedColumns1: string[] = ['SrNo', 'client_name', 'name', 'village', 'subvillage', 'date',
+  displayedColumns1: string[] = ['action', 'SrNo', 'client_name', 'name', 'village', 'subvillage', 'date',
     'month', 'year', 'gender', 'age', 'contact', 'code', 'Description', 'Opinion'];
 
   // Variables for HB Screening Table
@@ -25,7 +26,7 @@ export class AllCampsComponent {
   pageSize2: number = 50;
   pageIndex2: number = 0;
   dataSource2 = new MatTableDataSource<any>();
-  displayedColumns2: string[] = ['SrNo', 'client_name', 'name', 'village', 'subvillage', 'date',
+  displayedColumns2: string[] = ['action', 'SrNo', 'client_name', 'name', 'village', 'subvillage', 'date',
     'month', 'year', 'gender', 'age', 'contact', 'HB', 'HBReadings'];
 
   // Variables for Aarogya Camp Table
@@ -33,7 +34,7 @@ export class AllCampsComponent {
   pageSize3: number = 50;
   pageIndex3: number = 0;
   dataSource3 = new MatTableDataSource<any>();
-  displayedColumns3: string[] = ['SrNo', 'client_name', 'name', 'village', 'subvillage', 'date', 'month',
+  displayedColumns3: string[] = ['action', 'SrNo', 'client_name', 'name', 'village', 'subvillage', 'date', 'month',
     'year', 'age', 'contact', 'standard', 'weight', 'height', 'HB', 'HBReadings', 'BMI', 'BMIReadings'];
 
   // Variables for Mega Camp Table
@@ -41,7 +42,7 @@ export class AllCampsComponent {
   pageSize4: number = 50;
   pageIndex4: number = 0;
   dataSource4 = new MatTableDataSource<any>();
-  displayedColumns4: string[] = ['SrNo', 'client_name', 'name', 'village', 'villagename', 'date', 'day',
+  displayedColumns4: string[] = ['action', 'SrNo', 'client_name', 'name', 'village', 'villagename', 'date', 'day',
     'month', 'year', 'gender', 'age', 'contact', 'weight', 'height', 'bp', 'pulse', 'temperature',
     'bloodtest', 'hb', 'xray', 'ecg', 'eyetest', 'audiometry', 'spirometry', 'breastcancer',
     'cervicalcancer', 'oralcancer', 'tb', 'description'];
@@ -55,7 +56,7 @@ export class AllCampsComponent {
   selectedToMonth: string = 'December';
 
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: ServiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadEyeScreeningData();
@@ -274,5 +275,18 @@ export class AllCampsComponent {
     } else {
       this.loadMegaCampData();
     }
+  }
+
+  editEyeCamp(id: number): void {
+    this.router.navigate(['/edit_eye_camp', id]);
+  }
+  editHBCamp(id: number): void {
+    this.router.navigate(['/edit_hb_camp', id]);
+  }
+  editADCamp(id: number): void {
+    this.router.navigate(['/edit_ad_camp', id]);
+  }
+  editMegaCamp(id: number): void {
+    this.router.navigate(['/edit_mega_camp', id]);
   }
 }

@@ -36,6 +36,10 @@ import { EditVillagesComponent } from './Components/edit-villages/edit-villages.
 import { AllCampsComponent } from './Components/all-camps/all-camps.component';
 import { EditDiseasesComponent } from './Components/edit-diseases/edit-diseases.component';
 import { EditMedicinesComponent } from './Components/edit-medicines/edit-medicines.component';
+import { EditEyeCampComponent } from './Components/edit-eye-camp/edit-eye-camp.component';
+import { EditHbCampComponent } from './Components/edit-hb-camp/edit-hb-camp.component';
+import { EditAdCampComponent } from './Components/edit-ad-camp/edit-ad-camp.component';
+import { EditMegaCampComponent } from './Components/edit-mega-camp/edit-mega-camp.component';
 
 
 @NgModule({
@@ -54,7 +58,11 @@ import { EditMedicinesComponent } from './Components/edit-medicines/edit-medicin
     EditVillagesComponent,
     AllCampsComponent,
     EditDiseasesComponent,
-    EditMedicinesComponent
+    EditMedicinesComponent,
+    EditEyeCampComponent,
+    EditHbCampComponent,
+    EditAdCampComponent,
+    EditMegaCampComponent,
   ],
   imports: [
     BrowserModule,

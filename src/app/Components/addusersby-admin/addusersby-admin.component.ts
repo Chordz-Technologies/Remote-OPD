@@ -29,6 +29,7 @@ export class AddusersbyAdminComponent {
   villages: any;
   diseases: any;
   medicines: any;
+  role!: string;
   constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
@@ -89,7 +90,7 @@ export class AddusersbyAdminComponent {
         this.userService.edituser(this.currentUserId, this.userForm.value).subscribe(
           response => {
             if (response.status === 'success') {
-              this.toastr.success('User updated successfully!', 'Success');
+              this.toastr.success('Data updated successfully!', 'Success');
               this.dialog.closeAll();
               this.getAllUsers();
             } else {
@@ -104,7 +105,7 @@ export class AddusersbyAdminComponent {
         this.userService.addusers(this.userForm.value).subscribe(
           response => {
             if (response.status === 'success') {
-              this.toastr.success('Course created successfully!', 'Success');
+              this.toastr.success('User created successfully!', 'Success');
               this.dialog.closeAll();
               this.getAllUsers();
             } else {

@@ -1,9 +1,3 @@
-button {
-    padding: 30px;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
 .form-wrapper {
     display: flex;
     align-items: center;
@@ -88,22 +82,6 @@ label {
     margin-right: 5px;
 }
 
-.btn-submit {
-    background-color: #392e73;
-    color: #ffffff;
-    border: none;
-    padding: 12px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.btn-submit:hover {
-    background-color: #E31E25;
-}
 
 @media (max-width: 768px) {
     .form-wrapper {
@@ -128,17 +106,10 @@ label[for="mainVillage"]::after,
 label[for="subVillage"]::after,
 label[for="gender"]::after,
 label[for="age"]::after,
-label[for="day"]::after,
 label[for="month"]::after,
 label[for="year"]::after,
-label[for="code"]::after,
 label[for="HB"]::after,
-label[for="HBReadings"]::after,
-label[for="Description"]::after,
-label[for="weight"]::after,
-label[for="height"]::after,
-label[for="BMI"]::after,
-label[for="BMIReadings"]::after {
+label[for="HBReadings"]::after {
     content: " *";
     color: #e74c3c;
 }

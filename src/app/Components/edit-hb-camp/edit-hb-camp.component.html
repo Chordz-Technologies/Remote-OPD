@@ -1,0 +1,125 @@
+<div class="container-fluid">
+    <div class="form-wrapper">
+        <div class="form-content">
+            <h2 class="form-heading">Edit NCD – Village Level HB Screening Camp Form</h2>
+            <form [formGroup]="hbScreeningForm">
+                <div class="form-grid">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="client_name">Client Name</label>
+                            <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                                placeholder="Enter Client Name" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="patientName">Patient Name</label>
+                            <input id="patientName" type="text" formControlName="name" class="form-control"
+                                placeholder="Enter Patient Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input id="date" type="date" formControlName="date" class="form-control"
+                                (change)="onDateChange($event)" />
+                        </div>
+                        <div class="form-group">
+                            <label for="month">Month</label>
+                            <input id="month" type="text" formControlName="month" class="form-control"
+                                placeholder="Month" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year"
+                                readonly />
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <div class="radio-group my-4">
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="M" />
+                                    <span>Male</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="F" />
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input id="age" type="number" formControlName="age" class="form-control"
+                                placeholder="Enter Age" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactNo">Contact No.</label>
+                            <input id="contactNo" type="text" formControlName="contact" class="form-control"
+                                placeholder="Enter Contact No." />
+                        </div>
+                        <div class="form-group">
+                            <div class="dropdown-with-arrow">
+                                <label for="mainVillage">Site Name</label>
+                                <select id="mainVillage" (change)="onMainVillageChange($event)"
+                                    formControlName="village" class="form-control">
+                                    <option value="" disabled selected>
+                                        Select Site Name
+                                    </option>
+                                    <option *ngFor="let village of villages" [value]="village.id">
+                                        {{ village.name }}
+                                    </option>
+                                </select>
+                                <div class="arrow-down"></div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="subVillages.length > 0">
+                            <div class="dropdown-with-arrow">
+                                <label for="subVillage">Village Name</label>
+                                <div class="arrow-down"></div>
+                                <select id="subVillage" formControlName="subvillage" class="form-control">
+                                    <option value="" disabled selected>
+                                        Select Village Name
+                                    </option>
+                                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
+                                        {{ subVillage }}
+                                    </option>
+                                </select>
+                                <div class="arrow-down"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="HB">HB (Hemoglobin)</label>
+                            <input id="HB" type="number" formControlName="HB" class="form-control"
+                                placeholder="Enter Hemoglobin Level" (input)="onHBChange()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="HBReadings">HB Readings</label>
+                    <input id="HBReadings" type="text" formControlName="HBReadings" class="form-control"
+                        placeholder="HB Readings" readonly />
+                </div>
+                <div class="text-center mt-3 pt-4">
+                    <button type="submit" class="btn btn-primary me-2 mb-2" (click)="update()">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-danger me-2 mb-2" (click)="openConfirmationDialog()">
+                        Delete
+                    </button>
+                    <button type="button" class="btn btn-success me-2 mb-2" routerLink="/all_camps">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmationDialogTemplate>
+    <h2 mat-dialog-title>Confirmation</h2>
+    <mat-dialog-content>
+        <p>Are you sure you want to delete this record?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false">No</button>
+        <button mat-button color="warn" [mat-dialog-close]="true">Yes</button>
+    </mat-dialog-actions>
+</ng-template>

@@ -131,11 +131,22 @@ export class EditPatientInfoComponent implements OnInit {
     }
   }
 
-  // Function to calculate ISO week number
+  // Function to calculate the ISO week number
   getWeekNumber(date: Date): number {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    const targetDate = new Date(date.getTime());
+
+    // Adjust to the nearest Thursday (ISO weeks are anchored to Thursdays)
+    const dayOfWeek = (targetDate.getDay() + 6) % 7; // Monday = 0, Sunday = 6
+    targetDate.setDate(targetDate.getDate() - dayOfWeek + 3);
+
+    // Get the first Thursday of the year
+    const firstThursday = new Date(targetDate.getFullYear(), 0, 4);
+    const firstWeekStart = new Date(firstThursday.getTime());
+    firstWeekStart.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7));
+
+    // Calculate week number
+    const diff = targetDate.getTime() - firstWeekStart.getTime();
+    return Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
   }
 
   // Handle age group auto-fill based on age

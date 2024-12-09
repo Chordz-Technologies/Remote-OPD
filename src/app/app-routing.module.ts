@@ -13,6 +13,10 @@ import { EditVillagesComponent } from './Components/edit-villages/edit-villages.
 import { AllCampsComponent } from './Components/all-camps/all-camps.component';
 import { EditDiseasesComponent } from './Components/edit-diseases/edit-diseases.component';
 import { EditMedicinesComponent } from './Components/edit-medicines/edit-medicines.component';
+import { EditEyeCampComponent } from './Components/edit-eye-camp/edit-eye-camp.component';
+import { EditHbCampComponent } from './Components/edit-hb-camp/edit-hb-camp.component';
+import { EditAdCampComponent } from './Components/edit-ad-camp/edit-ad-camp.component';
+import { EditMegaCampComponent } from './Components/edit-mega-camp/edit-mega-camp.component';
 
 const routes: Routes = [
   {
@@ -32,10 +36,13 @@ const routes: Routes = [
       { path: 'add_diseases', component: EditDiseasesComponent },
       { path: 'edit_diseases/:id', component: EditDiseasesComponent },
       { path: 'add_medicines', component: EditMedicinesComponent },
-      { path: 'edit_medicines/:id', component: EditMedicinesComponent }
+      { path: 'edit_medicines/:id', component: EditMedicinesComponent },
+      { path: 'edit_eye_camp/:id', component: EditEyeCampComponent },
+      { path: 'edit_hb_camp/:id', component: EditHbCampComponent },
+      { path: 'edit_ad_camp/:id', component: EditAdCampComponent },
+      { path: 'edit_mega_camp/:id', component: EditMegaCampComponent },
     ]
   },
-
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

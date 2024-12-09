@@ -337,22 +337,6 @@ export class ServiceService {
     return this.http.get<any>(`${this.url}/camps/allcamps/`);
   }
 
-  postEyeCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/eyecamp/addeyecamp/`, data);
-  }
-
-  postHBCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/hbcamp/addhbcamp/`, data);
-  }
-
-  postAarogyaCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/adcamp/addadcamp/`, data);
-  }
-
-  postMegaCampForm(data: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/megacamp/addmegacamp/`, data);
-  }
-
   getEyeCampRecords(pageIndex: number, pageSize: number): Observable<any> {
     let params = new HttpParams()
       .set('start_index', pageIndex.toString())
@@ -384,5 +368,63 @@ export class ServiceService {
   // Get Patient past data
   getPatientHistory(patientName: string): Observable<any> {
     return this.http.get<any>(`${this.url}/patient/PatientHistory/?patientName=${patientName}`);
+  }
+
+  // Eye Camp
+  postEyeCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/eyecamp/addeyecamp/`, data);
+  }
+  getEyeCampDataById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/eyecamp/eyecamp/${id}/`);
+  }
+  updateEyeCampData(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/eyecamp/eyecamp/${id}/update/`, data);
+  }
+  deleteEyeCampData(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/eyecamp/eyecamp/${id}/delete/`);
+  }
+
+  // HB Camp
+  postHBCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/hbcamp/addhbcamp/`, data);
+  }
+  getHBCampDataById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/hbcamp/hbcamp/${id}/`);
+  }
+  updateHBCampData(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/hbcamp/hbcamp/${id}/update/`, data);
+  }
+  deleteHBCampData(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/hbcamp/hbcamp/${id}/delete/`);
+  }
+
+  // AD Camp
+  postAarogyaCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/adcamp/addadcamp/`, data);
+  }
+  getADCampDataById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/adcamp/adcamp/${id}/`);
+  }
+
+  updateADCampData(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/adcamp/adcamp/${id}/update/`, data);
+  }
+
+  deleteADCampData(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/adcamp/adcamp/${id}/delete/`);
+  }
+
+  // Mega Camp
+  postMegaCampForm(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/megacamp/addmegacamp/`, data);
+  }
+  getMegaCampDataById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/megacamp/megacampbyid/${id}/`);
+  }
+  updateMegaCampData(id: number, data: any) {
+    return this.http.put<any>(`${this.url}/megacamp/updatemegacamp/${id}`, data);
+  }
+  deleteMegaCampData(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/megacamp/deletemegacamp/${id}`);
   }
 }

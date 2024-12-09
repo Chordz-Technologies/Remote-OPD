@@ -1,0 +1,210 @@
+<div class="container-fluid">
+    <div class="form-wrapper">
+        <div class="form-content">
+            <h2 class="form-heading">Edit Mega Camp Form</h2>
+            <form [formGroup]="megaCampForm">
+                <div class="form-grid">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="client_name">Client Name</label>
+                            <input id="client_name" type="text" formControlName="client_name" class="form-control"
+                                placeholder="Enter Client Name" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="patientName">Patient Name</label>
+                            <input id="patientName" type="text" formControlName="name" class="form-control"
+                                placeholder="Enter Patient Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input id="date" type="date" formControlName="date" class="form-control"
+                                (change)="onDateChange($event)" />
+                        </div>
+                        <div class="form-group">
+                            <label for="day">Day</label>
+                            <input id="day" type="text" formControlName="day" class="form-control" placeholder="Day"
+                                readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="month">Month</label>
+                            <input id="month" type="text" formControlName="month" class="form-control"
+                                placeholder="Month" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input id="year" type="text" formControlName="year" class="form-control" placeholder="Year"
+                                readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <div class="radio-group my-4">
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="Male" />
+                                    <span>Male</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" formControlName="gender" value="Female" />
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input id="age" type="number" formControlName="age" class="form-control"
+                                placeholder="Enter Age" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactNo">Contact No.</label>
+                            <input id="contactNo" type="text" formControlName="contact" class="form-control"
+                                placeholder="Enter Contact No." />
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <div class="dropdown-with-arrow">
+                                <label for="mainVillage">Site Name</label>
+                                <select id="mainVillage" formControlName="village" class="form-control"
+                                    (change)="onMainVillageChange($event)">
+                                    <option value="" disabled selected>
+                                        Select Site Name
+                                    </option>
+                                    <option *ngFor="let village of villages" [value]="village.id">
+                                        {{ village.name }}
+                                    </option>
+                                </select>
+                                <div class="arrow-down"></div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="villageName.length > 0">
+                            <div class="dropdown-with-arrow">
+                                <label for="subVillage">Village Name</label>
+                                <select id="subVillage" formControlName="villagename" class="form-control">
+                                    <option value="" disabled selected>
+                                        Select Village Name
+                                    </option>
+                                    <option *ngFor="let subVillage of subVillages" [value]="subVillage">
+                                        {{ subVillage }}
+                                    </option>
+                                </select>
+                                <div class="arrow-down"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Weight">Weight</label>
+                            <input id="Weight" type="text" formControlName="weight" class="form-control"
+                                placeholder="Enter Weight" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Height">Height</label>
+                            <input id="Height" type="text" formControlName="height" class="form-control"
+                                placeholder="Enter Height" />
+                        </div>
+                        <div class="form-group">
+                            <label for="BP">BP</label>
+                            <input id="BP" type="text" formControlName="bp" class="form-control"
+                                placeholder="Enter BP" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Pulse">Pulse</label>
+                            <input id="Pulse" type="text" formControlName="pulse" class="form-control"
+                                placeholder="Enter Pulse" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Temperature">Temperature</label>
+                            <input id="Temperature" type="text" formControlName="temperature" class="form-control"
+                                placeholder="Enter Temperature" />
+                        </div>
+                        <div class="form-group">
+                            <label for="BloodTest">Blood Test</label>
+                            <input id="BloodTest" type="text" formControlName="bloodtest" class="form-control"
+                                placeholder="Enter BloodTest" />
+                        </div>
+                        <div class="form-group">
+                            <label for="hb">HB</label>
+                            <input id="hb" type="text" formControlName="hb" class="form-control"
+                                placeholder="Enter HB" />
+                        </div>
+                        <div class="form-group">
+                            <label for="X-RAY">X-RAY</label>
+                            <input id="X-RAY" type="text" formControlName="xray" class="form-control"
+                                placeholder="Enter X-RAY" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="ECG">ECG</label>
+                            <input id="ECG" type="text" formControlName="ecg" class="form-control"
+                                placeholder="Enter ECG" />
+                        </div>
+                        <div class="form-group">
+                            <label for="EyeTest">Eye Test</label>
+                            <input id="EyeTest" type="text" formControlName="eyetest" class="form-control"
+                                placeholder="Enter Eye Test" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Audiometry">Audiometry</label>
+                            <input id="Audiometry" type="text" formControlName="audiometry" class="form-control"
+                                placeholder="Enter Audiometry" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Spirometry">Spirometry</label>
+                            <input id="Spirometry" type="text" formControlName="spirometry" class="form-control"
+                                placeholder="Enter Spirometry" />
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="breastCancer">Breast Screening Test</label>
+                            <input id="breastCancer" type="text" formControlName="breastcancer" class="form-control"
+                                placeholder="Enter Breast Screening Test" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cervicalCancer">Cervical / Gynea Screening Test</label>
+                            <input id="cervicalCancer" type="text" formControlName="cervicalcancer" class="form-control"
+                                placeholder="Enter Cervical / Gynea Screening Test" />
+                        </div>
+                        <div class="form-group">
+                            <label for="oralCancer">Oral Screening Test</label>
+                            <input id="oralCancer" type="text" formControlName="oralcancer" class="form-control"
+                                placeholder="Enter Oral Screening Test" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tb">TB Screening Test</label>
+                            <input id="tb" type="text" formControlName="tb" class="form-control"
+                                placeholder="Enter TB Screening Test" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" formControlName="description" class="form-control" rows="4"
+                        placeholder="Enter description"></textarea>
+                </div>
+                <div class="text-center mt-3 pt-4">
+                    <button type="submit" class="btn btn-primary me-2 mb-2" (click)="update()">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-danger me-2 mb-2" (click)="openConfirmationDialog()">
+                        Delete
+                    </button>
+                    <button type="button" class="btn btn-success me-2 mb-2" routerLink="/all_camps">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmationDialogTemplate>
+    <h2 mat-dialog-title>Confirmation</h2>
+    <mat-dialog-content>
+        <p>Are you sure you want to delete this record?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false">No</button>
+        <button mat-button color="warn" [mat-dialog-close]="true">Yes</button>
+    </mat-dialog-actions>
+</ng-template>
