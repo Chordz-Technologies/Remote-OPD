@@ -35,10 +35,10 @@ export class EditAdCampComponent implements OnInit {
       villageName: ['', Validators.required],
       standard: ['',],
       contact: ['',],
-      weight: ['', Validators.required],
-      height: ['', Validators.required],
-      BMI: ['', Validators.required], // Auto-calculated BMI
-      BMIReadings: ['', Validators.required], // Auto-populated BMI status
+      weight: ['',],
+      height: ['',],
+      BMI: ['',],
+      BMIReadings: ['',],
       HB: ['', [Validators.required, Validators.min(1)]], // HB field
       HBReadings: ['', Validators.required], // HB status field
     });
