@@ -15,7 +15,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
   pageSize: number = 50;
   pageIndex: number = 0;
 
-  selectedYear: string = '2024';
+  selectedYear: string = '';
   selectedFromMonth: string = '';
   selectedToMonth: string = '';
   searchKey: string = '';
@@ -24,7 +24,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  years: string[] = ['2021', '2022', '2023', '2024', '2025'];
+  years: string[] = ['2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'];
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [
@@ -107,7 +107,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
     }
 
     if (filterValue) {
-      this.service.searchRecords(filterValue, this.selectedFromMonth, this.selectedToMonth).subscribe({
+      this.service.searchRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
         next: (response) => {
           this.dataSource.data = response.patients || [];
           this.totalRecords = response.total_records || 0;

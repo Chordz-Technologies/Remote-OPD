@@ -26,6 +26,35 @@
     </div>
 </div>
 
+<div class="filter-container">
+    <mat-form-field appearance="outline">
+        <mat-label>Year</mat-label>
+        <mat-select [(ngModel)]="selectedYear">
+            <mat-option *ngFor="let year of years" [value]="year">{{
+                year
+                }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>From Month</mat-label>
+        <mat-select [(ngModel)]="selectedFromMonth">
+            <mat-option *ngFor="let month of months" [value]="month">{{
+                month
+                }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>To Month</mat-label>
+        <mat-select [(ngModel)]="selectedToMonth">
+            <mat-option *ngFor="let month of months" [value]="month">{{
+                month
+                }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
 <!--   NCD – Eye Screening Camp Details -->
 <div class="container-fluid">
     <div *ngIf="currentForm === 'ncd-eye-screening'">

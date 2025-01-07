@@ -34,3 +34,25 @@ table {
     width: 100%;
     overflow-x: auto;
 }
+
+.filter-container {
+    margin: 0 1%;
+}
+
+@media only screen and (max-width: 800px) {
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    mat-form-field {
+        width: 100%;
+    }
+}

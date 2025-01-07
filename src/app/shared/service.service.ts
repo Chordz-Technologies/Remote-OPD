@@ -200,55 +200,55 @@ export class ServiceService {
   }
 
   //all patients info
-  searchRecords(searchTerm: string, fromMonth: string, toMonth: string): Observable<any> {
+  searchRecords(searchTerm: string, fromMonth: string, toMonth: string, year: string): Observable<any> {
     if (!searchTerm || searchTerm.trim() === '') {
       return new Observable<any>(observer => {
         observer.next({ patients: [], total_records: 0 });
         observer.complete();
       });
     }
-    return this.http.get(`${this.url}/patient/opdsearch/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
+    return this.http.get(`${this.url}/patient/opdsearch/?year=${year}&from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
   }
 
   //All camps search records
-  searchEyeCampRecords(searchTerm: string, fromMonth: string, toMonth: string): Observable<any> {
+  searchEyeCampRecords(searchTerm: string, fromMonth: string, toMonth: string, year: string): Observable<any> {
     if (!searchTerm || searchTerm.trim() === '') {
       return new Observable<any>(observer => {
         observer.next({ patients: [], total_records: 0 });
         observer.complete();
       });
     }
-    return this.http.get(`${this.url}/eyecamp/eyecamp_search/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
+    return this.http.get(`${this.url}/eyecamp/eyecamp_search/?year=${year}&from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
   }
 
-  searchHBCampRecords(searchTerm: string, fromMonth: string, toMonth: string): Observable<any> {
+  searchHBCampRecords(searchTerm: string, fromMonth: string, toMonth: string, year: string): Observable<any> {
     if (!searchTerm || searchTerm.trim() === '') {
       return new Observable<any>(observer => {
         observer.next({ patients: [], total_records: 0 });
         observer.complete();
       });
     }
-    return this.http.get(`${this.url}/hbcamp/hbcamp_search/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
+    return this.http.get(`${this.url}/hbcamp/hbcamp_search/?year=${year}&from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
   }
 
-  searchADCampRecords(searchTerm: string, fromMonth: string, toMonth: string): Observable<any> {
+  searchADCampRecords(searchTerm: string, fromMonth: string, toMonth: string, year: string): Observable<any> {
     if (!searchTerm || searchTerm.trim() === '') {
       return new Observable<any>(observer => {
         observer.next({ patients: [], total_records: 0 });
         observer.complete();
       });
     }
-    return this.http.get(`${this.url}/adcamp/adcamp_search/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
+    return this.http.get(`${this.url}/adcamp/adcamp_search/?year=${year}&from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
   }
 
-  searchMegaCampRecords(searchTerm: string, fromMonth: string, toMonth: string): Observable<any> {
+  searchMegaCampRecords(searchTerm: string, fromMonth: string, toMonth: string, year: string): Observable<any> {
     if (!searchTerm || searchTerm.trim() === '') {
       return new Observable<any>(observer => {
         observer.next({ patients: [], total_records: 0 });
         observer.complete();
       });
     }
-    return this.http.get(`${this.url}/megacamp/megacamp_search/?from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
+    return this.http.get(`${this.url}/megacamp/megacamp_search/?year=${year}&from_month=${fromMonth}&to_month=${toMonth}&search_term=${searchTerm}`);
   }
 
   getFilteredRecords(year: string, fromMonth: string, toMonth: string, pageIndex: number, pageSize: number): Observable<any> {
