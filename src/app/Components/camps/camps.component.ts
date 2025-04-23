@@ -241,6 +241,11 @@ export class CampsComponent implements OnInit {
           Description: 'Pterygium (This growth covers the white part of the eye and extends onto the cornea)'
         });
         break;
+      case 'operation done':
+        this.eyeScreeningForm.patchValue({
+          Description: 'Cataract operations completed'
+        });
+        break;
       default:
         this.eyeScreeningForm.patchValue({ Description: '' });
         break;
