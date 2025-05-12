@@ -32,4 +32,5 @@ export class village_model {
     id!: number;
     name!: string;
     vnames!: string;
+    client!: number;
 }

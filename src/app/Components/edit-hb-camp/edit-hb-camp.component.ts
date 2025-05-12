@@ -18,6 +18,8 @@ export class EditHbCampComponent implements OnInit {
   villages: any[] = [];
   subVillages: string[] = [];
   villageName: string[] = [];
+  FilteredVillages: any[] = [];
+  clients: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private dialog: MatDialog,
     private toastr: ToastrService, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -45,6 +47,12 @@ export class EditHbCampComponent implements OnInit {
       }
     });
 
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
+
     // Check if editing an existing disease
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
@@ -53,6 +61,17 @@ export class EditHbCampComponent implements OnInit {
         this.loadDetails(this.selectedId);
       }
     });
+  }
+
+  onCampClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.FilteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.hbScreeningForm.patchValue({ village: '', subvillage: '' });
+    this.subVillages = [];
   }
 
   onHBChange(): void {
@@ -109,6 +128,12 @@ export class EditHbCampComponent implements OnInit {
       const selectedSubVillage = this.hbScreeningForm.get('villageName')?.value;
       hbCampData.villageName = selectedSubVillage; // This should be a string
 
+      // Convert client_id to client_name
+      const selectedClient = this.clients.find(client => client.client_id === +hbCampData.client_name);
+      if (selectedClient) {
+        hbCampData.client_name = selectedClient.client_name;
+      }
+
       this.service.updateHBCampData(this.selectedId, hbCampData).subscribe(
         () => {
           this.toastr.success('HB camp data updated successfully!');
@@ -152,26 +177,38 @@ export class EditHbCampComponent implements OnInit {
   loadDetails(hbCampId: number): void {
     this.service.getHBCampDataById(hbCampId).subscribe(
       (response) => {
-        const hbCampDetails = response.hbcamp;
-        this.hbScreeningForm.patchValue(response.hbcamp);
+        const eyeCampDetails = response.hbcamp;
         this.selectedId = hbCampId;
+        this.hbScreeningForm.patchValue(eyeCampDetails);
 
-        // Handle village and sub-village selection
-        if (hbCampDetails.village) {
-          const selectedVillage = this.villages.find(village => village.name === hbCampDetails.village);
+        // Match client name → ID
+        const selectedClient = this.clients.find(
+          client => client.client_name === eyeCampDetails.client_name
+        );
+        if (selectedClient) {
+          this.hbScreeningForm.patchValue({ client_name: selectedClient.client_id });
+          this.FilteredVillages = this.villages.filter(
+            v => v.client === selectedClient.client_id
+          );
+
+          // Match village name → ID
+          const selectedVillage = this.FilteredVillages.find(
+            v => v.name === eyeCampDetails.village
+          );
           if (selectedVillage) {
             this.hbScreeningForm.patchValue({ village: selectedVillage.id });
-            this.onMainVillageChange({ target: { value: selectedVillage.id } });
 
-            // Patch sub-village directly if present
-            if (hbCampDetails.villageName) {
-              this.hbScreeningForm.patchValue({ villageName: hbCampDetails.villageName });
+            this.subVillages = selectedVillage.vnames;
+            this.villageName = selectedVillage.vnames;
+
+            if (eyeCampDetails.villageName) {
+              this.hbScreeningForm.patchValue({ subvillage: eyeCampDetails.villageName });
             }
           }
         }
       },
       () => {
-        this.toastr.error('Failed to load hb camp details.');
+        this.toastr.error('Failed to load eye camp details.');
       }
     );
   }

@@ -6,9 +6,17 @@
         <div class="form-grid">
           <div class="form-column">
             <div class="form-group">
-              <label for="client_name">Client Name</label>
-              <input id="client_name" type="text" formControlName="client_name" class="form-control"
-                placeholder="Enter Client Name" readonly />
+              <div class="dropdown-with-arrow">
+                <label for="client_name">Client Name</label>
+                <select id="client_name" formControlName="client_name" class="form-control"
+                  (change)="onClientChange($event)">
+                  <option value="" disabled selected>Select Client</option>
+                  <option *ngFor="let client of clients" [value]="client.client_id">
+                    {{ client.client_name }}
+                  </option>
+                </select>
+                <div class="arrow-down"></div>
+              </div>
             </div>
             <div class="form-group">
               <label for="patientName">Patient Name</label>
@@ -45,14 +53,14 @@
                   <option value="" disabled selected>
                     Select Main Village
                   </option>
-                  <option *ngFor="let village of villages" [value]="village.id">
+                  <option *ngFor="let village of filteredVillages" [value]="village.id">
                     {{ village.name }}
                   </option>
                 </select>
                 <div class="arrow-down"></div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="villageName.length > 0">
               <div class="dropdown-with-arrow">
                 <label for="subVillage">Sub-Village Name</label>
                 <select id="subVillage" formControlName="villageName" class="form-control">

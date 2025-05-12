@@ -18,6 +18,8 @@ export class EditMegaCampComponent implements OnInit {
   villages: any[] = [];
   subVillages: string[] = [];
   villageName: string[] = [];
+  clients: any[] = [];
+  FilteredVillages: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private dialog: MatDialog,
     private toastr: ToastrService, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -61,6 +63,12 @@ export class EditMegaCampComponent implements OnInit {
       }
     });
 
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
+
     // Check if editing an existing disease
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
@@ -82,6 +90,17 @@ export class EditMegaCampComponent implements OnInit {
     } else {
       this.subVillages = []; // Clear sub-villages if no main village is selected
     }
+  }
+
+  onCampClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.FilteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.megaCampForm.patchValue({ village: '', subvillage: '' });
+    this.subVillages = [];
   }
 
   onDateChange(event: any): void {
@@ -108,6 +127,12 @@ export class EditMegaCampComponent implements OnInit {
       }
       const selectedSubVillage = this.megaCampForm.get('villageName')?.value;
       megaCampData.villageName = selectedSubVillage; // This should be a string
+
+      // Convert client_id to client_name
+      const selectedClient = this.clients.find(client => client.client_id === +megaCampData.client_name);
+      if (selectedClient) {
+        megaCampData.client_name = selectedClient.client_name;
+      }
 
       this.service.updateMegaCampData(this.selectedId, megaCampData).subscribe(
         () => {
@@ -156,22 +181,33 @@ export class EditMegaCampComponent implements OnInit {
         this.megaCampForm.patchValue(response.megacamp);
         this.selectedId = megaCampId;
 
-        // Handle village and sub-village selection
-        if (megaCampDetails.village) {
-          const selectedVillage = this.villages.find(village => village.name === megaCampDetails.village);
+        const selectedClient = this.clients.find(
+          client => client.client_name === megaCampDetails.client_name
+        );
+        if (selectedClient) {
+          this.megaCampForm.patchValue({ client_name: selectedClient.client_id });
+          this.FilteredVillages = this.villages.filter(
+            v => v.client === selectedClient.client_id
+          );
+
+          // Match village name → ID
+          const selectedVillage = this.FilteredVillages.find(
+            v => v.name === megaCampDetails.village
+          );
           if (selectedVillage) {
             this.megaCampForm.patchValue({ village: selectedVillage.id });
-            this.onMainVillageChange({ target: { value: selectedVillage.id } });
 
-            // Patch sub-village directly if present
+            this.subVillages = selectedVillage.vnames;
+            this.villageName = selectedVillage.vnames;
+
             if (megaCampDetails.villageName) {
-              this.megaCampForm.patchValue({ villageName: megaCampDetails.villageName });
+              this.megaCampForm.patchValue({ villagename: megaCampDetails.villageName });
             }
           }
         }
       },
       () => {
-        this.toastr.error('Failed to load mega camp details.');
+        this.toastr.error('Failed to load eye camp details.');
       }
     );
   }

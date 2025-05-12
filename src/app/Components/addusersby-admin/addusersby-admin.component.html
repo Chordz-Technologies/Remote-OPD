@@ -29,6 +29,9 @@
 
   <div class="main-div my-5">
     <div class="button-group">
+      <button mat-raised-button class="py-4" color="primary" (click)="currentForm = 'clients'">
+        Clients
+      </button>
       <button mat-raised-button class="py-4" color="primary" (click)="currentForm = 'villages'">
         Villages
       </button>
@@ -40,6 +43,60 @@
       </button>
     </div>
     <hr>
+  </div>
+
+  <div class="main-div my-5">
+    <div *ngIf="currentForm === 'clients'">
+      <div class="button-group">
+        <button mat-raised-button class="py-4" color="primary" routerLink="/add_clients">
+          Add Clients
+        </button>
+      </div>
+      <div *ngIf="dataLoaded" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource4" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><b>ID</b></th>
+            <td mat-cell *matCellDef="let row">{{ row.client_id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Client Name</b>
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Address</b>
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.client_address }}</td>
+          </ng-container>
+          <ng-container matColumnDef="no_of_villages">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>No. of Villages</b>
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.no_of_villages }}</td>
+          </ng-container>
+          <ng-container matColumnDef="onboarding_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Onboarding Date</b>
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.onboarding_date }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Action</b>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <button (click)="editClients(row.client_id)">
+                <mat-icon color="primary">edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns4"></tr>
+        </table>
+      </div>
+    </div>
   </div>
 
   <div class="main-div my-5">
@@ -60,6 +117,12 @@
               <b>Main Village Name</b>
             </th>
             <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="client_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Client Name</b>
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.client_name }}</td>
           </ng-container>
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>

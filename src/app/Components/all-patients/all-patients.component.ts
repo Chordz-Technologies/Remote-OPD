@@ -18,7 +18,9 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
   selectedYear: string = '';
   selectedFromMonth: string = '';
   selectedToMonth: string = '';
+  clientName: string = '';
   searchKey: string = '';
+  clients: any[] = [];
 
   months: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -41,6 +43,12 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadData();
+
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -59,6 +67,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
       this.selectedYear,
       this.selectedFromMonth,
       this.selectedToMonth,
+      this.clientName,
       startIndex,
       this.pageSize
     ).subscribe({
@@ -107,7 +116,7 @@ export class AllPatientsComponent implements OnInit, AfterViewInit {
     }
 
     if (filterValue) {
-      this.service.searchRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
+      this.service.searchRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear, this.clientName).subscribe({
         next: (response) => {
           this.dataSource.data = response.patients || [];
           this.totalRecords = response.total_records || 0;

@@ -18,6 +18,8 @@ export class EditEyeCampComponent implements OnInit {
   villages: any[] = [];
   subVillages: string[] = [];
   villageName: string[] = [];
+  filteredVillages: any[] = [];
+  clients: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private dialog: MatDialog,
     private toastr: ToastrService, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -46,6 +48,12 @@ export class EditEyeCampComponent implements OnInit {
       }
     });
 
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
+
     // Check if editing an existing disease
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
@@ -54,6 +62,17 @@ export class EditEyeCampComponent implements OnInit {
         this.loadDetails(this.selectedId);
       }
     });
+  }
+
+  onCampClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.filteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.eyeScreeningForm.patchValue({ village: '', subvillage: '' });
+    this.subVillages = [];
   }
 
   //Eye Screening Camp
@@ -133,6 +152,12 @@ export class EditEyeCampComponent implements OnInit {
       const selectedSubVillage = this.eyeScreeningForm.get('villageName')?.value;
       eyeCampData.villageName = selectedSubVillage; // This should be a string
 
+      // Convert client_id to client_name
+      const selectedClient = this.clients.find(client => client.client_id === +eyeCampData.client_name);
+      if (selectedClient) {
+        eyeCampData.client_name = selectedClient.client_name;
+      }
+
       this.service.updateEyeCampData(this.selectedId, eyeCampData).subscribe(
         () => {
           this.toastr.success('Eye camp data updated successfully!');
@@ -177,19 +202,31 @@ export class EditEyeCampComponent implements OnInit {
     this.service.getEyeCampDataById(eyeCampId).subscribe(
       (response) => {
         const eyeCampDetails = response.Eyecamp;
-        this.eyeScreeningForm.patchValue(response.Eyecamp);
         this.selectedId = eyeCampId;
+        this.eyeScreeningForm.patchValue(eyeCampDetails);
 
-        // Handle village and sub-village selection
-        if (eyeCampDetails.village) {
-          const selectedVillage = this.villages.find(village => village.name === eyeCampDetails.village);
+        // Match client name → ID
+        const selectedClient = this.clients.find(
+          client => client.client_name === eyeCampDetails.client_name
+        );
+        if (selectedClient) {
+          this.eyeScreeningForm.patchValue({ client_name: selectedClient.client_id });
+          this.filteredVillages = this.villages.filter(
+            v => v.client === selectedClient.client_id
+          );
+
+          // Match village name → ID
+          const selectedVillage = this.filteredVillages.find(
+            v => v.name === eyeCampDetails.village
+          );
           if (selectedVillage) {
             this.eyeScreeningForm.patchValue({ village: selectedVillage.id });
-            this.onMainVillageChange({ target: { value: selectedVillage.id } });
 
-            // Patch sub-village directly if present
+            this.subVillages = selectedVillage.vnames;
+            this.villageName = selectedVillage.vnames;
+
             if (eyeCampDetails.villageName) {
-              this.eyeScreeningForm.patchValue({ villageName: eyeCampDetails.villageName });
+              this.eyeScreeningForm.patchValue({ subvillage: eyeCampDetails.villageName });
             }
           }
         }

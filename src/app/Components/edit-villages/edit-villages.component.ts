@@ -17,6 +17,7 @@ import { ServiceService } from 'src/app/shared/service.service';
 export class EditVillagesComponent implements OnInit {
   @ViewChild('confirmationDialogTemplate') confirmationDialogTemplate!: TemplateRef<any>;
   editSubVillageControl = new FormControl();
+  clients: any[] = [];
 
   villageForm!: FormGroup;
   villageID!: number;
@@ -32,7 +33,6 @@ export class EditVillagesComponent implements OnInit {
   displayedColumns: string[] = ['subvillage', 'action'];
   dataSource!: MatTableDataSource<any>;
 
-  // @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder, private service: ServiceService,
@@ -43,9 +43,9 @@ export class EditVillagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.villageForm = this.fb.group({
+      client: [''],
       village: [''],
       subvillage: ['']
-
     })
 
     this.dataSource = new MatTableDataSource<any>([]);
@@ -59,7 +59,6 @@ export class EditVillagesComponent implements OnInit {
           this.onEdit(res.Villages);
           this.villageDetails = res.Villages;
           this.dataSource = new MatTableDataSource(this.villageDetails.vnames.map((vnames: string) => ({ vnames })));
-          // this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }, error: (err) => {
           console.log(err)
@@ -71,16 +70,25 @@ export class EditVillagesComponent implements OnInit {
     this.showupdate = false;
     this.showdelete = false;
 
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
   }
 
   onEdit(Village: village_model) {
     this.showsubmit = false;
     this.showupdate = true;
     this.showdelete = true;
+
+    const selectedClient = this.clients.find(c => c.client_id == Village.client); // adjust key as needed
+
     this.villageForm.setValue({
+      client: selectedClient.client_id, // display the client name
       village: Village.name,
       subvillage: Village.vnames,
-    })
+    });
     this.villageForm.get('subvillage')?.setValue('');
 
   }
@@ -92,18 +100,17 @@ export class EditVillagesComponent implements OnInit {
     // Convert the array of subcategories into a comma-separated string
     this.village_model.vnames = this.villageDetails.vnames.join(', ');
 
+    this.village_model.client = this.villageForm.value.client; // Set ID instead of name
+
     // Call the service to update the village details
     this.service.updateVillage(this.village_model, this.villageID,).subscribe({
       next: (res) => {
         console.log(res);
-        // alert('Update village Successful');
-        this.toastr.success('Update Village Successful!', 'Success');
+        this.toastr.success('Update Village Successfully!', 'Success');
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.error('Error updating village:', err);
-        // Optionally, display an error message to the user
-        // You can also handle specific error cases if needed
       }
     });
   }
@@ -122,18 +129,17 @@ export class EditVillagesComponent implements OnInit {
     // Convert the array of subcategories into a comma-separated string
     this.village_model.vnames = this.villageDetails.vnames.join(', ');
 
+    this.village_model.client = this.villageForm.value.client; // Set ID instead of name
+
     // Call the service to post the village details
     this.service.addVillage(this.village_model).subscribe({
       next: (res) => {
         console.log(res);
-        // alert('Add village Successful');
-        this.toastr.success('Add village Successful!', 'Success');
+        this.toastr.success('Add Village Successfully!', 'Success');
         this.router.navigate(['dashboard']);
       },
       error: (err) => {
         console.error('Error adding village:', err);
-        // Optionally, display an error message to the user
-        // You can also handle specific error cases if needed
         this.toastr.error('Error adding village', 'Error');
       }
     });
@@ -144,7 +150,7 @@ export class EditVillagesComponent implements OnInit {
     this.service.deleteVillageById(this.villageID).subscribe(
       (res) => {
         console.log(res);
-        this.toastr.success('Delete Village Successful!', 'Success');
+        this.toastr.success('Delete Village Successfully!', 'Success');
         this.villageForm.reset();
         this.router.navigate(['dashboard']);
       },
@@ -198,7 +204,7 @@ export class EditVillagesComponent implements OnInit {
       this.editSubVillageControl.reset();
 
       // Optionally, you can call updateVillage here if you want to persist edits immediately
-      this.toastr.success('Sub-village updated successfully!', 'Success');
+      this.toastr.success('Sub-village updated Successfully!', 'Success');
     } else {
       console.error('Invalid index for saving subvillage');
     }
@@ -217,7 +223,7 @@ export class EditVillagesComponent implements OnInit {
 
       // Optionally, update the village details if needed
       this.updateVillage();
-      this.toastr.success('Delete Sub-village Successful!', 'Success');
+      this.toastr.success('Delete Sub-village Successfully!', 'Success');
 
       // Reset form and editing index if the deleted row was being edited
       if (this.editingIndex === index) {
@@ -248,7 +254,7 @@ export class EditVillagesComponent implements OnInit {
       this.villageDetails.vnames.push(newSubVillage);
       this.dataSource.data = [...this.villageDetails.vnames.map((vnames: string) => ({ vnames }))];
       this.villageForm.patchValue({ subvillage: '' }); // Clear the input field after adding
-      this.toastr.success('Add Sub-Village Successful!', 'Success');
+      this.toastr.success('Add Sub-Village Successfully!', 'Success');
     } else {
       console.error('New sub village cannot be empty');
       this.toastr.error('New sub village cannot be empty', 'Error'); // Show error toast

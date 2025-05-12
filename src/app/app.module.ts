@@ -40,6 +40,7 @@ import { EditEyeCampComponent } from './Components/edit-eye-camp/edit-eye-camp.c
 import { EditHbCampComponent } from './Components/edit-hb-camp/edit-hb-camp.component';
 import { EditAdCampComponent } from './Components/edit-ad-camp/edit-ad-camp.component';
 import { EditMegaCampComponent } from './Components/edit-mega-camp/edit-mega-camp.component';
+import { EditClientsComponent } from './Components/edit-clients/edit-clients.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { EditMegaCampComponent } from './Components/edit-mega-camp/edit-mega-cam
     EditHbCampComponent,
     EditAdCampComponent,
     EditMegaCampComponent,
+    EditClientsComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ export class EditPatientInfoComponent implements OnInit {
   villages: any[] = [];
   villageName: any[] = []; // Subvillages will be stored here
   clients: any[] = [];
+  filteredVillages: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
@@ -99,6 +100,17 @@ export class EditPatientInfoComponent implements OnInit {
     });
   }
 
+  onClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.filteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.patientForm.patchValue({ village: '', villageName: '' });
+    this.villageName = [];
+  }
+
   // Handle village selection
   onMainVillageChange(event: any): void {
     const selectedVillageId = event.target.value;
@@ -174,13 +186,11 @@ export class EditPatientInfoComponent implements OnInit {
 
   // Fill form with patient data when editing
   fillFormToUpdate(patient: Patient_model) {
-    this.patientForm.setValue({
+    // First set basic form values (excluding client_name, village, villageName)
+    this.patientForm.patchValue({
       srNo: patient.srNo,
-      client_name: patient.client_name,
       patientName: patient.patientName,
       date: patient.date,
-      village: patient.village,
-      villageName: patient.villageName,
       category: patient.category,
       gender: patient.gender,
       age: patient.age,
@@ -203,41 +213,64 @@ export class EditPatientInfoComponent implements OnInit {
       treatmentRemark: patient.treatmentRemark,
     });
 
-    if (patient.village) {
-      const selectedVillage = this.villages.find(village => village.name === patient.village);
-      if (selectedVillage) {
-        this.patientForm.patchValue({ village: selectedVillage.id });
-        this.onMainVillageChange({ target: { value: selectedVillage.id } });
+    // STEP 1: Set client and trigger village loading
+    const selectedClient = this.clients.find(c => c.client_name === patient.client_name);
+    if (selectedClient) {
+      this.patientForm.patchValue({ client_name: selectedClient.client_id });
+      this.onClientChange({ target: { value: selectedClient.client_id } });
 
-        this.patientForm.patchValue({
-          villageName: patient.villageName // directly set as a string
-        });
-      }
+      // Wait a tick to allow `filteredVillages` to populate
+      setTimeout(() => {
+        // STEP 2: Set main village and trigger sub-village loading
+        const selectedVillage = this.filteredVillages.find(v => v.name === patient.village);
+        if (selectedVillage) {
+          this.patientForm.patchValue({ village: selectedVillage.id });
+          this.onMainVillageChange({ target: { value: selectedVillage.id } });
+
+          // STEP 3: Wait a tick to allow `villageName` to populate
+          setTimeout(() => {
+            this.patientForm.patchValue({ villageName: patient.villageName });
+          }, 200); // adjust timeout if needed
+        }
+      }, 200);
     }
   }
 
   // Update patient information
   update() {
-    const patientData = this.patientForm.value;
+    if (!this.patientForm.valid) {
+      this.toastr.error('Please fill all required fields.', 'Error');
+      return;
+    }
+
+    const patientData = { ...this.patientForm.value }; // Use spread to avoid mutating original form
+
+    // Convert village ID to name
     const selectedVillage = this.villages.find(village => village.id === +patientData.village);
     if (selectedVillage) {
-      patientData.village = selectedVillage.name; // Set the village name instead of ID
+      patientData.village = selectedVillage.name;
     }
-    const selectedSubVillage = this.patientForm.get('villageName')?.value;
-    patientData.villageName = selectedSubVillage; // This should be a string
 
-    if (this.patientForm.valid) {
-      this.service.updatePatient(patientData, this.patientId)
-        .subscribe(res => {
-          this.toastr.success('Patient Data Updated Successfully!', 'Success');
-          const clientName = this.patientForm.get('client_name')?.value;
-          this.patientForm.reset();
-          this.patientForm.patchValue({ client_name: clientName });
-          this.router.navigate(['/all_patient_info']);
-        });
+    // Set sub-village name
+    patientData.villageName = this.patientForm.get('villageName')?.value || '';
+
+    // Convert client_id to client_name
+    const selectedClient = this.clients.find(client => client.client_id === +patientData.client_name);
+    if (selectedClient) {
+      patientData.client_name = selectedClient.client_name;
     }
-    else {
-      this.toastr.error('Please fill all required fields.', 'Error');
-    }
+
+    this.service.updatePatient(patientData, this.patientId).subscribe({
+      next: res => {
+        this.toastr.success('Patient Data Updated Successfully!', 'Success');
+        this.patientForm.reset();
+        this.patientForm.patchValue({ client_name: selectedClient?.client_id }); // Set client ID again if needed
+        this.router.navigate(['/all_patient_info']);
+      },
+      error: err => {
+        this.toastr.error('Update failed. Please try again.', 'Error');
+        console.error(err);
+      }
+    });
   }
 }

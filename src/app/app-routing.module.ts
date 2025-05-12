@@ -17,6 +17,7 @@ import { EditEyeCampComponent } from './Components/edit-eye-camp/edit-eye-camp.c
 import { EditHbCampComponent } from './Components/edit-hb-camp/edit-hb-camp.component';
 import { EditAdCampComponent } from './Components/edit-ad-camp/edit-ad-camp.component';
 import { EditMegaCampComponent } from './Components/edit-mega-camp/edit-mega-camp.component';
+import { EditClientsComponent } from './Components/edit-clients/edit-clients.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,8 @@ const routes: Routes = [
       { path: 'edit_diseases/:id', component: EditDiseasesComponent },
       { path: 'add_medicines', component: EditMedicinesComponent },
       { path: 'edit_medicines/:id', component: EditMedicinesComponent },
+      { path: 'add_clients', component: EditClientsComponent },
+      { path: 'edit_clients/:id', component: EditClientsComponent },
       { path: 'edit_eye_camp/:id', component: EditEyeCampComponent },
       { path: 'edit_hb_camp/:id', component: EditHbCampComponent },
       { path: 'edit_ad_camp/:id', component: EditAdCampComponent },

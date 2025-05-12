@@ -1,0 +1,16 @@
+.dropdown-with-arrow {
+    position: relative;
+}
+
+.arrow-down {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 7px 0 7px;
+    border-color: #555 transparent transparent transparent;
+    z-index: 1;
+}

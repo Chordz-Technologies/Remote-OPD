@@ -25,6 +25,7 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   changeDetectorRef: any;
+  filteredVillages: any[] = [];
 
   constructor(private fb: FormBuilder, private patientService: ServiceService, private router: Router, private toastr: ToastrService) { }
   ngAfterViewInit(): void {
@@ -89,10 +90,6 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
     this.patientService.getClientNames().subscribe((response) => {
       if (response.status === 'success') {
         this.clients = response.all_clients;
-        if (this.clients.length === 1) {
-          const singleClientName = this.clients[0].client_name;
-          this.patientForm.get('client_name')?.setValue(singleClientName);
-        }
       }
     });
   }
@@ -119,6 +116,17 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
   // Function triggered when the search button is clicked
   onSearch(): void {
     this.fetchPatientHistory(this.searchPatientName.trim());
+  }
+
+  onClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.filteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.patientForm.patchValue({ village: '', villageName: '' });
+    this.villageName = [];
   }
 
   onMainVillageChange(event: any): void {
@@ -220,9 +228,17 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     const patientData = this.patientForm.value;
+
+    // Replace village ID with village name
     const selectedVillage = this.villages.find(village => village.id === +patientData.village);
     if (selectedVillage) {
-      patientData.village = selectedVillage.name; // Set the village name instead of ID
+      patientData.village = selectedVillage.name;
+    }
+
+    // Replace client ID with client name
+    const selectedClient = this.clients.find(client => client.client_id === +patientData.client_name);
+    if (selectedClient) {
+      patientData.client_name = selectedClient.client_name;
     }
 
     if (this.patientForm.valid) {
@@ -230,7 +246,7 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
         (response) => {
           if (response.status === 'success') {
             this.toastr.success('Patient Data Submitted Successfully!', 'Success');
-            const clientName = this.patientForm.get('client_name')?.value;
+            const clientName = selectedClient?.client_name;
             this.patientForm.reset();
             this.patientForm.patchValue({ client_name: clientName });
             this.router.navigate(['/all_patient_info']);
@@ -243,8 +259,7 @@ export class PatientInfoComponent implements OnInit, AfterViewInit {
           console.error('Error submitting patient data:', error);
         }
       );
-    }
-    else {
+    } else {
       this.toastr.error('Please fill all required fields.', 'Error');
     }
   }

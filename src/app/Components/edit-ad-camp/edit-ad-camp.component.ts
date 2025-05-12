@@ -18,6 +18,8 @@ export class EditAdCampComponent implements OnInit {
   villages: any[] = [];
   subVillages: string[] = [];
   villageName: string[] = [];
+  FilteredVillages: any[] = [];
+  clients: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private dialog: MatDialog,
     private toastr: ToastrService, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -58,6 +60,12 @@ export class EditAdCampComponent implements OnInit {
       }
     });
 
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
+
     // Check if editing an existing disease
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
@@ -66,6 +74,17 @@ export class EditAdCampComponent implements OnInit {
         this.loadDetails(this.selectedId);
       }
     });
+  }
+
+  onCampClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.FilteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.aarogyaCampForm.patchValue({ village: '', subvillage: '' });
+    this.subVillages = [];
   }
 
   onMainVillageChange(event: any): void {
@@ -155,6 +174,12 @@ export class EditAdCampComponent implements OnInit {
       const selectedSubVillage = this.aarogyaCampForm.get('villageName')?.value;
       aarogyaCampData.villageName = selectedSubVillage; // This should be a string
 
+      // Convert client_id to client_name
+      const selectedClient = this.clients.find(client => client.client_id === +aarogyaCampData.client_name);
+      if (selectedClient) {
+        aarogyaCampData.client_name = selectedClient.client_name;
+      }
+
       this.service.updateADCampData(this.selectedId, aarogyaCampData).subscribe(
         () => {
           this.toastr.success('Aarogya dhansampada camp data updated successfully!');
@@ -202,14 +227,25 @@ export class EditAdCampComponent implements OnInit {
         this.aarogyaCampForm.patchValue(response.adcamp);
         this.selectedId = adCampId;
 
-        // Handle village and sub-village selection
-        if (adCampDetails.village) {
-          const selectedVillage = this.villages.find(village => village.name === adCampDetails.village);
+        const selectedClient = this.clients.find(
+          client => client.client_name === adCampDetails.client_name
+        );
+        if (selectedClient) {
+          this.aarogyaCampForm.patchValue({ client_name: selectedClient.client_id });
+          this.FilteredVillages = this.villages.filter(
+            v => v.client === selectedClient.client_id
+          );
+
+          // Match village name → ID
+          const selectedVillage = this.FilteredVillages.find(
+            v => v.name === adCampDetails.village
+          );
           if (selectedVillage) {
             this.aarogyaCampForm.patchValue({ village: selectedVillage.id });
-            this.onMainVillageChange({ target: { value: selectedVillage.id } });
 
-            // Patch sub-village directly if present
+            this.subVillages = selectedVillage.vnames;
+            this.villageName = selectedVillage.vnames;
+
             if (adCampDetails.villageName) {
               this.aarogyaCampForm.patchValue({ villageName: adCampDetails.villageName });
             }
@@ -217,7 +253,7 @@ export class EditAdCampComponent implements OnInit {
         }
       },
       () => {
-        this.toastr.error('Failed to load aarogya dhansampada camp details.');
+        this.toastr.error('Failed to load eye camp details.');
       }
     );
   }

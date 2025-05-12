@@ -19,6 +19,7 @@ export class CampsComponent implements OnInit {
   aarogyaCampForm!: FormGroup;
   megaCampForm!: FormGroup;
   villageName: string[] = [];
+  FilteredVillages: any[] = [];
 
   constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private toastr: ToastrService) { }
 
@@ -117,26 +118,18 @@ export class CampsComponent implements OnInit {
       description: ['',],
     });
     this.getVillages();
+
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
   }
 
   getVillages(): void {
     this.service.getAllVillages().subscribe((response: any) => {
       if (response.status === 'success') {
         this.villages = response.all_Villages;
-      }
-    });
-
-    this.service.getClientNames().subscribe((response) => {
-      if (response.status === 'success') {
-        this.clients = response.all_clients;
-
-        if (this.clients.length === 1) {
-          const singleClientName = this.clients[0].client_name;
-          this.eyeScreeningForm.get('client_name')?.setValue(singleClientName);
-          this.hbScreeningForm.get('client_name')?.setValue(singleClientName);
-          this.aarogyaCampForm.get('client_name')?.setValue(singleClientName);
-          this.megaCampForm.get('client_name')?.setValue(singleClientName);
-        }
       }
     });
   }
@@ -165,9 +158,28 @@ export class CampsComponent implements OnInit {
     }
   }
 
+  onCampClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.FilteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.eyeScreeningForm.patchValue({ village: '', subvillage: '' });
+    this.hbScreeningForm.patchValue({ village: '', subvillage: '' });
+    this.aarogyaCampForm.patchValue({ village: '', villageName: '' });
+    this.megaCampForm.patchValue({ village: '', villagename: '' });
+    this.subVillages = [];
+  }
+
   onMainVillageChange(event: any): void {
-    const selectedVillageId = event.target.value;
-    const selectedVillage = this.villages.find(village => village.id === +selectedVillageId);
+    const selectedVillageId = +event.target.value;
+
+    const selectedVillage = this.FilteredVillages.find(v => v.id === selectedVillageId);
+    this.subVillages = selectedVillage ? selectedVillage.village_name : [];
+
+    // const selectedVillageId = event.target.value;
+    // const selectedVillage = this.villages.find(village => village.id === +selectedVillageId);
 
     if (selectedVillage) {
       this.villageName = selectedVillage.vnames;
@@ -263,6 +275,12 @@ export class CampsComponent implements OnInit {
         formData.village = selectedVillage.name; // Set the village name instead of ID
       }
 
+      // Replace client ID with client name
+      const selectedClient = this.clients.find(client => client.client_id === +formData.client_name);
+      if (selectedClient) {
+        formData.client_name = selectedClient.client_name;
+      }
+
       // Now submit the formData object with village name
       this.service.postEyeCampForm(formData).subscribe(
         (response) => {
@@ -314,12 +332,18 @@ export class CampsComponent implements OnInit {
         formData.village = selectedVillage.name; // Set the village name instead of ID
       }
 
+      // Replace client ID with client name
+      const selectedClient = this.clients.find(client => client.client_id === +formData.client_name);
+      if (selectedClient) {
+        formData.client_name = selectedClient.client_name;
+      }
+
       // Now submit the formData object with village name
       this.service.postHBCampForm(formData).subscribe(
         (response) => {
           if (response.status === 'success') {
             this.toastr.success('HB Screening Camp details submitted successfully!', 'Success');
-            const clientName = this.eyeScreeningForm.get('client_name')?.value;
+            const clientName = this.hbScreeningForm.get('client_name')?.value;
             this.hbScreeningForm.reset();
             this.hbScreeningForm.patchValue({ client_name: clientName });
             this.subVillages = []; // Clear sub-villages
@@ -398,6 +422,12 @@ export class CampsComponent implements OnInit {
         formData.village = selectedVillage.name; // Set the village name instead of ID
       }
 
+      // Replace client ID with client name
+      const selectedClient = this.clients.find(client => client.client_id === +formData.client_name);
+      if (selectedClient) {
+        formData.client_name = selectedClient.client_name;
+      }
+
       // Now submit the formData object with village name
       this.service.postAarogyaCampForm(formData).subscribe(
         (response) => {
@@ -429,6 +459,12 @@ export class CampsComponent implements OnInit {
       const selectedVillage = this.villages.find(village => village.id === +formData.village);
       if (selectedVillage) {
         formData.village = selectedVillage.name; // Set the village name instead of ID
+      }
+
+      // Replace client ID with client name
+      const selectedClient = this.clients.find(client => client.client_id === +formData.client_name);
+      if (selectedClient) {
+        formData.client_name = selectedClient.client_name;
       }
 
       // Now submit the formData object with village name

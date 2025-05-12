@@ -20,15 +20,18 @@ export class AddusersbyAdminComponent {
   currentUserId: string | null = null;
   currentForm!: string;
   public dataLoaded: boolean = false;
-  displayedColumns1: string[] = ['id', 'name', 'action'];
+  displayedColumns1: string[] = ['id', 'name', 'client_name', 'action'];
   dataSource1!: MatTableDataSource<any>;
   displayedColumns2: string[] = ['id', 'name', 'action'];
   dataSource2!: MatTableDataSource<any>;
   displayedColumns3: string[] = ['id', 'name', 'action'];
   dataSource3!: MatTableDataSource<any>;
+  displayedColumns4: string[] = ['id', 'name', 'address', 'no_of_villages', 'onboarding_date', 'action'];
+  dataSource4!: MatTableDataSource<any>;
   villages: any;
   diseases: any;
   medicines: any;
+  clients: any;
   role!: string;
   constructor(private fb: FormBuilder, private userService: ServiceService, private toastr: ToastrService, private dialog: MatDialog, private router: Router) { }
 
@@ -41,9 +44,10 @@ export class AddusersbyAdminComponent {
     });
 
     this.getAllUsers();
-    this.getAllVillageList();
+    this.getAllClientsAndVillages();
     this.getAllDiseases();
     this.getAllMedicines();
+    this.getAllClients();
   }
 
   toggleForm(): void {
@@ -141,18 +145,44 @@ export class AddusersbyAdminComponent {
     }
   }
 
-  getAllVillageList() {
-    this.userService.getAllVillages().subscribe({
+  getAllClientsAndVillages() {
+    this.userService.getAllClients().subscribe({
       next: (res: any) => {
-        this.dataLoaded = true;
-        this.villages = res.all_Villages;
-        this.dataSource1 = new MatTableDataSource(this.villages);
+        this.clients = res.all_clients;
+
+        // Now fetch villages after clients are ready
+        this.userService.getAllVillages().subscribe({
+          next: (res: any) => {
+            this.villages = res.all_Villages;
+
+            // Map client name to each village
+            this.villages.forEach((village: any) => {
+              const client = this.clients.find((c: any) => c.client_id === village.client);
+              village.client_name = client ? client.client_name : 'Unknown';
+            });
+
+            this.dataSource1 = new MatTableDataSource(this.villages);
+            this.dataLoaded = true;
+          },
+          error: (err: any) => console.log(err)
+        });
       },
-      error: (err: any) => {
-        console.log(err);
-      }
+      error: (err: any) => console.log(err)
     });
   }
+
+  // getAllVillageList() {
+  //   this.userService.getAllVillages().subscribe({
+  //     next: (res: any) => {
+  //       this.dataLoaded = true;
+  //       this.villages = res.all_Villages;
+  //       this.dataSource1 = new MatTableDataSource(this.villages);
+  //     },
+  //     error: (err: any) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
   getAllDiseases() {
     this.userService.getAllDiseases().subscribe({
@@ -180,6 +210,19 @@ export class AddusersbyAdminComponent {
     });
   }
 
+  getAllClients() {
+    this.userService.getAllClients().subscribe({
+      next: (res: any) => {
+        this.dataLoaded = true;
+        this.clients = res.all_clients;
+        this.dataSource4 = new MatTableDataSource(this.clients);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
   editVillages(id: number) {
     this.router.navigate(['/edit_villages/', id]);
   }
@@ -188,5 +231,8 @@ export class AddusersbyAdminComponent {
   }
   editMedicines(id: number) {
     this.router.navigate(['/edit_medicines/', id]);
+  }
+  editClients(id: number) {
+    this.router.navigate(['/edit_clients/', id]);
   }
 }

@@ -12,6 +12,8 @@ import { ServiceService } from 'src/app/shared/service.service';
 export class AllCampsComponent {
   currentForm: string = 'ncd-eye-screening';
   public dataLoaded: boolean = false;
+  clientName: string = '';
+  clients: any[] = [];
 
   // Variables for Eye Screening Table
   totalRecords1: number = 0;
@@ -70,6 +72,12 @@ export class AllCampsComponent {
     this.loadHBScreeningData();
     this.loadAarogyaCampData();
     this.loadMegaCampData();
+
+    this.service.getClientNames().subscribe((response) => {
+      if (response.status === 'success') {
+        this.clients = response.all_clients;
+      }
+    });
   }
 
   // Function to load Eye Screening Data
@@ -188,7 +196,7 @@ export class AllCampsComponent {
     }
 
     if (filterValue) {
-      this.service.searchEyeCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
+      this.service.searchEyeCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear, this.clientName).subscribe({
         next: (response) => {
           this.dataSource1.data = response.patients || [];
           this.totalRecords1 = response.total_records || 0;
@@ -214,7 +222,7 @@ export class AllCampsComponent {
     }
 
     if (filterValue) {
-      this.service.searchHBCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
+      this.service.searchHBCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear, this.clientName).subscribe({
         next: (response) => {
           this.dataSource2.data = response.patients || [];
           this.totalRecords2 = response.total_records || 0;
@@ -240,7 +248,7 @@ export class AllCampsComponent {
     }
 
     if (filterValue) {
-      this.service.searchADCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
+      this.service.searchADCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear, this.clientName).subscribe({
         next: (response) => {
           this.dataSource3.data = response.patients || [];
           this.totalRecords3 = response.total_records || 0;
@@ -266,7 +274,7 @@ export class AllCampsComponent {
     }
 
     if (filterValue) {
-      this.service.searchMegaCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear).subscribe({
+      this.service.searchMegaCampRecords(filterValue, this.selectedFromMonth, this.selectedToMonth, this.selectedYear, this.clientName).subscribe({
         next: (response) => {
           this.dataSource4.data = response.patients || [];
           this.totalRecords4 = response.total_records || 0;
