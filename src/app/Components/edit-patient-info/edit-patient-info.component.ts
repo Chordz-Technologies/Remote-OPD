@@ -273,4 +273,19 @@ export class EditPatientInfoComponent implements OnInit {
       }
     });
   }
+
+  delete() {
+    if (this.patientId) {
+      this.service.deletePatient(this.patientId).subscribe(
+        () => {
+          this.toastr.success('Patient deleted successfully!');
+          this.patientForm.reset();
+          this.router.navigate(['/all_patient_info']);
+        },
+        () => {
+          this.toastr.error('Failed to delete patient.');
+        }
+      );
+    }
+  }
 }

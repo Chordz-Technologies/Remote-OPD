@@ -263,6 +263,11 @@ export class ServiceService {
       `${this.url}/patient/opdform/${id}/update/`, data);
   }
 
+  deletePatient(id: any) {
+    return this.http.delete<any>(
+      `${this.url}/patient/opdform/${id}/delete/`, id);
+  }
+
   getAllVillages(): Observable<any> {
     return this.http.get<any>(`${this.url}/villages/allvillages/`);
   }

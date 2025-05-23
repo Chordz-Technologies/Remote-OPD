@@ -10,10 +10,11 @@ import { ServiceService } from 'src/app/shared/service.service';
 })
 export class AllReportsComponent {
   patientForm!: FormGroup;
-  villages: string[] = ['Shirwal', 'Talegaon'];
+  villages: any[] = [];
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   years: string[] = ['2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'];
   clients: any[] = [];
+  filteredVillages: any[] = [];
 
 
   constructor(private fb: FormBuilder, private service: ServiceService, private toastr: ToastrService) { }
@@ -26,17 +27,43 @@ export class AllReportsComponent {
       client_name: [''],
     });
 
+    // Fetch villages names
+    this.service.getAllVillages().subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.villages = response.all_Villages;
+      }
+    });
+
     // Fetch client names
     this.service.getClientNames().subscribe((response) => {
       if (response.status === 'success') {
         this.clients = response.all_clients;
       }
     });
-
   }
+
+  onClientChange(event: any): void {
+    const selectedClientId = +event.target.value;
+
+    // Filter villages based on selected client ID
+    this.filteredVillages = this.villages.filter(village => village.client === selectedClientId);
+
+    // Clear previously selected values
+    this.patientForm.patchValue({ village: '' });
+  }
+
   // Utility function to get filter values
   getFilterValues() {
-    return this.patientForm.value;
+    const formValues = this.patientForm.value;
+
+    const selectedClient = this.clients.find(c => c.client_id === +formValues.client_name);
+
+    return {
+      village: formValues.village,
+      month: formValues.month,
+      year: formValues.year,
+      client_name: selectedClient?.client_name || ''
+    };
   }
 
   // Utility function to handle the file download
